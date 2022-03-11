@@ -143,7 +143,7 @@ def main(argv = None):
     args = parser.parse_args(argv)
     if args.command_name == "replay":
         args.no_gui = False
-        args.n_rounds = 1
+        args.n_rounds = 1#changed to from 1 to 2
         args.match_name = Path(args.replay).name
 
     has_gui = not args.no_gui

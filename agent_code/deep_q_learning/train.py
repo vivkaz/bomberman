@@ -9,24 +9,29 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 
 
-
 ACTIONS = ['UP', 'RIGHT', 'DOWN', 'LEFT', 'WAIT', 'BOMB']
+ALPHA = 1e-3
+GAMMA = 0.6
 
-#function to give an action like "WAIT" a specific number
+
+# function to give an action like "WAIT" a specific number
 def transform_actions_to_number(action):
     result = []
     for act in action:
         result.append(ACTIONS.index(act))
     return np.array(result)
 
-#function "sample_experiences" samples a random set of experiences. A experience is the information about the state the action the reward and the next state of one step in the game.
-#the parameter batch_size defines the number of experiences that are use for one training iteration
-def sample_experiences(self, batch_size):
+
+# function "sample_experiences" samples a random set of experiences.
+# A experience is the information about the state the action the reward and the next state of one step in the game.
+# the parameter batch_size defines the number of experiences that are use for one training iteration
+def sample_experiences(self, batch_size=32):
     indices = np.random.randint(len(self.replay_memory), size=batch_size)
     batch = [self.replay_memory[index] for index in indices]
     states, actions, rewards, next_states = [np.array([experience[field_index] for experience in batch])
                                                     for field_index in range(4)]
     return states, actions, rewards, next_states
+
 
 def setup_training(self):
     """
@@ -37,10 +42,10 @@ def setup_training(self):
     :param self: This object is passed to all callbacks and you can set arbitrary values.
     """
 
-    #variable to buffer the experiences of previous setps
+    # variable to buffer the experiences of previous setps
     self.replay_memory = deque(maxlen=2000)
 
-    #variavle to save the rewards per step
+    # variavle to save the rewards per step
     self.rewards = []
 
 
@@ -64,11 +69,11 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     """
     self.logger.debug(f'Encountered game event(s) {", ".join(map(repr, events))} in step {new_game_state["step"]}')
 
-    #function "buffer_information" saves the experience of one step in the variable self.replay_memory starts a step 2 since in setp 1 the old_game_state is none
-    def buffer_information():
+    # function "buffer_information" saves the experience of one step in the variable
+    # self.replay_memory starts a step 2 since in setp 1 the old_game_state is none
+    def buffer_information(): # store
         if new_game_state["step"] >=2:
-            self.replay_memory.append((state_to_features(old_game_state),self_action,reward_from_events(self,events),state_to_features(new_game_state)))
-
+            self.replay_memory.append((state_to_features(old_game_state), self_action, reward_from_events(self,events), state_to_features(new_game_state)))
 
     buffer_information()
 
@@ -88,9 +93,9 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
     :param self: The same object that is passed to all of your callbacks.
     """
 
-    batch_size = 32#number of old experience used for updating the model
-    discount_factor = 0.95#value which weights
-    optimizer = tf.keras.optimizers.Adam(learning_rate=1e-3)
+    batch_size = 32 # number of old experience used for updating the model
+    discount_factor = GAMMA #0.95 # value which weights
+    optimizer = tf.keras.optimizers.Adam(learning_rate=ALPHA)
     loss_fn = tf.keras.losses.mean_squared_error
 
     if last_game_state["round"] >= 1:
@@ -105,13 +110,13 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
         max_next_Q_values = np.max(next_Q_values, axis=1)
         target_Q_values = (rewards + (1) * discount_factor * max_next_Q_values)
         target_Q_values = target_Q_values.reshape(-1, 1)
-        # print("actions : ",actions)
+        #print("actions : ",actions)
         actions = transform_actions_to_number(actions)
-        # print("actions : ", actions)
+        #print("actions : ", actions)
         mask = tf.one_hot(actions, self.n_outputs)
         with tf.GradientTape() as tape:
-            # print("states",states)
-            # print(self.model(states))
+            #print("states",states)
+            #print(self.model(states))
             all_Q_values = self.model(states)
             Q_values = tf.reduce_sum(all_Q_values * mask, axis=1, keepdims=True)
             loss = tf.reduce_mean(loss_fn(target_Q_values, Q_values))
@@ -123,7 +128,6 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
 
     #save model
     self.model.save("saved_model")
-
 
     self.logger.debug(f'Encountered event(s) {", ".join(map(repr, events))} in final step')
 
@@ -146,12 +150,12 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
         f.write(f'{sum}')
         f.write('\n')
 
-    #reset protokoll file in first round
+    # reset protokoll file in first round
     if last_game_state["round"] == 1:
         with open("training_protokoll.txt",'r+') as f:
             f.truncate(0)
 
-    #write data to protokoll such that the training status can be supervised during training
+    # write data to protokoll such that the training status can be supervised during training
     with open("training_protokoll.txt",'a') as f:
         f.write(f"[{datetime.now().strftime('%H_%M_%S')}] finished epoche {last_game_state['round']} with total reward {sum}")
         f.write("\n")
@@ -164,15 +168,19 @@ def reward_from_events(self, events: List[str]) -> int:
     certain behavior.
     """
     game_rewards = {
-        e.INVALID_ACTION: -20,
-        e.MOVED_UP:10,
-        e.MOVED_DOWN: 10,
-        e.MOVED_LEFT: 10,
-        e.WAITED: 0,
-        e.MOVED_RIGHT: 10,
-        #e.COIN_COLLECTED: 20
-
+        e.INVALID_ACTION: -5,
+        e.MOVED_UP: -1,
+        e.MOVED_DOWN: -1,
+        e.MOVED_LEFT: -1,
+        e.MOVED_RIGHT: -1,
+        e.WAITED: -2,
+        e.COIN_COLLECTED: 2,
+        #e.KILLED_OPPONENT: 5,
+        #e.BOMB_DROPPED: 2,
+        #e.KILLED_SELF: -5,
+        #e.GOT_KILLED: -5
     }
+
     reward_sum = 0
     for event in events:
         if event in game_rewards:

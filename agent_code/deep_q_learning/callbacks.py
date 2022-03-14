@@ -1,14 +1,16 @@
 import os
 import pickle
 import random
+from smtpd import DebuggingServer
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 from collections import deque
+
+
 ACTIONS = ['UP', 'RIGHT', 'DOWN', 'LEFT', 'WAIT', 'BOMB']
-
-
-
+ALPHA = 0.01
+OPTIMIZER= Adam(learning_rate=ALPHA)
 
 
 def setup(self):
@@ -55,6 +57,30 @@ def setup(self):
         self.logger.debug("model cant be loaded from save place")
     self.n_outputs = self.model.get_config()['layers'][-1]["config"]["units"]
 
+"""
+    # Build networks
+    self.q_network = self._build_compile_model()
+    self.target_network = self._build_compile_model()
+    self.alighn_target_model()
+
+
+def build_compile_model(self):
+    model = Sequential()
+    model.add(Embedding(200, 10, input_length=1))
+    model.add(Reshape((10,)))
+    model.add(Dense(50, activation='relu'))
+    model.add(Dense(50, activation='relu'))
+    model.add(Dense(200, activation='linear'))
+
+    model.compile(loss='mse', oplimizer=OPTIMIZER)
+
+    return model
+
+
+def alighn_target_model(self):
+    self.target_network.set_weights(self.q_network.get_wights)
+"""
+
 def act(self, game_state: dict) -> str:
     """
     Your agent should parse the input, think, and take a decision.
@@ -65,24 +91,26 @@ def act(self, game_state: dict) -> str:
     :return: The action to take as a string.
     """
 
-    #epsilon is a hyperparameter that introduces a random factor for the decisoin process for the first trained rounds. This supports the agent to discover the enviroment
-    epsilon = max(1 - game_state["round"] / 250, 0.01)
+    # epsilon is a hyperparameter that introduces a random factor for the decisoin process for the first trained rounds.
+    # This supports the agent to discover the enviroment
+    epsilon = max(1 - game_state["round"] / 250, 0.1)#0.01)
 
-    #inputs are the input data for the network, which calculates an action based on the inputs. The function state_to_features transform the game states in to a 17x17xn matrix where the
-    #information abount position, walls, coins, ... are stored in the 3rd dimension
+    # inputs are the input data for the network, which calculates an action based on the inputs.
+    # The function state_to_features transform the game states in to a 17x17xn matrix where the
+    # information about position, walls, coins, ... are stored in the 3rd dimension
     inputs = state_to_features(game_state)
+    
     # todo Exploration vs exploitation
 
     self.logger.debug("Querying model for action.")
 
-    #actual decision process
-    #the action with the highes Q-value is choosen
+    # actual decision process; the action with the highes Q-value is choosen
     if self.train:
         if np.random.rand() < epsilon:
-            decision =  np.random.randint(5)
+            decision = np.random.randint(5)
         else:
-            Q_values = self.model.predict(inputs[np.newaxis])
-            decision =  np.argmax(Q_values[0])
+            Q_values = self.model.predict(inputs[np.newaxis]) # q_values = self.q_network.predict(game_state)
+            decision = np.argmax(Q_values[0])
     else:
         decision = np.argmax(self.model.predict(inputs[np.newaxis]))
 
@@ -128,6 +156,6 @@ def state_to_features(game_state: dict) -> np.array:
     inputs = np.zeros(field.shape + (2,))
     inputs[:, :, 0] = field
     inputs[:, :, 1][agents_position[0], agents_position[1]] = 1
-    #inputs[:, :, 2][x_coin,y_coin] = 1
+    inputs[:, :, 2][x_coin,y_coin] = 1
 
     return inputs

@@ -3,9 +3,15 @@ import pickle
 import random
 
 import numpy as np
+from sklearn import neighbors
 
 
 ACTIONS = ['UP', 'RIGHT', 'DOWN', 'LEFT', 'WAIT', 'BOMB']
+N_STATES = 825
+M_ACTIONS = len(ACTIONS)
+ALPHA = 0.1
+GAMMA = 0.6
+epsilon = 0.1
 
 
 def setup(self):
@@ -24,8 +30,8 @@ def setup(self):
     """
     if self.train or not os.path.isfile("my-saved-model.pt"):
         self.logger.info("Setting up model from scratch.")
-        weights = np.random.rand(len(ACTIONS))
-        self.model = weights / weights.sum()
+        q_table = np.zeros([N_STATES, M_ACTIONS])
+        self.model = q_table
     else:
         self.logger.info("Loading model from saved state.")
         with open("my-saved-model.pt", "rb") as file:
@@ -42,14 +48,18 @@ def act(self, game_state: dict) -> str:
     :return: The action to take as a string.
     """
     # todo Exploration vs exploitation
-    random_prob = .1
-    if self.train and random.random() < random_prob:
+    if self.train and random.uniform(0, 1) < epsilon: # random.random()
         self.logger.debug("Choosing action purely at random.")
         # 80%: walk in any direction. 10% wait. 10% bomb.
-        return np.random.choice(ACTIONS, p=[.2, .2, .2, .2, .1, .1])
+        return np.random.choice(ACTIONS, p=[.2, .2, .2, .2, .1, .1]) # Explore action space
 
     self.logger.debug("Querying model for action.")
-    return np.random.choice(ACTIONS, p=self.model)
+    #return np.random.choice(ACTIONS, p=self.model)
+    state = state_to_features(game_state)
+    action = np.argmax(self.model[state]) # Exploit learned values
+    
+    return ACTIONS[action]
+
 
 
 def state_to_features(game_state: dict) -> np.array:
@@ -72,8 +82,31 @@ def state_to_features(game_state: dict) -> np.array:
 
     # For example, you could construct several channels of equal shape, ...
     channels = []
-    channels.append(...)
+    
+    position = game_state['self'][3] # (x,y) coordinate on the field
+    if True:
+        position_value = 0
+    channels.append(position_value)
+    sub = [(1,0), (-1,0), (0,1), (0,-1)]
+    neighbors = [np.subtract(position, i) for i in sub]
+    features_1_4 = game_state['field'][neighbors] # Its entries are 1 for crates, −1 for stone walls and 0 for free tiles
+
+    channels.append(features_1_4)
+
+    # TODO: value of current field (position), more values for features_1_4
+
+    if len(game_state['coins']) > 0: # TODO: check if the coins are visible, near the agent
+        mode = 0 # collect coins
+    elif len(game_state['others']) > 0:
+        mode = 2 # kill opponents
+    else:
+        mode = 1 # destroy crates
+
+    channels.append(mode)
+
     # concatenate them as a feature tensor (they must have the same shape), ...
     stacked_channels = np.stack(channels)
+    
     # and return them as a vector
     return stacked_channels.reshape(-1)
+

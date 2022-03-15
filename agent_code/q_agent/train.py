@@ -30,6 +30,9 @@ def setup_training(self):
     # (s, a, r, s')
     self.transitions = deque(maxlen=TRANSITION_HISTORY_SIZE)
 
+    # save rewards
+    self.rewards = []
+
 
 def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_state: dict, events: List[str]):
     """
@@ -51,6 +54,8 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     self.logger.debug(f'Encountered game event(s) {", ".join(map(repr, events))} in step {new_game_state["step"]}')
 
     # Idea: Add your own events to hand out rewards
+    # TODO: events
+    # TODO: update q-table
     if ...:
         events.append(PLACEHOLDER_EVENT)
 
@@ -87,13 +92,22 @@ def reward_from_events(self, events: List[str]) -> int:
     certain behavior.
     """
     game_rewards = {
-        e.COIN_COLLECTED: 1,
-        e.KILLED_OPPONENT: 5,
-        PLACEHOLDER_EVENT: -.1  # idea: the custom event is bad
+        e.INVALID_ACTION: -10,
+        e.MOVED_UP:-2,
+        e.MOVED_DOWN: -2,
+        e.MOVED_LEFT: -2,
+        e.WAITED: -5,
+        e.MOVED_RIGHT: -2,
+        e.COIN_COLLECTED: 20,
+        e.COIN_DISTANCE_REDUCED: 5,
+        e.COIN_DISTANCE_INCREASED: -5,
+        e.RUN_IN_LOOP:-20
+        #e.BOMB_AVOIDED : 1
     }
     reward_sum = 0
     for event in events:
         if event in game_rewards:
             reward_sum += game_rewards[event]
     self.logger.info(f"Awarded {reward_sum} for events {', '.join(events)}")
+    
     return reward_sum

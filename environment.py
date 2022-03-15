@@ -128,7 +128,7 @@ class GenericWorld:
         return is_free
 
 
-    def perform_agent_action(self, agent: Agent, action: str):
+    def perform_agent_action(self, agent: Agent, action: str):    
 
         # check if our agent
         def is_agent(self, agent):

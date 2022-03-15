@@ -15,6 +15,10 @@ SCENARIOS = {
     "classic": {
         "CRATE_DENSITY": 0.75,
         "COIN_COUNT": 9
+    }, 
+    "clean": {
+        "CRATE_DENSITY": 0,
+        "COIN_COUNT": 0
     }
     # Feel free to add more game modes and properties
     # game is created in environment.py -> BombeRLeWorld -> build_arena()
@@ -35,9 +39,9 @@ ASSET_DIR = Path(__file__).parent / "assets"
 AGENT_COLORS = ['blue', 'green', 'yellow', 'pink']
 
 # Game rules
-BOMB_POWER = 3
-BOMB_TIMER = 4
-EXPLOSION_TIMER = 2  # = 1 of bomb explosion + N of lingering around
+BOMB_POWER = 3 # explosion extends three tiles up, down, left and right
+BOMB_TIMER = 4 # detonate after four steps
+EXPLOSION_TIMER = 2  # = 1 of bomb explosion + N of lingering around # remains dangerous for one more round before it vanishes in smoke
 
 # Rules for agents
 TIMEOUT = 0.5

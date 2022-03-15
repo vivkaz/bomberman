@@ -127,29 +127,33 @@ class GenericWorld:
                 is_free = is_free and (obstacle.x != x or obstacle.y != y)
         return is_free
 
+
     def perform_agent_action(self, agent: Agent, action: str):
-        # Perform the specified action if possible, wait otherwise
-        def save_space(agents_position):
-            vert = np.array([[x,agents_position[1]] for x in range(agents_position[0]-3,agents_position[0]+4)])
-            hort = np.array([[agents_position[0],y] for y in range(agents_position[1]-3,agents_position[1]+4)])
-            return np.concatenate((vert,hort),axis = 0)
 
-
-
-
-
-
-        position_old = np.array([agent.x, agent.y])
-        def danger(position,bombs):
-            area = save_space(position)
-            x = False
-            for i in bombs:
-                for j in area:
-                    if (i == j).all():
-                        x = True
+        # check if our agent
+        def is_agent(self, agent):
+            return agent.name == self.agents[0].name
+    
+        # compute the risky area around the agent
+        def risky_area(agent_position):
+            vertical = np.array([ [x, agent_position[1]] for x in range(agent_position[0]-3, agent_position[0]+4) ])
+            horizontal = np.array([ [agent_position[0], y] for y in range(agent_position[1]-3, agent_position[1]+4) ])
+            return np.concatenate((vertical, horizontal), axis = 0)
+        
+        # is agent in danger due to a bomb
+        def in_danger(position, bombs):
+            area = risky_area(position)
+            danger = False
+            for b in bombs:
+                for a in area:
+                    if (b == a).all():
+                        danger = True
                         break
-            return x
+            return danger
 
+        old_position = np.array([agent.x, agent.y])
+
+        # Perform the specified action if possible, wait otherwise
         if action == 'UP' and self.tile_is_free(agent.x, agent.y - 1):
             agent.y -= 1
             agent.add_event(e.MOVED_UP)
@@ -173,48 +177,50 @@ class GenericWorld:
             agent.add_event(e.INVALID_ACTION)
 
         position = np.array([agent.x,agent.y])
-        coins = np.empty((2,sum([i.collectable for i in self.coins])))
-        if coins.size != 0:
+        coins = np.empty((2, sum([i.collectable for i in self.coins])))
 
+        if coins.size != 0:
             for count, coin in enumerate([i for i in self.coins if i.collectable]):
                 if coin.collectable:
-                    coins[0,count] = coin.x
-                    coins[1,count] = coin.y
+                    coins[0, count] = coin.x
+                    coins[1, count] = coin.y
+            
+            # compute distance to coins
+            def dist(position, coins):
+                return np.sqrt( np.power(coins[0]-position[0], 2) + np.power(coins[1]-position[1], 2) )
+            
+            old_d = dist(old_position,coins)
+            new_d = dist(position,coins)
 
-            def d(position, coins):
-                return np.sqrt(np.power(coins[0]-position[0],2)+np.power(coins[1]-position[1],2))
-            d_old = d(position_old,coins)
-            d_new = d(position,coins)
-            #print(np.sort(d_old),np.sort(d_new))
-
-            if np.min(d_new) < np.min(d_old) :
+            if np.min(new_d) < np.min(old_d) :
                 agent.add_event(e.COIN_DISTANCE_REDUCED)
-            if np.min(d_new) >= np.min(d_old):
+
+            if np.min(new_d) >= np.min(old_d):
                 agent.add_event(e.COIN_DISTANCE_INCREASED)
 
 
-
-        if agent.name == self.agents[0].name:
+        # check if agent is running in loop
+        #if agent.name == self.agents[0].name:
+        if is_agent(self, agent):
             self.buffer_steps.append(position)
             if len(self.buffer_steps) == 4:
                 if (self.buffer_steps[0] == self.buffer_steps[2]).all() and (self.buffer_steps[1] == self.buffer_steps[3]).all() and (self.buffer_steps[0] != self.buffer_steps[1]).any():
-                    agent.add_event(e.INFINITY_LOOP)
+                    agent.add_event(e.RUN_IN_LOOP)
 
 
-
-        if agent.name == self.agents[0].name:
+        # check if bomb avoided
+        #if agent.name == self.agents[0].name:
+        if is_agent(self, agent):
             bombs = np.empty((2, len(self.bombs)))
             if bombs.size != 0:
                 for count, bomb in enumerate(self.bombs):
                     bombs[0, count] = bomb.x
                     bombs[1, count] = bomb.y
                 bombs = bombs.transpose()
-                danger_old = danger(position_old,bombs)
-                danger_new = danger(position,bombs)
-                if danger_old and not danger_new:
-                    agent.add_event(e.AVOID_BOMB)
-
-
+                old_danger = in_danger(old_position,bombs)
+                new_danger = in_danger(position,bombs)
+                if old_danger and not new_danger:
+                    agent.add_event(e.BOMB_AVOIDED)
 
 
     def poll_and_run_agents(self):
@@ -398,6 +404,7 @@ class GenericWorld:
                 json.dump(results, file, indent=4, sort_keys=True)
 
 
+
 class BombeRLeWorld(GenericWorld):
     def __init__(self, args: WorldArgs, agents):
         super().__init__(args)
@@ -414,6 +421,7 @@ class BombeRLeWorld(GenericWorld):
             else:
                 name = agent_dir
             self.add_agent(agent_dir, name, train=train)
+
 
     def build_arena(self):
         WALL = -1
@@ -463,6 +471,7 @@ class BombeRLeWorld(GenericWorld):
 
         return arena, coins, active_agents
 
+
     def get_state_for_agent(self, agent: Agent):
         if agent.dead:
             return None
@@ -486,6 +495,7 @@ class BombeRLeWorld(GenericWorld):
         state['explosion_map'] = explosion_map
 
         return state
+
 
     def poll_and_run_agents(self):
         # Tell agents to act
@@ -529,6 +539,7 @@ class BombeRLeWorld(GenericWorld):
             self.replay['actions'][a.name].append(action)
             self.perform_agent_action(a, action)
 
+
     def send_game_events(self):
 
         # Send events to all agents that expect them, then reset and wait for them
@@ -553,9 +564,6 @@ class BombeRLeWorld(GenericWorld):
             a.reset_game_events()
 
 
-
-
-
     def end_round(self):
         super().end_round()
 
@@ -576,6 +584,7 @@ class BombeRLeWorld(GenericWorld):
             with open(name, 'wb') as f:
                 pickle.dump(self.replay, f)
 
+
     def end(self):
         super().end()
         self.logger.info('SHUT DOWN')
@@ -583,6 +592,7 @@ class BombeRLeWorld(GenericWorld):
             # Send exit message to shut down agent
             self.logger.debug(f'Sending exit message to agent <{a.name}>')
             # todo multiprocessing shutdown
+
 
 
 class GUI:

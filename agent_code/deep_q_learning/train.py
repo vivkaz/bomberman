@@ -68,7 +68,8 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     def buffer_information():
         if new_game_state["step"] >=2:
             self.replay_memory.append((state_to_features(old_game_state),self_action,reward_from_events(self,events),state_to_features(new_game_state)))
-
+    self.old_game_state = old_game_state
+    self.new_game_state = new_game_state
 
     buffer_information()
 
@@ -88,9 +89,9 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
     :param self: The same object that is passed to all of your callbacks.
     """
 
-    batch_size = 32#number of old experience used for updating the model
-    discount_factor = 0.95#value which weights
-    optimizer = tf.keras.optimizers.Adam(learning_rate=1e-3)
+    batch_size = 50#number of old experience used for updating the model
+    discount_factor = 0.99#value which weights
+    optimizer = tf.keras.optimizers.Adam(learning_rate=1e-2)
     loss_fn = tf.keras.losses.mean_squared_error
 
     if last_game_state["round"] >= 1:
@@ -157,20 +158,42 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
         f.write("\n")
 
 def reward_from_events(self, events: List[str]) -> int:
+
+    def distance_to_nearest_coin(state):
+        position = state["self"][3]
+        coins_position = state["coins"]
+        x_coin = []
+        y_coin = []
+        for i in coins_position:
+            x_coin.append(i[0])
+            y_coin.append(i[1])
+        x_coin = np.array(x_coin)
+        y_coin = np.array(y_coin)
+        d = np.max(np.sqrt(np.power(position[0]-x_coin,2)+np.power(position[1]-y_coin,2)))
+        return d
+
+
     """
     *This is not a required function, but an idea to structure your code.*
 
     Here you can modify the rewards your agent get so as to en/discourage
     certain behavior.
     """
+
+
     game_rewards = {
-        e.INVALID_ACTION: -20,
-        e.MOVED_UP:10,
-        e.MOVED_DOWN: 10,
-        e.MOVED_LEFT: 10,
-        e.WAITED: 0,
-        e.MOVED_RIGHT: 10,
-        #e.COIN_COLLECTED: 20
+        e.INVALID_ACTION: -10,
+        e.MOVED_UP:-2,
+        e.MOVED_DOWN: -2,
+        e.MOVED_LEFT: -2,
+        e.WAITED: -5,
+        e.MOVED_RIGHT: -2,
+        e.COIN_COLLECTED: 20,
+        e.COIN_DISTANCE_REDUCED: 5,
+        e.COIN_DISTANCE_INCREASED: -5,
+        e.INFINITY_LOOP:-20
+        #e.AVOID_BOMB: 1
+
 
     }
     reward_sum = 0

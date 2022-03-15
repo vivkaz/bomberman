@@ -8,6 +8,7 @@ from pathlib import Path
 from threading import Event
 from time import time
 from typing import List, Tuple, Dict
+from collections import namedtuple, deque
 
 import numpy as np
 
@@ -54,6 +55,7 @@ class GenericWorld:
         self.round_statistics = {}
 
         self.running = False
+        self.buffer_steps = deque(maxlen=4)
 
     def setup_logging(self):
         self.logger = logging.getLogger('BombeRLeWorld')
@@ -127,6 +129,27 @@ class GenericWorld:
 
     def perform_agent_action(self, agent: Agent, action: str):
         # Perform the specified action if possible, wait otherwise
+        def save_space(agents_position):
+            vert = np.array([[x,agents_position[1]] for x in range(agents_position[0]-3,agents_position[0]+4)])
+            hort = np.array([[agents_position[0],y] for y in range(agents_position[1]-3,agents_position[1]+4)])
+            return np.concatenate((vert,hort),axis = 0)
+
+
+
+
+
+
+        position_old = np.array([agent.x, agent.y])
+        def danger(position,bombs):
+            area = save_space(position)
+            x = False
+            for i in bombs:
+                for j in area:
+                    if (i == j).all():
+                        x = True
+                        break
+            return x
+
         if action == 'UP' and self.tile_is_free(agent.x, agent.y - 1):
             agent.y -= 1
             agent.add_event(e.MOVED_UP)
@@ -148,6 +171,51 @@ class GenericWorld:
             agent.add_event(e.WAITED)
         else:
             agent.add_event(e.INVALID_ACTION)
+
+        position = np.array([agent.x,agent.y])
+        coins = np.empty((2,sum([i.collectable for i in self.coins])))
+        if coins.size != 0:
+
+            for count, coin in enumerate([i for i in self.coins if i.collectable]):
+                if coin.collectable:
+                    coins[0,count] = coin.x
+                    coins[1,count] = coin.y
+
+            def d(position, coins):
+                return np.sqrt(np.power(coins[0]-position[0],2)+np.power(coins[1]-position[1],2))
+            d_old = d(position_old,coins)
+            d_new = d(position,coins)
+            #print(np.sort(d_old),np.sort(d_new))
+
+            if np.min(d_new) < np.min(d_old) :
+                agent.add_event(e.COIN_DISTANCE_REDUCED)
+            if np.min(d_new) >= np.min(d_old):
+                agent.add_event(e.COIN_DISTANCE_INCREASED)
+
+
+
+        if agent.name == self.agents[0].name:
+            self.buffer_steps.append(position)
+            if len(self.buffer_steps) == 4:
+                if (self.buffer_steps[0] == self.buffer_steps[2]).all() and (self.buffer_steps[1] == self.buffer_steps[3]).all() and (self.buffer_steps[0] != self.buffer_steps[1]).any():
+                    agent.add_event(e.INFINITY_LOOP)
+
+
+
+        if agent.name == self.agents[0].name:
+            bombs = np.empty((2, len(self.bombs)))
+            if bombs.size != 0:
+                for count, bomb in enumerate(self.bombs):
+                    bombs[0, count] = bomb.x
+                    bombs[1, count] = bomb.y
+                bombs = bombs.transpose()
+                danger_old = danger(position_old,bombs)
+                danger_new = danger(position,bombs)
+                if danger_old and not danger_new:
+                    agent.add_event(e.AVOID_BOMB)
+
+
+
 
     def poll_and_run_agents(self):
         raise NotImplementedError()
@@ -178,6 +246,7 @@ class GenericWorld:
 
     def collect_coins(self):
         for coin in self.coins:
+
             if coin.collectable:
                 for a in self.active_agents:
                     if a.x == coin.x and a.y == coin.y:
@@ -186,6 +255,7 @@ class GenericWorld:
                         a.update_score(s.REWARD_COIN)
                         a.add_event(e.COIN_COLLECTED)
                         a.trophies.append(Trophy.coin_trophy)
+
 
     def update_explosions(self):
         # Progress explosions
@@ -460,6 +530,7 @@ class BombeRLeWorld(GenericWorld):
             self.perform_agent_action(a, action)
 
     def send_game_events(self):
+
         # Send events to all agents that expect them, then reset and wait for them
         for a in self.agents:
             if a.train:
@@ -480,6 +551,10 @@ class BombeRLeWorld(GenericWorld):
         for a in self.active_agents:
             a.store_game_state(self.get_state_for_agent(a))
             a.reset_game_events()
+
+
+
+
 
     def end_round(self):
         super().end_round()

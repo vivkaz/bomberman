@@ -4,12 +4,12 @@ from pathlib import Path
 from fallbacks import pygame
 
 # Game properties
-COLS = 9#17
-ROWS = 9#17
+COLS = 17
+ROWS = 17
 SCENARIOS = {
     "coin-heaven": {
         "CRATE_DENSITY": 0,
-        "COIN_COUNT": 10#50
+        "COIN_COUNT": 50#50
     },
     # This is the tournament game mode
     "classic": {

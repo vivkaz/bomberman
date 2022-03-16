@@ -90,7 +90,7 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
     """
 
     batch_size = 50#number of old experience used for updating the model
-    discount_factor = 0.6#value which weights
+    discount_factor = 0.8#value which weights
     optimizer = tf.keras.optimizers.Adam(learning_rate=1e-2)
     loss_fn = tf.keras.losses.mean_squared_error
 
@@ -123,6 +123,7 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
         self.logger.info("update model")
 
     #save model
+
     self.model.save("saved_model")
 
 
@@ -188,8 +189,8 @@ def reward_from_events(self, events: List[str]) -> int:
         e.MOVED_LEFT: -2,
         e.WAITED: -5,
         e.MOVED_RIGHT: -2,
-        e.COIN_COLLECTED: 20,
-        e.COIN_DISTANCE_REDUCED: 5,
+        e.COIN_COLLECTED: 30,
+        e.COIN_DISTANCE_REDUCED: 10,
         e.COIN_DISTANCE_INCREASED: -5,
         e.RUN_IN_LOOP:-20
         #e.BOMB_AVOIDED : 1

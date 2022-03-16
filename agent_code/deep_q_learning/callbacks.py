@@ -38,12 +38,16 @@ def setup(self):
         load_model = "initialize_model"
     else:
         load_model = "saved_model"
+        #try:
+        #    self.feature_setup = np.loadtxt(f"{load_model}/feature_setup.txt",dtype = list)
+        #except:
+        #    print("[Error] feature setup could not be loaded")
     #load_model = "working_coin_collector"
     #load_model = "saved_model_4"
     #load_model = "saved_model_without_coin_9x9"
     #load_model = "saved_model"
     #load_model = "best_coin_collector"
-
+    #load_model = "initialize_model"
     try:
         self.model = tf.keras.models.load_model(load_model)
     except:
@@ -68,32 +72,67 @@ def act(self, game_state: dict) -> str:
 
     #epsilon is a hyperparameter that introduces a random factor for the decisoin process for the first trained rounds. This supports the agent to discover the enviroment
     epsilon = max(1 - game_state["round"] / 500, 0.01)
+    #epsilon = 0
 
-    #inputs are the input data for the network, which calculates an action based on the inputs. The function state_to_features transform the game states in to a 17x17xn matrix where the
-    #information abount position, walls, coins, ... are stored in the 3rd dimension
     inputs = state_to_features(game_state)
     # todo Exploration vs exploitation
 
     self.logger.debug("Querying model for action.")
     time_1 = time.time()
-    #actual decision process
-    #the action with the highes Q-value is choosen
+
     if self.train:
         if np.random.rand() < epsilon:
             decision =  np.random.randint(5)
         else:
-            Q_values = self.model.predict(inputs[np.newaxis])
-            decision =  np.argmax(Q_values[0])
+            Q_values = self.model.predict(inputs[np.newaxis])[0]
+            decision = np.argmax(Q_values)
+        return ACTIONS[decision]
     else:
-        decision = np.argmax(self.model.predict(inputs[np.newaxis]))
-
+        Q_values = self.model.predict(inputs[np.newaxis])[0]#Q_values hat shape [1,2,3,4]
     time_2 = time.time()
-    self.logger.info(f"Action {ACTIONS[decision]} at step {game_state['step']}")
+
     end_time = time.time()
-    #print(f" STEP : {game_state['step']}, ACTION : {ACTIONS[decision]} with time : {np.round(end_time-start_time,3)},{np.round(time_1-start_time,3)},{np.round(time_2-start_time,3)}")
 
-    #print(f"Q_Values : {self.model.predict(inputs[np.newaxis])}")
 
+    def invalid_move(action,game_state):
+        if action < 4:
+
+            old_position = np.array(game_state["self"][3])
+            if action == 0:
+                move = np.array([0,-1])
+            elif action == 1:
+                move = np.array([1,0])
+            elif action == 2:
+                move = np.array([0,1])
+            elif action == 3:
+                move = np.array([-1,0])
+            new_position = old_position + move
+            obsticle_coord = np.where((game_state["field"] == 1) | (game_state["field"] == -1))
+            obsticles_on_field = np.array([obsticle_coord[0],obsticle_coord[1]]).transpose()
+
+            if ((obsticles_on_field == np.broadcast_to(new_position,np.shape(obsticles_on_field))).all(axis = 1) == True).any():
+                return True
+
+            else:
+                return False
+        else:
+            return False
+
+    if invalid_move(np.argmax(Q_values),game_state):
+        decision = np.where(Q_values == np.sort(Q_values)[-2])[0][0]
+        print(f" invalid move occured at step : {game_state['step']} \n invalid move : {ACTIONS[np.argmax(Q_values)]} \n Q-values : {Q_values} \n"
+              f" move replaced with : {ACTIONS[decision]}")
+    else:
+        decision = np.argmax(Q_values)
+
+
+
+    self.logger.info(f"Action {ACTIONS[decision]} at step {game_state['step']}")
+
+    print(
+        f" STEP : {game_state['step']}, ACTION : {ACTIONS[decision]} with time : {np.round(end_time - start_time, 3)},{np.round(time_1 - start_time, 3)},{np.round(time_2 - start_time, 3)}")
+
+    print(f"Q_Values : {self.model.predict(inputs[np.newaxis])}")
 
 
     return ACTIONS[decision]
@@ -118,10 +157,21 @@ def state_to_features(game_state: dict) -> np.array:
         return None
 
     view_range = 2
+
     agents_position = game_state["self"][3]
     field = game_state["field"]
-    # print(field)
-    # print(agents_position)
+
+    x_coin = []
+    y_coin = []
+    coin_position = game_state["coins"]
+    for i in coin_position:
+        x_coin.append(i[0])
+        y_coin.append(i[1])
+    x_coin = np.array(x_coin)
+    y_coin = np.array(y_coin)
+    coin_field = np.zeros(np.shape(field))
+    coin_field[x_coin, y_coin] = 1
+
     def get_agents_view(map,view_range,agents_position,type):
         if type == "field":
             agents_view = np.ones((2 * view_range + 1, 2 * view_range + 1)) * -1
@@ -142,19 +192,11 @@ def state_to_features(game_state: dict) -> np.array:
         agents_view[x_spacing[0]:x_spacing[1], y_spacing[0]:y_spacing[1]] = agents_real_view
         return agents_view
 
-    x_coin = []
-    y_coin = []
-    coin_position = game_state["coins"]
-    for i in coin_position:
-        x_coin.append(i[0])
-        y_coin.append(i[1])
-    x_coin = np.array(x_coin)
-    y_coin = np.array(y_coin)
-    coin_field = np.zeros(np.shape(field))
-    coin_field[x_coin, y_coin] = 1
-
     field_map = get_agents_view(field, view_range, agents_position, "field")
     coin_map = get_agents_view(coin_field, view_range, agents_position, "coin_field")
+
+    def
+
     if x_coin.size != 0:
 
         def d(position, coins):
@@ -163,31 +205,20 @@ def state_to_features(game_state: dict) -> np.array:
         d_coin_min = np.min(d(agents_position,np.array([x_coin,y_coin])))
     else:
         d_coin_min = 0
-    coin_map[int(np.shape(coin_map)[0]/2),int(np.shape(coin_map)[1]/2)] = d_coin_min/(np.sqrt(2)*15)
+    #coin_map[int(np.shape(coin_map)[0]/2),int(np.shape(coin_map)[1]/2)] = d_coin_min/(np.sqrt(2)*15)
     inputs = np.zeros(field_map.shape + (2,))
     inputs[:,:,0] = field_map
     inputs[:,:,1] = coin_map
 
+    if self.train:
+        with open("saved_model/feature_setup.txt", 'w') as f:
+            f.write(feature_setup)
 
-    """
-    field = game_state["field"]
-    agents_position = game_state["self"][3]
-    
 
-    #implement the position of the coins
-    x_coin = []
-    y_coin = []
-    for i in coin_position:
-        x_coin.append(i[0])
-        y_coin.append(i[1])
-    x_coin = np.array(x_coin)
-    y_coin = np.array(y_coin)
+    def find_feature(setup,func_list):
+        feature_f = func_list[setup[0]]
+        return feature_f[1:]
 
-    #putting it all into the matrix inputs
-    inputs = np.zeros(field.shape + (3,))
-    inputs[:, :, 0] = field
-    inputs[:, :, 1][agents_position[0], agents_position[1]] = 1
-    inputs[:, :, 2][x_coin,y_coin] = 1
-    #print(inputs)
-    """
+    return = find_feature(self)
+
     return inputs

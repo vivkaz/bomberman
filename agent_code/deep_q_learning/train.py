@@ -191,8 +191,8 @@ def reward_from_events(self, events: List[str]) -> int:
         e.COIN_COLLECTED: 20,
         e.COIN_DISTANCE_REDUCED: 5,
         e.COIN_DISTANCE_INCREASED: -5,
-        e.INFINITY_LOOP:-20
-        #e.AVOID_BOMB: 1
+        e.RUN_IN_LOOP:-20
+        #e.BOMB_AVOIDED : 1
 
 
     }

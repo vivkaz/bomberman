@@ -55,7 +55,7 @@ class GenericWorld:
         self.round_statistics = {}
 
         self.running = False
-        self.buffer_steps = deque(maxlen=4)
+        #self.buffer_steps = deque(maxlen=4)
 
     def setup_logging(self):
         self.logger = logging.getLogger('BombeRLeWorld')
@@ -133,7 +133,7 @@ class GenericWorld:
         # check if our agent
         def is_agent(self, agent):
             return agent.name == self.agents[0].name
-    
+        """
         # compute the risky area around the agent
         def risky_area(agent_position):
             vertical = np.array([ [x, agent_position[1]] for x in range(agent_position[0]-3, agent_position[0]+4) ])
@@ -152,7 +152,7 @@ class GenericWorld:
             return danger
 
         old_position = np.array([agent.x, agent.y])
-
+        """
         # Perform the specified action if possible, wait otherwise
         if action == 'UP' and self.tile_is_free(agent.x, agent.y - 1):
             agent.y -= 1
@@ -175,7 +175,7 @@ class GenericWorld:
             agent.add_event(e.WAITED)
         else:
             agent.add_event(e.INVALID_ACTION)
-
+        """
         position = np.array([agent.x,agent.y])
         coins = np.empty((2, sum([i.collectable for i in self.coins])))
 
@@ -221,7 +221,7 @@ class GenericWorld:
                 new_danger = in_danger(position,bombs)
                 if old_danger and not new_danger:
                     agent.add_event(e.BOMB_AVOIDED)
-
+    """
 
     def poll_and_run_agents(self):
         raise NotImplementedError()

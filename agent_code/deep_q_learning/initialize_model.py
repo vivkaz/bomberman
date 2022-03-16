@@ -1,10 +1,10 @@
 import tensorflow as tf
-
+import pickle
 
 import events as e
 
 n_outputs = 5
-inputs_shape = (5, 5, 2)
+inputs_shape = (7, 7, 2)
 model = tf.keras.models.Sequential([
     tf.keras.layers.Conv2D(20, 3, activation="elu", padding='same', input_shape=inputs_shape),
     tf.keras.layers.MaxPooling2D(2),
@@ -21,10 +21,12 @@ model.summary()
 
 #Hyperparameter
 Hyperparameter = {
-"epsilon_scale" : 500,
+"save_name" : "saved_model",
+"epsilon_scale" : 1,
 "learning_rate" : 1e-2,
 "batch_size" : 50,
 "steps" : 100,
+"episoden" : 1,
 "discount_factor" : 0.9,
 "rewards" : {
         e.INVALID_ACTION: -10,
@@ -38,5 +40,16 @@ Hyperparameter = {
         e.COIN_DISTANCE_INCREASED: -5,
         e.RUN_IN_LOOP:-20
       #e.BOMB_AVOIDED : 1
+},
+"coin_density" : 9,
+"crate_density" : 0,
+"feature_setup" : {"feature_function" : "field_coin_map",
+                   "INPUTS" : [3,inputs_shape,False]}
+
+
 }
-}
+
+with open('initialize_model/Hyperparameter.pkl', 'wb') as f:
+    pickle.dump(Hyperparameter, f)
+print("[info] model and hyperparameter file initialized")
+

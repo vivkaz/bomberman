@@ -1,5 +1,6 @@
 from collections import namedtuple, deque
-from turtle import position
+from pathlib import PosixPath
+#from turtle import position
 from matplotlib.pyplot import new_figure_manager
 import numpy as np
 
@@ -7,7 +8,7 @@ import pickle
 from typing import List
 
 import events as e
-from .callbacks import ALPHA, state_to_features
+from .callbacks import get_state_index, state_to_features
 
 # This is only an example!
 Transition = namedtuple('Transition',
@@ -65,9 +66,9 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         if new_game_state is not None:
             self.buffer_states.append(new_game_state['self'][3])
 
-    def risky_area(position):
-        vertical = np.array([ [x, position[1]] for x in range(position[1]-3, position[1]+4) ])
-        horizontal = np.array([ [position[0], y] for y in range(position[0]-3, position[0]+4) ])
+    def risky_area(pos):
+        vertical = np.array([ [x, pos[1]] for x in range(pos[1]-3, pos[1]+4) ])
+        horizontal = np.array([ [pos[0], y] for y in range(pos[0]-3, pos[0]+4) ])
         return np.concatenate((vertical, horizontal), axis = 0)
 
     def in_danger(area, bombs):
@@ -103,19 +104,22 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
                 if coin.collectable:
                     coins[0, count] = coin[0]
                     coins[1, count] = coin[1]
-        return coins
+        return coins, coins.size != 0
 
     def coin_distance_reduced():
         old_position = old_game_state['self'][3]
         new_position = new_game_state['self'][3]
-        coins = get_collectable_coins()
-        
-        def dist(position, coins):
-            return np.sqrt( np.power(coins[0]-position[0], 2) + np.power(coins[1]-position[1], 2) )
-        
-        old_dist = dist(old_position, coins)
-        new_dist = dist(new_position, coins)
-        return np.min(new_dist) < np.min(old_dist)
+        coins, flag = get_collectable_coins()
+
+        if flag: # coins not empty
+            def dist(position, coins):
+                return np.sqrt( np.power(coins[0]-position[0], 2) + np.power(coins[1]-position[1], 2) )
+            
+            old_dist = dist(old_position, coins)
+            new_dist = dist(new_position, coins)
+            return flag, np.min(new_dist) < np.min(old_dist)
+        else: 
+            return flag, False
             
     def run_in_loop():
         update_buffer_states()
@@ -125,16 +129,19 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             return False
 
     # Add your own events to hand out rewards 
-    if bomb_avoided():
-        events.append(e.BOMB_AVOIDED)
+    if old_game_state is not None:
+        if bomb_avoided():
+            events.append(e.BOMB_AVOIDED)
 
-    if bomb_dropped():
-        events.append(e.BOMB_DROPPED)
+        if bomb_dropped():
+            events.append(e.BOMB_DROPPED)
 
-    if coin_distance_reduced():
-        events.append(e.COIN_DISTANCE_REDUCED)
-    else: 
-        events.append(e.COIN_DISTANCE_INCREASED)
+        collectable_coins, reduced_dist = coin_distance_reduced()
+        if collectable_coins: 
+            if reduced_dist:
+                events.append(e.COIN_DISTANCE_REDUCED)
+            else: 
+                events.append(e.COIN_DISTANCE_INCREASED)
 
     if run_in_loop():
         events.append(e.RUN_IN_LOOP)
@@ -143,15 +150,15 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     self.transitions.append(Transition(state_to_features(old_game_state), self_action, state_to_features(new_game_state), reward_from_events(self, events)))
 
     # Recalculate Q-values
-    state, action, next_state, reward = self.transtitions[-1]
+    state, action, next_state, reward = self.transitions[-1]
     # check if states are None
     if state is not None and next_state is not None:
-        q_value = self.model[state, action]
+        q_value = self.model[get_state_index(state), action]
         max_value = np.max(self.model[next_state])
         new_q_value = (1 - ALPHA) * q_value + ALPHA * (reward + GAMMA * max_value)
         
         # Update Q-table
-        self.model[state, action] = new_q_value
+        self.model[get_state_index(state), action] = new_q_value
 
 
 def end_of_round(self, last_game_state: dict, last_action: str, events: List[str]):

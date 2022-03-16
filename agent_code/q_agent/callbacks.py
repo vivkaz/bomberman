@@ -35,6 +35,8 @@ def setup(self):
         with open("my-saved-model.pt", "rb") as file:
             self.model = pickle.load(file)
 
+def get_state_index(state):
+    return
 
 def act(self, game_state: dict) -> str:
     """
@@ -52,11 +54,14 @@ def act(self, game_state: dict) -> str:
         return np.random.choice(ACTIONS, p=[.2, .2, .2, .2, .1, .1]) # Explore action space
 
     self.logger.debug("Querying model for action.")
-    #return np.random.choice(ACTIONS, p=self.model)
-    state = state_to_features(game_state)
-    action = np.argmax(self.model[state]) # Exploit learned values
     
-    return ACTIONS[action]
+    if game_state is not None:
+        state = state_to_features(game_state)
+        action = np.argmax(self.model[get_state_index(state)]) # Exploit learned values
+    
+        return ACTIONS[action]
+    else:
+        return np.random.choice(ACTIONS, p=[.2, .2, .2, .2, .1, .1])
 
 
 
@@ -82,15 +87,15 @@ def state_to_features(game_state: dict) -> np.array:
     channels = []
     
     position = game_state['self'][3] # (x,y) coordinate on the field
-    #print(f"game state position of agent {position}")
+    print(f"game state position of agent {position}")
     if True:
-        position_value = 0
+        position_value = 1
     channels.append(position_value)
     sub = [(1,0), (-1,0), (0,1), (0,-1)]
     neighbors = [np.subtract(position, i) for i in sub]
-    features_1_4 = game_state['field'][neighbors] # Its entries are 1 for crates, −1 for stone walls and 0 for free tiles
-
-    channels.append(features_1_4)
+    
+    # Its entries are 1 for crates, −1 for stone walls and 0 for free tiles
+    channels.append(game_state['field'][neighbour] for neighbour in neighbors)
 
     # TODO: value of current field (position), more values for features_1_4
 

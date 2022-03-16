@@ -38,20 +38,15 @@ def setup(self):
         load_model = "initialize_model"
     else:
         load_model = "saved_model"
-        #try:
-        #    self.feature_setup = np.loadtxt(f"{load_model}/feature_setup.txt",dtype = list)
-        #except:
-        #    print("[Error] feature setup could not be loaded")
-    #load_model = "working_coin_collector"
-    #load_model = "saved_model_4"
-    #load_model = "saved_model_without_coin_9x9"
     #load_model = "saved_model"
-    #load_model = "best_coin_collector"
-    #load_model = "initialize_model"
+
     try:
         self.model = tf.keras.models.load_model(load_model)
+        with open(f'{load_model}/Hyperparameter.pkl', 'rb') as f:
+            self.Hyperparameter = pickle.load(f)
     except:
         self.logger.debug("model cant be loaded from save place")
+
     self.n_outputs = self.model.get_config()['layers'][-1]["config"]["units"]
     print(f"[info] loaded model to play/train : {load_model}")
 
@@ -71,10 +66,10 @@ def act(self, game_state: dict) -> str:
     """
 
     #epsilon is a hyperparameter that introduces a random factor for the decisoin process for the first trained rounds. This supports the agent to discover the enviroment
-    epsilon = max(1 - game_state["round"] / 500, 0.01)
+    epsilon = max(1 - game_state["round"] / self.Hyperparameter["epsilon_scale"], 0.01)
     #epsilon = 0
 
-    inputs = state_to_features(game_state)
+    inputs = state_to_features(self,game_state)
     # todo Exploration vs exploitation
 
     self.logger.debug("Querying model for action.")
@@ -138,7 +133,7 @@ def act(self, game_state: dict) -> str:
     return ACTIONS[decision]
 
 
-def state_to_features(game_state: dict) -> np.array:
+def state_to_features(self,game_state: dict) -> np.array:
     """
     *This is not a required function, but an idea to structure your code.*
 
@@ -155,23 +150,6 @@ def state_to_features(game_state: dict) -> np.array:
     # This is the dict before the game begins and after it ends
     if game_state is None:
         return None
-
-    view_range = 2
-
-    agents_position = game_state["self"][3]
-    field = game_state["field"]
-
-    x_coin = []
-    y_coin = []
-    coin_position = game_state["coins"]
-    for i in coin_position:
-        x_coin.append(i[0])
-        y_coin.append(i[1])
-    x_coin = np.array(x_coin)
-    y_coin = np.array(y_coin)
-    coin_field = np.zeros(np.shape(field))
-    coin_field[x_coin, y_coin] = 1
-
     def get_agents_view(map,view_range,agents_position,type):
         if type == "field":
             agents_view = np.ones((2 * view_range + 1, 2 * view_range + 1)) * -1
@@ -192,33 +170,48 @@ def state_to_features(game_state: dict) -> np.array:
         agents_view[x_spacing[0]:x_spacing[1], y_spacing[0]:y_spacing[1]] = agents_real_view
         return agents_view
 
-    field_map = get_agents_view(field, view_range, agents_position, "field")
-    coin_map = get_agents_view(coin_field, view_range, agents_position, "coin_field")
 
-    def
+    agents_position = game_state["self"][3]
+    field = game_state["field"]
 
-    if x_coin.size != 0:
+    x_coin = []
+    y_coin = []
+    coin_position = game_state["coins"]
+    for i in coin_position:
+        x_coin.append(i[0])
+        y_coin.append(i[1])
+    x_coin = np.array(x_coin)
+    y_coin = np.array(y_coin)
+    coin_field = np.zeros(np.shape(field))
+    coin_field[x_coin, y_coin] = 1
 
+
+    # input ["field_coin_map",view_range int, shape tuple, distance_information bool]
+    def field_coin_map(INPUT):
+        view_range = INPUT[0]
+        shape = INPUT[1]
+        distance_information = INPUT[2]
+        field_map = get_agents_view(field, view_range, agents_position, "field")
+        coin_map = get_agents_view(coin_field, view_range, agents_position, "coin_field")
         def d(position, coins):
             return np.sqrt(np.power(coins[0] - position[0], 2) + np.power(coins[1] - position[1], 2))
+        if distance_information == True:
+            if x_coin.size != 0:
+                d_coin_min = np.min(d(agents_position, np.array([x_coin, y_coin])))
+                coin_map[int(np.shape(coin_map)[0] / 2), int(np.shape(coin_map)[1] / 2)] = d_coin_min / (
+                            np.sqrt(2) * 15)
+            else:
+                d_coin_min = 0
 
-        d_coin_min = np.min(d(agents_position,np.array([x_coin,y_coin])))
-    else:
-        d_coin_min = 0
-    #coin_map[int(np.shape(coin_map)[0]/2),int(np.shape(coin_map)[1]/2)] = d_coin_min/(np.sqrt(2)*15)
-    inputs = np.zeros(field_map.shape + (2,))
-    inputs[:,:,0] = field_map
-    inputs[:,:,1] = coin_map
+        feature = np.zeros(shape)
+        feature[:,:,0] = field_map
+        feature[:,:,1] = coin_map
+        return feature
 
-    if self.train:
-        with open("saved_model/feature_setup.txt", 'w') as f:
-            f.write(feature_setup)
+    feature_functions = {"field_coin_map": field_coin_map
+                         }
 
 
-    def find_feature(setup,func_list):
-        feature_f = func_list[setup[0]]
-        return feature_f[1:]
-
-    return = find_feature(self)
+    inputs = feature_functions[self.Hyperparameter["feature_setup"]["feature_function"]](self.Hyperparameter["feature_setup"]["INPUTS"])
 
     return inputs

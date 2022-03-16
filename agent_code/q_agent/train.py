@@ -16,6 +16,7 @@ Transition = namedtuple('Transition',
 
 # Hyper parameters -- DO modify
 TRANSITION_HISTORY_SIZE = 4  # keep only 4 last transitions
+BUFFER_HISTORY_SIZE = 6 # keep only 6 last states
 RECORD_ENEMY_TRANSITIONS = 1.0  # record enemy transitions with probability 
 ALPHA = 0.1
 GAMMA = 0.6
@@ -40,7 +41,7 @@ def setup_training(self):
     self.rewards = []
 
     # buffer with last 4 positions for checking if agent runs in loop
-    self.buffer_states = deque(maxlen=TRANSITION_HISTORY_SIZE)
+    self.buffer_states = deque(maxlen=BUFFER_HISTORY_SIZE)
 
 
 def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_state: dict, events: List[str]):
@@ -60,28 +61,27 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     :param new_game_state: The state the agent is in now.
     :param events: The events that occurred when going from  `old_game_state` to `new_game_state`
     """
-    self.logger.debug(f'Encountered game event(s) {", ".join(map(repr, events))} in step {new_game_state["step"]}')
+
+    #self.logger.debug(f'Encountered game event(s) {", ".join(map(repr, events))} in step {new_game_state["step"]}')
 
     def update_buffer_states():
         if new_game_state is not None:
             self.buffer_states.append(new_game_state['self'][3])
 
     def risky_area(pos):
-        vertical = np.array([ [x, pos[1]] for x in range(pos[1]-3, pos[1]+4) ])
-        horizontal = np.array([ [pos[0], y] for y in range(pos[0]-3, pos[0]+4) ])
+        vertical = np.array([ [x, pos[1]] for x in range(pos[0]-3, pos[0]+4) ])
+        horizontal = np.array([ [pos[0], y] for y in range(pos[1]-3, pos[1]+4) ])
         return np.concatenate((vertical, horizontal), axis = 0)
 
     def in_danger(area, bombs):
-        danger = False
         for b in bombs:
             for a in area:
                 if (b == a).all():
-                    danger = True
-                    break
-        return danger
+                    return True
+        return False
 
     def bomb_dropped():
-        return old_game_state['self'][2]==True and new_game_state['self'][2]==False
+        return old_game_state['self'][2] == True and new_game_state['self'][2] == False
 
     def bomb_avoided(): 
         old_risky_area = risky_area(old_game_state['self'][3])
@@ -94,11 +94,11 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
                 bombs[1, count] = bomb[0][1]
             bombs = bombs.transpose()
             old_danger = in_danger(old_risky_area, bombs)
-            new_danger = in_danger(new_risky_area,bombs)
+            new_danger = in_danger(new_risky_area, bombs)
             return old_danger and not new_danger
     
     def get_collectable_coins():
-        coins = np.empty((2, sum(old_game_state['coins']))) # old or new game state?
+        coins = np.empty((2, len(old_game_state['coins'])))
         if coins.size != 0:
             for count, coin in enumerate(old_game_state['coins']):
                 if coin.collectable:
@@ -113,7 +113,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
         if flag: # coins not empty
             def dist(position, coins):
-                return np.sqrt( np.power(coins[0]-position[0], 2) + np.power(coins[1]-position[1], 2) )
+                return np.sqrt( np.power(coins[0] - position[0], 2) + np.power(coins[1] - position[1], 2) )
             
             old_dist = dist(old_position, coins)
             new_dist = dist(new_position, coins)
@@ -123,8 +123,13 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             
     def run_in_loop():
         update_buffer_states()
-        if len(self.buffer_states) == 4:
-            return (self.buffer_states[0] == self.buffer_states[2]).all() and (self.buffer_states[1] == self.buffer_states[3]).all() and (self.buffer_states[0] != self.buffer_states[1]).any()
+
+        if len(self.buffer_states) == BUFFER_HISTORY_SIZE:
+            #return (self.buffer_states[0] == self.buffer_states[2]).all() and (self.buffer_states[1] == self.buffer_states[3]).all() and (self.buffer_states[0] != self.buffer_states[1]).any()
+            buffer = np.array(self.buffer_states)
+            return len(np.unique(buffer[[0, 2, 4]], axis=0)) == 1 and len(
+                        np.unique(buffer[[1, 3, 5]], axis=0)) == 1 and (
+                            np.unique(buffer[[0, 2, 4]], axis=0) != np.unique(buffer[[1, 3, 5]], axis = 0)).any()        
         else:
             return False
 
@@ -146,6 +151,9 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     if run_in_loop():
         events.append(e.RUN_IN_LOOP)
      
+    
+    self.logger.debug(f'Encountered game event(s) {", ".join(map(repr, events))} in step {new_game_state["step"]}')
+
     # state_to_features is defined in callbacks.py
     self.transitions.append(Transition(state_to_features(old_game_state), self_action, state_to_features(new_game_state), reward_from_events(self, events)))
 

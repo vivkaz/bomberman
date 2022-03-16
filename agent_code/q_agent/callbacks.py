@@ -35,7 +35,9 @@ def setup(self):
         with open("my-saved-model.pt", "rb") as file:
             self.model = pickle.load(file)
 
+# transform state to index for the Q-table
 def get_state_index(state):
+    print("state", state)
     return
 
 def act(self, game_state: dict) -> str:
@@ -79,36 +81,87 @@ def state_to_features(game_state: dict) -> np.array:
     :param game_state:  A dictionary describing the current game board.
     :return: np.array
     """
+
     # This is the dict before the game begins and after it ends
     if game_state is None:
         return None
 
-    # For example, you could construct several channels of equal shape, ...
+    # distance from position to objects
+    def dist(pos, objects): 
+        return np.sqrt( np.power(int(objects[0][-1][0])-pos[0], 2) + np.power(int(objects[1][-1][1])-pos[1], 2) )
+    
+    
+    # get region around the position
+    def get_region(pos, n):
+        vertical = np.array([ [x, pos[1]] for x in range(pos[0]-n, pos[0]+(n+1)) ])
+        horizontal = np.array([ [pos[0], y] for y in range(pos[1]-n, pos[1]+(n+1)) ])
+        return np.concatenate((vertical, horizontal), axis = 0)
+
+    # check if there are collectable coins near position
+    def collectable_coin(pos, n=3):
+        if len(game_state['coins']) > 0: 
+            return len(game_state['coins']) > 0 and ( game_state['coins'][np.argmin(dist(pos, game_state['coins']))] in get_region(pos, n) )
+        else:
+            return False
+
+    # check if dangerous position
+    def danger(pos, n=3):
+        area = get_region(pos, n)
+        bombs = game_state['bombs']
+        if len(bombs) > 0:
+            for bomb in bombs:
+                for field in area:
+                    if (np.array(bomb[0]) == field).all():
+                        return True
+        return False  
+
+
+    # construct several channels of equal shape
     channels = []
     
-    position = game_state['self'][3] # (x,y) coordinate on the field
-    print(f"game state position of agent {position}")
-    if True:
-        position_value = 1
-    channels.append(position_value)
-    sub = [(1,0), (-1,0), (0,1), (0,-1)]
-    neighbors = [np.subtract(position, i) for i in sub]
+    my_position = game_state['self'][3] # (x,y) coordinate of current position
     
-    # Its entries are 1 for crates, −1 for stone walls and 0 for free tiles
-    channels.append(game_state['field'][neighbour] for neighbour in neighbors)
+    if True: # TODO value of current position
+        my_position_value = 1
+    
+    channels.append(my_position_value)
 
-    # TODO: value of current field (position), more values for features_1_4
+    sub = [(1,0), (-1,0), (0,1), (0,-1)]
+    neighbors = [np.subtract(my_position, i) for i in sub]
+    neighbors_values = [ game_state['field'][neighbour[0]][neighbour[1]] for neighbour in neighbors ] # its entries are 1 for crates, −1 for stone walls and 0 for free tiles
+    # calculate value of neighbours
+    for j, i in enumerate(neighbors_values):
+        if ((i == 0 and collectable_coin(neighbors[j])) or (i == 1 and not collectable_coin(neighbors[j]))) and not danger(neighbors[j]):
+            channels.append(2) # depending on game mode drop bomb or go in this direction
+        
+        elif i != -1 and danger(neighbors[j]): 
+            channels.append(1) # danger
+        
+        elif len(game_state['bombs']) > 0 and i == 0: 
+            if (neighbors[j] == game_state['bombs'][0]).any():
+                channels.append(-1) # bomb
+        
+        elif len(game_state['others']) > 0 and i == 0: 
+            if (neighbors[j] == game_state['others'][0][3]).any(): 
+                channels.append(-1) # opponent
+        
+        elif i == 0:
+            channels.append(0) # free tiles
+        
+        else:
+            channels.append(-1) # crate or wall
 
-    if len(game_state['coins']) > 0: # TODO: check if the coins are visible, near the agent
-        mode = 0 # collect coins
-    elif len(game_state['others']) > 0:
-        mode = 2 # kill opponents
+    # calculate value of game mode
+    if len(game_state['coins']) > 0 and np.min(dist(my_position, game_state['coins'])) < 4: # collectable coin near the agent
+        mode = 2 # collect coins
+    elif len(game_state['others']) > 0 and np.min(dist(my_position, game_state['others'])) < 4: # opponent near the agent
+        mode = 1 # kill opponents
     else:
-        mode = 1 # destroy crates
+        mode = 0 # destroy crates
 
     channels.append(mode)
 
-    # concatenate them as a feature tensor (they must have the same shape), ...
+    # concatenate them as a feature tensor (they must have the same shape)
     stacked_channels = np.stack(channels)
     
     # and return them as a vector

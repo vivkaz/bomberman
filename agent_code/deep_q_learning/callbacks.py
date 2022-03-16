@@ -4,6 +4,7 @@ import random
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
+import time
 from collections import deque
 ACTIONS = ['UP', 'RIGHT', 'DOWN', 'LEFT', 'WAIT', 'BOMB']
 
@@ -31,19 +32,7 @@ def setup(self):
     # number of outputs of the model
     #self.n_outputs = 5
     #self.inputs_shape = (9, 9, 2)
-    """
-    model = tf.keras.models.Sequential([
-        tf.keras.layers.Conv2D(8, 4, activation="elu", padding='same', input_shape=self.inputs_shape),
-        tf.keras.layers.MaxPooling2D(2),
-        tf.keras.layers.Conv2D(4, 3, activation="elu", padding='same'),
-        tf.keras.layers.MaxPooling2D(2),
-        tf.keras.layers.Flatten(),
-        tf.keras.layers.Dense(10, activation="relu"),
-        tf.keras.layers.Dense(10, activation="relu"),
-        tf.keras.layers.Dense(self.n_outputs, activation="softmax")
 
-    ])
-    """
     #name of loaded model either new initialize or pretrained model
     if self.train:
         load_model = "initialize_model"
@@ -62,7 +51,12 @@ def setup(self):
     self.n_outputs = self.model.get_config()['layers'][-1]["config"]["units"]
     print(f"[info] loaded model to play/train : {load_model}")
 
+    self.model_input_shape = self.model.get_config()["layers"][0]["config"]["batch_input_shape"]
+    initial_predict = self.model.predict(np.zeros(self.model_input_shape[1:])[np.newaxis])
+    del initial_predict
+
 def act(self, game_state: dict) -> str:
+    start_time = time.time()
     """
     Your agent should parse the input, think, and take a decision.
     When not in training mode, the maximum execution time for this method is 0.5s.
@@ -81,7 +75,7 @@ def act(self, game_state: dict) -> str:
     # todo Exploration vs exploitation
 
     self.logger.debug("Querying model for action.")
-
+    time_1 = time.time()
     #actual decision process
     #the action with the highes Q-value is choosen
     if self.train:
@@ -93,8 +87,14 @@ def act(self, game_state: dict) -> str:
     else:
         decision = np.argmax(self.model.predict(inputs[np.newaxis]))
 
-
+    time_2 = time.time()
     self.logger.info(f"Action {ACTIONS[decision]} at step {game_state['step']}")
+    end_time = time.time()
+    #print(f" STEP : {game_state['step']}, ACTION : {ACTIONS[decision]} with time : {np.round(end_time-start_time,3)},{np.round(time_1-start_time,3)},{np.round(time_2-start_time,3)}")
+
+    #print(f"Q_Values : {self.model.predict(inputs[np.newaxis])}")
+
+
 
     return ACTIONS[decision]
 
@@ -155,17 +155,18 @@ def state_to_features(game_state: dict) -> np.array:
 
     field_map = get_agents_view(field, view_range, agents_position, "field")
     coin_map = get_agents_view(coin_field, view_range, agents_position, "coin_field")
+    if x_coin.size != 0:
 
+        def d(position, coins):
+            return np.sqrt(np.power(coins[0] - position[0], 2) + np.power(coins[1] - position[1], 2))
+
+        d_coin_min = np.min(d(agents_position,np.array([x_coin,y_coin])))
+    else:
+        d_coin_min = 0
+    coin_map[int(np.shape(coin_map)[0]/2),int(np.shape(coin_map)[1]/2)] = d_coin_min/(np.sqrt(2)*15)
     inputs = np.zeros(field_map.shape + (2,))
     inputs[:,:,0] = field_map
     inputs[:,:,1] = coin_map
-    #print(inputs.shape)
-    #print(get_agents_view(field,view_range,agents_position,"field"))
-    #print(get_agents_view(coin_field,view_range,agents_position,"coin_field"))
-    #print(agents_position)
-    #print(field)
-    #print(coin_field)
-    # print(agents_view)
 
 
     """

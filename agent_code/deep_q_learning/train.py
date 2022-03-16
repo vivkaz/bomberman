@@ -90,7 +90,7 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
     """
 
     batch_size = 50#number of old experience used for updating the model
-    discount_factor = 0.99#value which weights
+    discount_factor = 0.6#value which weights
     optimizer = tf.keras.optimizers.Adam(learning_rate=1e-2)
     loss_fn = tf.keras.losses.mean_squared_error
 

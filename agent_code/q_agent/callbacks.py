@@ -9,8 +9,6 @@ from sklearn import neighbors
 ACTIONS = ['UP', 'RIGHT', 'DOWN', 'LEFT', 'WAIT', 'BOMB']
 N_STATES = 825
 M_ACTIONS = len(ACTIONS)
-ALPHA = 0.1
-GAMMA = 0.6
 epsilon = 0.1
 
 
@@ -84,6 +82,7 @@ def state_to_features(game_state: dict) -> np.array:
     channels = []
     
     position = game_state['self'][3] # (x,y) coordinate on the field
+    #print(f"game state position of agent {position}")
     if True:
         position_value = 0
     channels.append(position_value)

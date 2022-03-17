@@ -46,10 +46,11 @@ def setup(self):
         self.model = np.load("my-saved-model.npy")
         print(len(np.unique(self.model, axis = 0)))
 
-
+# rotate clockwise
 def get_arrangements(array):
     return [ np.roll(array, -i) for i in range(0,4) ]
 
+# get all possible combinations
 def get_variations(array, r=4):
     return [ item for item in list(itertools.product(array, repeat=r)) ]
 
@@ -73,13 +74,13 @@ def build_state_to_index(arr1 = [-1,0,1,2], arr2 = [0,1,2]):
 def get_state_index(state):
     temp = get_arrangements(state[1:5])
     arrangements = [ np.append(t, state[-1]) for t in temp ]
-    for a in arrangements:
+    for rotation, a in enumerate(arrangements):
         if tuple(a) in dic.keys():
-            return dic[tuple(a)]
+            return dic[tuple(a)], rotation
     print("Update dictionary")
     i = len(dic)
     dic.update({tuple(arrangements[0]) : i})
-    return i
+    return i, 0
 
 
 def act(self, game_state: dict) -> str:
@@ -100,12 +101,17 @@ def act(self, game_state: dict) -> str:
     self.logger.debug("Querying model for action.")
     
     state = state_to_features(game_state)
-    #print("index",get_state_index(state))
-    action = np.argmax(self.model[get_state_index(state)]) # Exploit learned values
-    #print("values",self.model[get_state_index(state)])
-    #print("action",action)
-    return ACTIONS[action]
+    index, rotation = get_state_index(state)
+    action = np.argmax(self.model[index]) # Exploit learned values
+    if action in [0,1,2,3] and rotation != 0:
+        action = (action + rotation) % 4
 
+    # log and print actions while playing 
+    if not self.train:
+        self.logger.info(f"Action {ACTIONS[action]} at step {game_state['step']}")
+        print(f" STEP : {game_state['step']}, ACTION : {ACTIONS[action]}")
+        
+    return ACTIONS[action]
 
 
 def state_to_features(game_state: dict) -> np.array:
@@ -167,7 +173,7 @@ def state_to_features(game_state: dict) -> np.array:
     
     channels.append(my_position_value)
 
-    sub = [(1,0), (-1,0), (0,1), (0,-1)]
+    sub = [(1,0), (0,1), (-1,0), (0,-1)] # left, down, right, up
     neighbors = [ np.subtract(my_position, i) for i in sub ]
     neighbors_values = [ game_state['field'][neighbour[0]][neighbour[1]] for neighbour in neighbors ] # its entries are 1 for crates, −1 for stone walls and 0 for free tiles
 

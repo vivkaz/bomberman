@@ -160,12 +160,22 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     state, action, next_state, reward = self.transitions[-1]
     # check if states are None
     if state is not None and next_state is not None:
-        q_value = self.model[get_state_index(state), ACTIONS.index(action)]
-        max_value = np.max(self.model[get_state_index(next_state)])
+        
+        index, rotation = get_state_index(state)
+        
+        action = np.argmax(self.model[index]) # Exploit learned values
+        if action in [0,1,2,3]:
+            action = (action + rotation) % 4
+
+        q_value = self.model[index, action]
+
+        next_index, _ = get_state_index(next_state)
+
+        max_value = np.max(self.model[next_index])
         new_q_value = (1 - ALPHA) * q_value + ALPHA * (reward + GAMMA * max_value)
         
         # Update Q-table
-        self.model[get_state_index(state), ACTIONS.index(action)] = new_q_value
+        self.model[index, action] = new_q_value
 
 
 def end_of_round(self, last_game_state: dict, last_action: str, events: List[str]):

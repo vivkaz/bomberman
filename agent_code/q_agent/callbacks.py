@@ -1,3 +1,5 @@
+from collections import deque
+import itertools
 import os
 import pickle
 import random
@@ -9,7 +11,8 @@ from sklearn import neighbors
 ACTIONS = ['UP', 'RIGHT', 'DOWN', 'LEFT', 'WAIT', 'BOMB']
 N_STATES = 825
 M_ACTIONS = len(ACTIONS)
-epsilon = 0.1
+epsilon = 0.1 # exploration vs exproitation
+dic = {} # for mapping states to index
 
 
 def setup(self):
@@ -28,17 +31,47 @@ def setup(self):
     """
     if self.train or not os.path.isfile("my-saved-model.pt"):
         self.logger.info("Setting up model from scratch.")
-        q_table = np.zeros([N_STATES, M_ACTIONS])
+        q_table = np.zeros((N_STATES, M_ACTIONS))
+        #q_table = np.random.rand(N_STATES, M_ACTIONS)
         self.model = q_table
+        build_state_to_index()
+
     else:
         self.logger.info("Loading model from saved state.")
         with open("my-saved-model.pt", "rb") as file:
             self.model = pickle.load(file)
 
-# transform state to index for the Q-table
+
+def get_arrangements(array):
+    return [ np.roll(array, -i) for i in range(0,4) ]
+
+def get_variations(array, repeat=4):
+    return [item for item in itertools.combinations(array, repeat)]
+
+# compute state to index for the Q-table
+def build_state_to_index(arr1 = [-1,0,1,2], arr2 = [0,1,2]):
+    perm = get_variations(arr1)
+    for p in perm:
+        arrangements = get_arrangements(p)
+        for a in arrangements:
+            completed_a = [np.append(a, j) for j in arr2] # add mode
+            for c_a in completed_a:
+                if tuple(c_a) in dic.keys():
+                    break
+                i = len(dic)
+                dic.update({tuple(c_a) : i})
+
+# return corresponding index
 def get_state_index(state):
-    print("state", state)
-    return
+    temp = get_arrangements(state[1:5])
+    arrangements = [ np.append(t, state[-1]) for t in temp ]
+    for a in arrangements:
+        if tuple(a) in dic.keys():
+            return dic[tuple(a)]
+    i = len(dic)
+    dic.update({tuple(arrangements[0]) : i})
+    return i
+
 
 def act(self, game_state: dict) -> str:
     """
@@ -60,7 +93,6 @@ def act(self, game_state: dict) -> str:
     if game_state is not None:
         state = state_to_features(game_state)
         action = np.argmax(self.model[get_state_index(state)]) # Exploit learned values
-    
         return ACTIONS[action]
     else:
         return np.random.choice(ACTIONS, p=[.2, .2, .2, .2, .1, .1])
@@ -87,8 +119,8 @@ def state_to_features(game_state: dict) -> np.array:
         return None
 
     # distance from position to objects
-    def dist(pos, objects): 
-        return np.sqrt( np.power(int(objects[0][-1][0])-pos[0], 2) + np.power(int(objects[1][-1][1])-pos[1], 2) )
+    def dist(pos, objects):
+        return np.sqrt( np.power(np.subtract(objects, pos).transpose()[0], 2) + np.power(np.subtract(objects, pos).transpose()[1], 2) )
     
     
     # get region around the position
@@ -129,6 +161,7 @@ def state_to_features(game_state: dict) -> np.array:
     sub = [(1,0), (-1,0), (0,1), (0,-1)]
     neighbors = [np.subtract(my_position, i) for i in sub]
     neighbors_values = [ game_state['field'][neighbour[0]][neighbour[1]] for neighbour in neighbors ] # its entries are 1 for crates, −1 for stone walls and 0 for free tiles
+
     # calculate value of neighbours
     for j, i in enumerate(neighbors_values):
         if ((i == 0 and collectable_coin(neighbors[j])) or (i == 1 and not collectable_coin(neighbors[j]))) and not danger(neighbors[j]):
@@ -140,27 +173,30 @@ def state_to_features(game_state: dict) -> np.array:
         elif len(game_state['bombs']) > 0 and i == 0: 
             if (neighbors[j] == game_state['bombs'][0]).any():
                 channels.append(-1) # bomb
+            else: 
+                channels.append(0) # free tiles
         
         elif len(game_state['others']) > 0 and i == 0: 
             if (neighbors[j] == game_state['others'][0][3]).any(): 
                 channels.append(-1) # opponent
+            else:
+                channels.append(0) # free tiles
         
         elif i == 0:
             channels.append(0) # free tiles
         
         else:
             channels.append(-1) # crate or wall
-
+    
     # calculate value of game mode
+    mode = 0 # destroy crates
     if len(game_state['coins']) > 0 and np.min(dist(my_position, game_state['coins'])) < 4: # collectable coin near the agent
         mode = 2 # collect coins
     elif len(game_state['others']) > 0 and np.min(dist(my_position, game_state['others'])) < 4: # opponent near the agent
         mode = 1 # kill opponents
-    else:
-        mode = 0 # destroy crates
 
     channels.append(mode)
-
+    
     # concatenate them as a feature tensor (they must have the same shape)
     stacked_channels = np.stack(channels)
     

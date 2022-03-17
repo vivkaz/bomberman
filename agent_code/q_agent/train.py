@@ -8,7 +8,7 @@ import pickle
 from typing import List
 
 import events as e
-from .callbacks import get_state_index, state_to_features
+from .callbacks import get_state_index, state_to_features, ACTIONS
 
 # This is only an example!
 Transition = namedtuple('Transition',
@@ -101,9 +101,8 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         coins = np.empty((2, len(old_game_state['coins'])))
         if coins.size != 0:
             for count, coin in enumerate(old_game_state['coins']):
-                if coin.collectable:
-                    coins[0, count] = coin[0]
-                    coins[1, count] = coin[1]
+                coins[0, count] = coin[0]
+                coins[1, count] = coin[1]
         return coins, coins.size != 0
 
     def coin_distance_reduced():
@@ -161,12 +160,12 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     state, action, next_state, reward = self.transitions[-1]
     # check if states are None
     if state is not None and next_state is not None:
-        q_value = self.model[get_state_index(state), action]
-        max_value = np.max(self.model[next_state])
+        q_value = self.model[get_state_index(state), ACTIONS.index(action)]
+        max_value = np.max(self.model[get_state_index(next_state)])
         new_q_value = (1 - ALPHA) * q_value + ALPHA * (reward + GAMMA * max_value)
         
         # Update Q-table
-        self.model[get_state_index(state), action] = new_q_value
+        self.model[get_state_index(state), ACTIONS.index(action)] = new_q_value
 
 
 def end_of_round(self, last_game_state: dict, last_action: str, events: List[str]):

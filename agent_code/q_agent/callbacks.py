@@ -7,11 +7,13 @@ import random
 import numpy as np
 from sklearn import neighbors
 
+from numpy import load
+
 
 ACTIONS = ['UP', 'RIGHT', 'DOWN', 'LEFT', 'WAIT', 'BOMB']
 N_STATES = 825
 M_ACTIONS = len(ACTIONS)
-epsilon = 0.1 # exploration vs exproitation
+epsilon = 0.3 # exploration vs exproitation
 dic = {} # for mapping states to index
 
 
@@ -29,35 +31,41 @@ def setup(self):
 
     :param self: This object is passed to all callbacks and you can set arbitrary values.
     """
-    if self.train or not os.path.isfile("my-saved-model.pt"):
+    if self.train or not os.path.isfile("my-saved-model.npy"):
         self.logger.info("Setting up model from scratch.")
         q_table = np.zeros((N_STATES, M_ACTIONS))
         #q_table = np.random.rand(N_STATES, M_ACTIONS)
         self.model = q_table
         build_state_to_index()
+        print("length of dict: ", len(dic))
 
     else:
         self.logger.info("Loading model from saved state.")
-        with open("my-saved-model.pt", "rb") as file:
-            self.model = pickle.load(file)
+        #with open("my-saved-model.pt", "rb") as file:
+        #    self.model = pickle.load(file)
+        self.model = np.load("my-saved-model.npy")
+        print(len(np.unique(self.model, axis = 0)))
 
 
 def get_arrangements(array):
     return [ np.roll(array, -i) for i in range(0,4) ]
 
-def get_variations(array, repeat=4):
-    return [item for item in itertools.combinations(array, repeat)]
+def get_variations(array, r=4):
+    return [ item for item in list(itertools.product(array, repeat=r)) ]
 
 # compute state to index for the Q-table
 def build_state_to_index(arr1 = [-1,0,1,2], arr2 = [0,1,2]):
     perm = get_variations(arr1)
+    #print(len(perm))
     for p in perm:
         arrangements = get_arrangements(p)
         for a in arrangements:
             completed_a = [np.append(a, j) for j in arr2] # add mode
             for c_a in completed_a:
                 if tuple(c_a) in dic.keys():
-                    break
+                    #print("already there: ")
+                    continue
+                #print("add: ")
                 i = len(dic)
                 dic.update({tuple(c_a) : i})
 
@@ -68,6 +76,7 @@ def get_state_index(state):
     for a in arrangements:
         if tuple(a) in dic.keys():
             return dic[tuple(a)]
+    print("Update dictionary")
     i = len(dic)
     dic.update({tuple(arrangements[0]) : i})
     return i
@@ -83,19 +92,19 @@ def act(self, game_state: dict) -> str:
     :return: The action to take as a string.
     """
     # todo Exploration vs exploitation
-    if self.train and random.uniform(0, 1) < epsilon: # random.random()
+    if (self.train and random.uniform(0, 1) < epsilon ) or game_state is None: # random.random()
         self.logger.debug("Choosing action purely at random.")
         # 80%: walk in any direction. 10% wait. 10% bomb.
         return np.random.choice(ACTIONS, p=[.2, .2, .2, .2, .1, .1]) # Explore action space
 
     self.logger.debug("Querying model for action.")
     
-    if game_state is not None:
-        state = state_to_features(game_state)
-        action = np.argmax(self.model[get_state_index(state)]) # Exploit learned values
-        return ACTIONS[action]
-    else:
-        return np.random.choice(ACTIONS, p=[.2, .2, .2, .2, .1, .1])
+    state = state_to_features(game_state)
+    #print("index",get_state_index(state))
+    action = np.argmax(self.model[get_state_index(state)]) # Exploit learned values
+    #print("values",self.model[get_state_index(state)])
+    #print("action",action)
+    return ACTIONS[action]
 
 
 
@@ -130,14 +139,14 @@ def state_to_features(game_state: dict) -> np.array:
         return np.concatenate((vertical, horizontal), axis = 0)
 
     # check if there are collectable coins near position
-    def collectable_coin(pos, n=3):
+    def collectable_coin(pos, n=4):
         if len(game_state['coins']) > 0: 
-            return len(game_state['coins']) > 0 and ( game_state['coins'][np.argmin(dist(pos, game_state['coins']))] in get_region(pos, n) )
+            return  game_state['coins'][np.argmin(dist(pos, game_state['coins']))] in get_region(pos, n) 
         else:
             return False
 
     # check if dangerous position
-    def danger(pos, n=3):
+    def danger(pos, n=4):
         area = get_region(pos, n)
         bombs = game_state['bombs']
         if len(bombs) > 0:
@@ -159,7 +168,7 @@ def state_to_features(game_state: dict) -> np.array:
     channels.append(my_position_value)
 
     sub = [(1,0), (-1,0), (0,1), (0,-1)]
-    neighbors = [np.subtract(my_position, i) for i in sub]
+    neighbors = [ np.subtract(my_position, i) for i in sub ]
     neighbors_values = [ game_state['field'][neighbour[0]][neighbour[1]] for neighbour in neighbors ] # its entries are 1 for crates, −1 for stone walls and 0 for free tiles
 
     # calculate value of neighbours
@@ -190,7 +199,7 @@ def state_to_features(game_state: dict) -> np.array:
     
     # calculate value of game mode
     mode = 0 # destroy crates
-    if len(game_state['coins']) > 0 and np.min(dist(my_position, game_state['coins'])) < 4: # collectable coin near the agent
+    if len(game_state['coins']) > 0 and np.min(dist(my_position, game_state['coins'])) < 5: # collectable coin near the agent
         mode = 2 # collect coins
     elif len(game_state['others']) > 0 and np.min(dist(my_position, game_state['others'])) < 4: # opponent near the agent
         mode = 1 # kill opponents

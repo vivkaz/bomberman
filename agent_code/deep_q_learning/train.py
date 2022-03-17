@@ -76,6 +76,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
     buffer_information()
 
+    ###
     def update_buffer_states():
         if new_game_state is not None:
             self.buffer_states.append(np.array(new_game_state['self'][3]))  # save position as array not as tuple
@@ -170,8 +171,9 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     #print(events)
     self.logger.debug(f'Encountered game event(s) {", ".join(map(repr, events))} in step {new_game_state["step"]}')
 
-    print(events)
-
+    #print(events)
+    print(f"events occured :  {events} \n"
+          f"in step {new_game_state['step']}")
 def end_of_round(self, last_game_state: dict, last_action: str, events: List[str]):
     """
     Called at the end of each game or when the agent died to hand out final rewards.

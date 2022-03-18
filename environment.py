@@ -135,6 +135,7 @@ class GenericWorld:
             return agent.name == self.agents[0].name
 
         ###
+        """
 
         # compute the risky area around the agent
         def risky_area(agent_position):
@@ -156,6 +157,8 @@ class GenericWorld:
         old_position = np.array([agent.x, agent.y])
 
         ###
+        """
+
 
         # Perform the specified action if possible, wait otherwise
         if action == 'UP' and self.tile_is_free(agent.x, agent.y - 1):
@@ -181,7 +184,7 @@ class GenericWorld:
             agent.add_event(e.INVALID_ACTION)
 
         ###
-
+        """
         position = np.array([agent.x,agent.y])
         coins = np.empty((2, sum([i.collectable for i in self.coins])))
 
@@ -228,7 +231,7 @@ class GenericWorld:
                 if old_danger and not new_danger:
                     agent.add_event(e.BOMB_AVOIDED)
     ###
-
+    """
     def poll_and_run_agents(self):
         raise NotImplementedError()
 

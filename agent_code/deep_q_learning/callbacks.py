@@ -38,7 +38,7 @@ def setup(self):
         load_model = "initialize_model"
     else:
         load_model = "saved_model"
-    load_model = "saved_model"
+    load_model = "recent_best_coin_collector"
 
     try:
         self.model = tf.keras.models.load_model(load_model)
@@ -70,6 +70,7 @@ def act(self, game_state: dict) -> str:
     #epsilon = 0
 
     inputs = state_to_features(self,game_state)
+    #print(inputs)
     # todo Exploration vs exploitation
 
     self.logger.debug("Querying model for action.")
@@ -183,7 +184,8 @@ def state_to_features(self,game_state: dict) -> np.array:
     x_coin = np.array(x_coin)
     y_coin = np.array(y_coin)
     coin_field = np.zeros(np.shape(field))
-    coin_field[x_coin, y_coin] = 1
+    if x_coin.size != 0:
+        coin_field[x_coin, y_coin] = 1
 
 
     # input ["field_coin_map",view_range int, shape tuple, distance_information bool]
@@ -220,33 +222,46 @@ def state_to_features(self,game_state: dict) -> np.array:
         feature = np.zeros(shape)
         feature[:, :, 0] = field_map + coin_map
         return feature
-    def field_fake_coins(INPUT):
+    def fake_coin_field(INPUT):
         view_range = INPUT[0]
         shape = INPUT[1]
         field_map = get_agents_view(field, view_range, agents_position, "field")
         coin_map = get_agents_view(coin_field, view_range, agents_position, "coin_field")
 
-        if np.sum(np.sum(coin_map,axis = 1),axis= 0 ) == 0:
+        def check_index(index):
+            if index > 16:
+                return 16
+            elif index < 0:
+                return 0
+            else:
+                return index
+
+
+        if np.sum(np.sum(coin_map,axis = 1),axis= 0 ) == 0 and x_coin.size != 0:
             agents_view_coord = []
             for i in range(-view_range,view_range+1,1):
                 for j in range(-view_range,view_range+1,1):
-                    agents_view_coord.append([agents_position[0]+i,agents_position[1]+j])
+                    if field[check_index(agents_position[0]+i),check_index(agents_position[1]+j)] == 0:
+                        agents_view_coord.append([agents_position[0]+i,agents_position[1]+j])
             agents_view_coord = np.array(agents_view_coord)
             n = np.argmin(d(agents_position,np.array([x_coin, y_coin])))
             nearest_coin = np.array([x_coin[n],y_coin[n]])
-            nearest_field = agents_view_coord[np.argmin(d(nearest_coin,agents_view_coord))]
-            coin_map[nearest_field[0],nearest_field[1]] = 1
+            nearest_field = agents_view_coord[np.argmin(d(nearest_coin,agents_view_coord.transpose()))]
+            #print("nearest_coin : ", nearest_coin)
+            #print("nearest_field : ", nearest_field)
+            agnets_coord_origin = agents_position - np.array([2,2])
+            coin_map[nearest_field[0]-agnets_coord_origin[0],nearest_field[1]-agnets_coord_origin[1]] = 1
 
         feature = np.zeros(shape)
         feature[:, :, 0] = field_map
         feature[:, :, 1] = coin_map
+
         return feature
 
 
     feature_functions = {"field_coin_map": field_coin_map,
                          "one_field_map" : one_field_map,
-                         "field_fake_coins" : field_fake_coins
-                         }
+                         "fake_coin_field" : fake_coin_field}
 
 
     inputs = feature_functions[self.Hyperparameter["feature_setup"]["feature_function"]](self.Hyperparameter["feature_setup"]["INPUTS"])

@@ -26,8 +26,8 @@ Hyperparameter = {
 "learning_rate" : 1e-2,
 "batch_size" : 50,
 "steps" : 50,
-"episoden" : 1000,
-"discount_factor" : 0.6,
+"episoden" : 200,
+"discount_factor" : 0.99,
 "rewards" : {
         e.INVALID_ACTION: -10,
         e.MOVED_UP: -2,
@@ -38,13 +38,13 @@ Hyperparameter = {
         e.COIN_COLLECTED: 20,
         e.COIN_DISTANCE_REDUCED: 5,
         e.COIN_DISTANCE_INCREASED: -5,
-        e.RUN_IN_LOOP:-20
+        e.RUN_IN_LOOP:-10
       #e.BOMB_AVOIDED : 1
 },
 "coin_density" : 50,
 "crate_density" : 0,
-"feature_setup" : {"feature_function" : "field_coin_map",
-                   "INPUTS" : [2,inputs_shape,True]}
+"feature_setup" : {"feature_function" : "fake_coin_field",
+                   "INPUTS" : [2,inputs_shape]}
 
 
 }

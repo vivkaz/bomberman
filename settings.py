@@ -13,7 +13,7 @@ SCENARIOS = {
     },
     # This is the tournament game mode
     "classic": {
-        "CRATE_DENSITY": 0.75,
+        "CRATE_DENSITY": 0.5,
         "COIN_COUNT": 9
     }, 
     "clean": {
@@ -26,7 +26,7 @@ SCENARIOS = {
 MAX_AGENTS = 4
 
 # Round properties
-MAX_STEPS = 100
+MAX_STEPS = 50
 
 # GUI properties
 GRID_SIZE = 30

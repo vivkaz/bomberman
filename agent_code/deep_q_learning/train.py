@@ -82,8 +82,8 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             self.buffer_states.append(np.array(new_game_state['self'][3]))  # save position as array not as tuple
 
     def risky_area(pos):
-        vertical = np.array([[x, pos[1]] for x in range(pos[1] - 3, pos[1] + 4)])
-        horizontal = np.array([[pos[0], y] for y in range(pos[0] - 3, pos[0] + 4)])
+        vertical = np.array([[x, pos[1]] for x in range(pos[0] - 3, pos[0] + 4)])
+        horizontal = np.array([[pos[0], y] for y in range(pos[1] - 3, pos[1] + 4)])
         return np.concatenate((vertical, horizontal), axis=0)
 
     def in_danger(area, bombs):

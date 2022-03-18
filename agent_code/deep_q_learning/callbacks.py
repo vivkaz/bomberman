@@ -38,7 +38,7 @@ def setup(self):
         load_model = "initialize_model"
     else:
         load_model = "saved_model"
-    load_model = "recent_best_coin_collector"
+    #load_model = "recent_best_coin_collector"
 
     try:
         self.model = tf.keras.models.load_model(load_model)
@@ -70,7 +70,7 @@ def act(self, game_state: dict) -> str:
     #epsilon = 0
 
     inputs = state_to_features(self,game_state)
-    #print(inputs)
+    print(inputs)
     # todo Exploration vs exploitation
 
     self.logger.debug("Querying model for action.")
@@ -78,7 +78,7 @@ def act(self, game_state: dict) -> str:
 
     if self.train:
         if np.random.rand() < epsilon:
-            decision =  np.random.randint(5)
+            decision =  np.random.randint(6)
         else:
             Q_values = self.model.predict(inputs[np.newaxis])[0]
             decision = np.argmax(Q_values)
@@ -187,6 +187,63 @@ def state_to_features(self,game_state: dict) -> np.array:
     if x_coin.size != 0:
         coin_field[x_coin, y_coin] = 1
 
+    x_bomb = []
+    y_bomb = []
+    bomb_timer = []
+    bomb_position = game_state["bombs"]
+    for i in bomb_position:
+        x_bomb.append(i[0][0])
+        y_bomb.append(i[0][1])
+        bomb_timer.append(i[1])
+    x_bomb = np.array(x_bomb)
+    y_bomb = np.array(y_bomb)
+    bomb_timer = np.array(bomb_timer)
+    bomb_field = np.zeros(np.shape(field))
+    bomb_timer_field = np.zeros(np.shape(field))
+    if x_bomb != 0:
+        bomb_field[x_bomb,y_bomb] = -2
+        bomb_timer_field[x_bomb,y_bomb] = bomb_timer
+
+
+
+    def check_for_wall(position,field):
+        #if (position >= 17).any() or (position < 0).any():
+        #    print("out of field")
+        #    return True
+        if field[position[0],position[1]] == -1:
+            #print("wall")
+            return True
+        else:
+            return False
+
+
+
+    explosion_field = np.where(game_state["explosion_map"] != 0, -game_state["explosion_map"]-3,0)
+    # timer infromation auf die felder mit zukünftiger explosion erweitern
+    advanced_explosion_field = np.zeros(np.shape(field)) + explosion_field
+
+    for n in range(len(x_bomb)):
+        x_b = x_bomb[n]
+        y_b = y_bomb[n]
+        timer = bomb_timer[n]
+        #print("bomb",x_b,y_b,timer)
+        for direction in [np.array([0,1]),np.array([0,-1]),np.array([1,0]),np.array([-1,0])]:
+            current_position = np.copy(np.array([x_b,y_b]))
+            for i in range(3):
+                current_position += direction
+                #print("current_position", current_position)
+                if check_for_wall(current_position,field):
+                    #print("break")
+                    break
+
+                else:
+                    if advanced_explosion_field[current_position[0],current_position[1]] >= 0:#condition needed becuase a timer should not overwrite a current explosion
+                        advanced_explosion_field[current_position[0], current_position[1]] = timer
+                        #print("timer_added")
+
+
+
+    #print("advanced_explosion_field",advanced_explosion_field)
 
     # input ["field_coin_map",view_range int, shape tuple, distance_information bool]
 
@@ -259,9 +316,52 @@ def state_to_features(self,game_state: dict) -> np.array:
         return feature
 
 
+    def fake_coin_field_bombs(INPUT):
+        view_range = INPUT[0]
+        shape = INPUT[1]
+        field_map = get_agents_view(field, view_range, agents_position, "field")
+        coin_map = get_agents_view(coin_field, view_range, agents_position, "coin_field")
+        bomb_map = get_agents_view(bomb_field,view_range,agents_position,"coin_field")#"coin_field" just sets tiles outside the field to zeros instead of -1 like for the option "field"
+        advanced_explosion_map = get_agents_view(advanced_explosion_field,view_range,agents_position,"coin_field")
+
+        def check_index(index):
+            if index > 16:
+                return 16
+            elif index < 0:
+                return 0
+            else:
+                return index
+
+
+        if np.sum(np.sum(coin_map,axis = 1),axis= 0 ) == 0 and x_coin.size != 0:
+            agents_view_coord = []
+            for i in range(-view_range,view_range+1,1):
+                for j in range(-view_range,view_range+1,1):
+                    if field[check_index(agents_position[0]+i),check_index(agents_position[1]+j)] == 0:
+                        agents_view_coord.append([agents_position[0]+i,agents_position[1]+j])
+            agents_view_coord = np.array(agents_view_coord)
+            n = np.argmin(d(agents_position,np.array([x_coin, y_coin])))
+            nearest_coin = np.array([x_coin[n],y_coin[n]])
+            nearest_field = agents_view_coord[np.argmin(d(nearest_coin,agents_view_coord.transpose()))]
+            #print("nearest_coin : ", nearest_coin)
+            #print("nearest_field : ", nearest_field)
+            agnets_coord_origin = agents_position - np.array([2,2])
+            coin_map[nearest_field[0]-agnets_coord_origin[0],nearest_field[1]-agnets_coord_origin[1]] = 1
+
+
+
+        feature = np.zeros(shape)
+        feature[:, :, 0] = (field_map + bomb_map)
+        feature[:, :, 1] = coin_map
+        feature[:,:,2] = advanced_explosion_map
+        return feature
+
+
+
     feature_functions = {"field_coin_map": field_coin_map,
                          "one_field_map" : one_field_map,
-                         "fake_coin_field" : fake_coin_field}
+                         "fake_coin_field" : fake_coin_field,
+                         "fake_coin_field_bombs": fake_coin_field_bombs}
 
 
     inputs = feature_functions[self.Hyperparameter["feature_setup"]["feature_function"]](self.Hyperparameter["feature_setup"]["INPUTS"])

@@ -1,200 +1,1000 @@
-2022-03-18 02:48:33,320 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:33,347 [deep_q_learning_code] INFO: Action DOWN at step 1
-2022-03-18 02:48:33,421 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:33,446 [deep_q_learning_code] INFO: Action DOWN at step 2
-2022-03-18 02:48:33,522 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:33,551 [deep_q_learning_code] INFO: Action LEFT at step 3
-2022-03-18 02:48:33,622 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:33,650 [deep_q_learning_code] INFO: Action LEFT at step 4
-2022-03-18 02:48:33,724 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:33,752 [deep_q_learning_code] INFO: Action LEFT at step 5
-2022-03-18 02:48:33,826 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:33,851 [deep_q_learning_code] INFO: Action RIGHT at step 6
-2022-03-18 02:48:33,927 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:33,952 [deep_q_learning_code] INFO: Action UP at step 7
-2022-03-18 02:48:34,028 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:34,054 [deep_q_learning_code] INFO: Action UP at step 8
-2022-03-18 02:48:34,129 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:34,154 [deep_q_learning_code] INFO: Action LEFT at step 9
-2022-03-18 02:48:34,230 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:34,255 [deep_q_learning_code] INFO: Action LEFT at step 10
-2022-03-18 02:48:34,331 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:34,355 [deep_q_learning_code] INFO: Action LEFT at step 11
-2022-03-18 02:48:34,433 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:34,459 [deep_q_learning_code] INFO: Action LEFT at step 12
-2022-03-18 02:48:34,532 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:34,558 [deep_q_learning_code] INFO: Action LEFT at step 13
-2022-03-18 02:48:34,632 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:34,660 [deep_q_learning_code] INFO: Action LEFT at step 14
-2022-03-18 02:48:34,734 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:34,759 [deep_q_learning_code] INFO: Action LEFT at step 15
-2022-03-18 02:48:34,840 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:34,864 [deep_q_learning_code] INFO: Action RIGHT at step 16
-2022-03-18 02:48:34,937 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:34,966 [deep_q_learning_code] INFO: Action DOWN at step 17
-2022-03-18 02:48:35,631 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:35,655 [deep_q_learning_code] INFO: Action DOWN at step 18
-2022-03-18 02:48:35,686 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:35,710 [deep_q_learning_code] INFO: Action DOWN at step 19
-2022-03-18 02:48:35,786 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:35,812 [deep_q_learning_code] INFO: Action UP at step 20
-2022-03-18 02:48:35,902 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:35,947 [deep_q_learning_code] INFO: Action LEFT at step 21
-2022-03-18 02:48:35,989 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:36,015 [deep_q_learning_code] INFO: Action RIGHT at step 22
-2022-03-18 02:48:36,089 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:36,113 [deep_q_learning_code] INFO: Action RIGHT at step 23
-2022-03-18 02:48:36,190 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:36,224 [deep_q_learning_code] INFO: Action RIGHT at step 24
-2022-03-18 02:48:36,290 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:36,317 [deep_q_learning_code] INFO: Action DOWN at step 25
-2022-03-18 02:48:36,403 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:36,431 [deep_q_learning_code] INFO: Action DOWN at step 26
-2022-03-18 02:48:36,490 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:36,519 [deep_q_learning_code] INFO: Action LEFT at step 27
-2022-03-18 02:48:36,592 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:36,620 [deep_q_learning_code] INFO: Action LEFT at step 28
-2022-03-18 02:48:36,694 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:36,723 [deep_q_learning_code] INFO: Action DOWN at step 29
-2022-03-18 02:48:36,798 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:36,822 [deep_q_learning_code] INFO: Action DOWN at step 30
-2022-03-18 02:48:36,908 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:36,964 [deep_q_learning_code] INFO: Action DOWN at step 31
-2022-03-18 02:48:36,996 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:37,021 [deep_q_learning_code] INFO: Action DOWN at step 32
-2022-03-18 02:48:37,097 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:37,122 [deep_q_learning_code] INFO: Action LEFT at step 33
-2022-03-18 02:48:37,199 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:37,229 [deep_q_learning_code] INFO: Action RIGHT at step 34
-2022-03-18 02:48:37,298 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:37,327 [deep_q_learning_code] INFO: Action LEFT at step 35
-2022-03-18 02:48:37,409 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:37,451 [deep_q_learning_code] INFO: Action RIGHT at step 36
-2022-03-18 02:48:37,500 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:37,525 [deep_q_learning_code] INFO: Action LEFT at step 37
-2022-03-18 02:48:37,602 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:37,631 [deep_q_learning_code] INFO: Action RIGHT at step 38
-2022-03-18 02:48:37,707 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:37,732 [deep_q_learning_code] INFO: Action LEFT at step 39
-2022-03-18 02:48:37,803 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:37,832 [deep_q_learning_code] INFO: Action RIGHT at step 40
-2022-03-18 02:48:37,904 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:37,930 [deep_q_learning_code] INFO: Action LEFT at step 41
-2022-03-18 02:48:38,005 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:38,038 [deep_q_learning_code] INFO: Action RIGHT at step 42
-2022-03-18 02:48:38,105 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:38,131 [deep_q_learning_code] INFO: Action LEFT at step 43
-2022-03-18 02:48:38,206 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:38,235 [deep_q_learning_code] INFO: Action RIGHT at step 44
-2022-03-18 02:48:38,308 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:38,337 [deep_q_learning_code] INFO: Action LEFT at step 45
-2022-03-18 02:48:38,407 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:38,439 [deep_q_learning_code] INFO: Action RIGHT at step 46
-2022-03-18 02:48:38,507 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:38,537 [deep_q_learning_code] INFO: Action LEFT at step 47
-2022-03-18 02:48:38,608 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:38,635 [deep_q_learning_code] INFO: Action RIGHT at step 48
-2022-03-18 02:48:38,708 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:38,739 [deep_q_learning_code] INFO: Action LEFT at step 49
-2022-03-18 02:48:38,810 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:38,843 [deep_q_learning_code] INFO: Action RIGHT at step 50
-2022-03-18 02:48:38,910 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:38,941 [deep_q_learning_code] INFO: Action LEFT at step 51
-2022-03-18 02:48:39,010 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:39,043 [deep_q_learning_code] INFO: Action RIGHT at step 52
-2022-03-18 02:48:39,111 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:39,142 [deep_q_learning_code] INFO: Action LEFT at step 53
-2022-03-18 02:48:39,212 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:39,241 [deep_q_learning_code] INFO: Action RIGHT at step 54
-2022-03-18 02:48:39,323 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:39,369 [deep_q_learning_code] INFO: Action LEFT at step 55
-2022-03-18 02:48:39,414 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:39,441 [deep_q_learning_code] INFO: Action RIGHT at step 56
-2022-03-18 02:48:39,515 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:39,545 [deep_q_learning_code] INFO: Action LEFT at step 57
-2022-03-18 02:48:39,616 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:39,645 [deep_q_learning_code] INFO: Action RIGHT at step 58
-2022-03-18 02:48:39,718 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:39,747 [deep_q_learning_code] INFO: Action LEFT at step 59
-2022-03-18 02:48:39,817 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:39,845 [deep_q_learning_code] INFO: Action RIGHT at step 60
-2022-03-18 02:48:39,919 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:39,950 [deep_q_learning_code] INFO: Action LEFT at step 61
-2022-03-18 02:48:40,019 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:40,051 [deep_q_learning_code] INFO: Action RIGHT at step 62
-2022-03-18 02:48:40,120 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:40,151 [deep_q_learning_code] INFO: Action LEFT at step 63
-2022-03-18 02:48:40,224 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:40,262 [deep_q_learning_code] INFO: Action RIGHT at step 64
-2022-03-18 02:48:40,322 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:40,349 [deep_q_learning_code] INFO: Action LEFT at step 65
-2022-03-18 02:48:40,424 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:40,457 [deep_q_learning_code] INFO: Action RIGHT at step 66
-2022-03-18 02:48:40,525 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:40,553 [deep_q_learning_code] INFO: Action LEFT at step 67
-2022-03-18 02:48:40,630 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:40,659 [deep_q_learning_code] INFO: Action RIGHT at step 68
-2022-03-18 02:48:40,728 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:40,759 [deep_q_learning_code] INFO: Action LEFT at step 69
-2022-03-18 02:48:40,829 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:40,859 [deep_q_learning_code] INFO: Action RIGHT at step 70
-2022-03-18 02:48:40,930 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:40,964 [deep_q_learning_code] INFO: Action LEFT at step 71
-2022-03-18 02:48:41,030 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:41,058 [deep_q_learning_code] INFO: Action RIGHT at step 72
-2022-03-18 02:48:41,130 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:41,159 [deep_q_learning_code] INFO: Action LEFT at step 73
-2022-03-18 02:48:41,231 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:41,259 [deep_q_learning_code] INFO: Action RIGHT at step 74
-2022-03-18 02:48:41,332 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:41,358 [deep_q_learning_code] INFO: Action LEFT at step 75
-2022-03-18 02:48:41,435 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:41,462 [deep_q_learning_code] INFO: Action RIGHT at step 76
-2022-03-18 02:48:41,533 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:41,561 [deep_q_learning_code] INFO: Action LEFT at step 77
-2022-03-18 02:48:41,643 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:41,670 [deep_q_learning_code] INFO: Action RIGHT at step 78
-2022-03-18 02:48:41,734 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:41,762 [deep_q_learning_code] INFO: Action LEFT at step 79
-2022-03-18 02:48:41,836 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:41,869 [deep_q_learning_code] INFO: Action RIGHT at step 80
-2022-03-18 02:48:41,936 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:41,964 [deep_q_learning_code] INFO: Action LEFT at step 81
-2022-03-18 02:48:42,038 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:42,065 [deep_q_learning_code] INFO: Action RIGHT at step 82
-2022-03-18 02:48:42,138 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:42,170 [deep_q_learning_code] INFO: Action LEFT at step 83
-2022-03-18 02:48:42,239 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:42,266 [deep_q_learning_code] INFO: Action RIGHT at step 84
-2022-03-18 02:48:42,339 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:42,373 [deep_q_learning_code] INFO: Action LEFT at step 85
-2022-03-18 02:48:42,442 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:42,469 [deep_q_learning_code] INFO: Action RIGHT at step 86
-2022-03-18 02:48:42,541 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:42,567 [deep_q_learning_code] INFO: Action LEFT at step 87
-2022-03-18 02:48:42,642 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:42,671 [deep_q_learning_code] INFO: Action RIGHT at step 88
-2022-03-18 02:48:42,743 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:42,772 [deep_q_learning_code] INFO: Action LEFT at step 89
-2022-03-18 02:48:42,843 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:42,876 [deep_q_learning_code] INFO: Action RIGHT at step 90
-2022-03-18 02:48:42,945 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:42,978 [deep_q_learning_code] INFO: Action LEFT at step 91
-2022-03-18 02:48:43,045 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:43,076 [deep_q_learning_code] INFO: Action RIGHT at step 92
-2022-03-18 02:48:43,147 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:43,178 [deep_q_learning_code] INFO: Action LEFT at step 93
-2022-03-18 02:48:43,249 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:43,278 [deep_q_learning_code] INFO: Action RIGHT at step 94
-2022-03-18 02:48:43,351 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:43,378 [deep_q_learning_code] INFO: Action LEFT at step 95
-2022-03-18 02:48:43,452 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:43,485 [deep_q_learning_code] INFO: Action RIGHT at step 96
-2022-03-18 02:48:43,553 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:43,579 [deep_q_learning_code] INFO: Action LEFT at step 97
-2022-03-18 02:48:43,653 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:43,680 [deep_q_learning_code] INFO: Action RIGHT at step 98
-2022-03-18 02:48:43,766 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:43,795 [deep_q_learning_code] INFO: Action LEFT at step 99
-2022-03-18 02:48:43,854 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-18 02:48:43,881 [deep_q_learning_code] INFO: Action RIGHT at step 100
+2022-03-18 18:37:31,110 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:31,135 [deep_q_learning_code] INFO: Action WAIT at step 1
+2022-03-18 18:37:31,209 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:31,234 [deep_q_learning_code] INFO: Action WAIT at step 2
+2022-03-18 18:37:31,310 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:31,333 [deep_q_learning_code] INFO: Action WAIT at step 3
+2022-03-18 18:37:31,411 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:31,436 [deep_q_learning_code] INFO: Action WAIT at step 4
+2022-03-18 18:37:31,513 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:31,543 [deep_q_learning_code] INFO: Action WAIT at step 5
+2022-03-18 18:37:31,614 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:31,637 [deep_q_learning_code] INFO: Action WAIT at step 6
+2022-03-18 18:37:31,716 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:31,740 [deep_q_learning_code] INFO: Action WAIT at step 7
+2022-03-18 18:37:31,832 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:31,864 [deep_q_learning_code] INFO: Action WAIT at step 8
+2022-03-18 18:37:31,917 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:31,941 [deep_q_learning_code] INFO: Action WAIT at step 9
+2022-03-18 18:37:32,019 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:32,045 [deep_q_learning_code] INFO: Action WAIT at step 10
+2022-03-18 18:37:32,125 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:32,153 [deep_q_learning_code] INFO: Action WAIT at step 11
+2022-03-18 18:37:32,219 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:32,245 [deep_q_learning_code] INFO: Action WAIT at step 12
+2022-03-18 18:37:32,321 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:32,345 [deep_q_learning_code] INFO: Action WAIT at step 13
+2022-03-18 18:37:32,422 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:32,447 [deep_q_learning_code] INFO: Action WAIT at step 14
+2022-03-18 18:37:32,522 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:32,546 [deep_q_learning_code] INFO: Action WAIT at step 15
+2022-03-18 18:37:32,624 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:32,651 [deep_q_learning_code] INFO: Action WAIT at step 16
+2022-03-18 18:37:32,740 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:32,779 [deep_q_learning_code] INFO: Action WAIT at step 17
+2022-03-18 18:37:32,836 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:32,873 [deep_q_learning_code] INFO: Action WAIT at step 18
+2022-03-18 18:37:32,939 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:32,975 [deep_q_learning_code] INFO: Action WAIT at step 19
+2022-03-18 18:37:33,042 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:33,073 [deep_q_learning_code] INFO: Action WAIT at step 20
+2022-03-18 18:37:33,142 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:33,179 [deep_q_learning_code] INFO: Action WAIT at step 21
+2022-03-18 18:37:33,239 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:33,275 [deep_q_learning_code] INFO: Action WAIT at step 22
+2022-03-18 18:37:33,328 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:33,352 [deep_q_learning_code] INFO: Action WAIT at step 23
+2022-03-18 18:37:33,445 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:33,478 [deep_q_learning_code] INFO: Action WAIT at step 24
+2022-03-18 18:37:33,538 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:33,571 [deep_q_learning_code] INFO: Action WAIT at step 25
+2022-03-18 18:37:33,646 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:33,679 [deep_q_learning_code] INFO: Action WAIT at step 26
+2022-03-18 18:37:33,731 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:33,755 [deep_q_learning_code] INFO: Action WAIT at step 27
+2022-03-18 18:37:33,832 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:33,856 [deep_q_learning_code] INFO: Action WAIT at step 28
+2022-03-18 18:37:33,934 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:33,961 [deep_q_learning_code] INFO: Action WAIT at step 29
+2022-03-18 18:37:34,034 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:34,059 [deep_q_learning_code] INFO: Action WAIT at step 30
+2022-03-18 18:37:34,140 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:34,164 [deep_q_learning_code] INFO: Action WAIT at step 31
+2022-03-18 18:37:34,237 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:34,264 [deep_q_learning_code] INFO: Action WAIT at step 32
+2022-03-18 18:37:34,353 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:34,378 [deep_q_learning_code] INFO: Action WAIT at step 33
+2022-03-18 18:37:34,440 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:34,464 [deep_q_learning_code] INFO: Action WAIT at step 34
+2022-03-18 18:37:34,557 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:34,598 [deep_q_learning_code] INFO: Action WAIT at step 35
+2022-03-18 18:37:34,649 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:34,672 [deep_q_learning_code] INFO: Action WAIT at step 36
+2022-03-18 18:37:35,510 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:35,534 [deep_q_learning_code] INFO: Action WAIT at step 37
+2022-03-18 18:37:35,564 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:35,590 [deep_q_learning_code] INFO: Action WAIT at step 38
+2022-03-18 18:37:35,681 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:35,723 [deep_q_learning_code] INFO: Action WAIT at step 39
+2022-03-18 18:37:35,766 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:35,790 [deep_q_learning_code] INFO: Action WAIT at step 40
+2022-03-18 18:37:35,882 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:35,908 [deep_q_learning_code] INFO: Action WAIT at step 41
+2022-03-18 18:37:35,984 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:36,012 [deep_q_learning_code] INFO: Action WAIT at step 42
+2022-03-18 18:37:36,069 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:36,094 [deep_q_learning_code] INFO: Action WAIT at step 43
+2022-03-18 18:37:36,170 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:36,194 [deep_q_learning_code] INFO: Action WAIT at step 44
+2022-03-18 18:37:36,285 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:36,319 [deep_q_learning_code] INFO: Action WAIT at step 45
+2022-03-18 18:37:36,370 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:36,396 [deep_q_learning_code] INFO: Action WAIT at step 46
+2022-03-18 18:37:36,471 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:36,503 [deep_q_learning_code] INFO: Action WAIT at step 47
+2022-03-18 18:37:36,573 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:36,601 [deep_q_learning_code] INFO: Action WAIT at step 48
+2022-03-18 18:37:36,690 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:36,730 [deep_q_learning_code] INFO: Action WAIT at step 49
+2022-03-18 18:37:36,776 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:36,803 [deep_q_learning_code] INFO: Action WAIT at step 50
+2022-03-18 18:37:37,992 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:38,024 [deep_q_learning_code] INFO: Action WAIT at step 1
+2022-03-18 18:37:38,089 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:38,120 [deep_q_learning_code] INFO: Action WAIT at step 2
+2022-03-18 18:37:38,190 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:38,221 [deep_q_learning_code] INFO: Action WAIT at step 3
+2022-03-18 18:37:38,291 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:38,321 [deep_q_learning_code] INFO: Action WAIT at step 4
+2022-03-18 18:37:38,392 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:38,422 [deep_q_learning_code] INFO: Action WAIT at step 5
+2022-03-18 18:37:38,493 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:38,521 [deep_q_learning_code] INFO: Action WAIT at step 6
+2022-03-18 18:37:38,595 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:38,619 [deep_q_learning_code] INFO: Action WAIT at step 7
+2022-03-18 18:37:38,696 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:38,722 [deep_q_learning_code] INFO: Action WAIT at step 8
+2022-03-18 18:37:38,797 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:38,826 [deep_q_learning_code] INFO: Action WAIT at step 9
+2022-03-18 18:37:38,897 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:38,924 [deep_q_learning_code] INFO: Action WAIT at step 10
+2022-03-18 18:37:39,003 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:39,029 [deep_q_learning_code] INFO: Action WAIT at step 11
+2022-03-18 18:37:39,098 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:39,124 [deep_q_learning_code] INFO: Action WAIT at step 12
+2022-03-18 18:37:39,199 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:39,224 [deep_q_learning_code] INFO: Action WAIT at step 13
+2022-03-18 18:37:39,300 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:39,329 [deep_q_learning_code] INFO: Action WAIT at step 14
+2022-03-18 18:37:39,406 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:39,438 [deep_q_learning_code] INFO: Action WAIT at step 15
+2022-03-18 18:37:39,502 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:39,527 [deep_q_learning_code] INFO: Action WAIT at step 16
+2022-03-18 18:37:39,603 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:39,628 [deep_q_learning_code] INFO: Action WAIT at step 17
+2022-03-18 18:37:39,720 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:39,756 [deep_q_learning_code] INFO: Action WAIT at step 18
+2022-03-18 18:37:39,805 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:39,830 [deep_q_learning_code] INFO: Action WAIT at step 19
+2022-03-18 18:37:39,916 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:39,955 [deep_q_learning_code] INFO: Action WAIT at step 20
+2022-03-18 18:37:40,014 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:40,048 [deep_q_learning_code] INFO: Action WAIT at step 21
+2022-03-18 18:37:40,122 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:40,160 [deep_q_learning_code] INFO: Action WAIT at step 22
+2022-03-18 18:37:40,221 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:40,256 [deep_q_learning_code] INFO: Action WAIT at step 23
+2022-03-18 18:37:40,320 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:40,349 [deep_q_learning_code] INFO: Action WAIT at step 24
+2022-03-18 18:37:40,411 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:40,435 [deep_q_learning_code] INFO: Action WAIT at step 25
+2022-03-18 18:37:40,526 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:40,565 [deep_q_learning_code] INFO: Action WAIT at step 26
+2022-03-18 18:37:40,620 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:40,649 [deep_q_learning_code] INFO: Action WAIT at step 27
+2022-03-18 18:37:40,728 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:40,769 [deep_q_learning_code] INFO: Action WAIT at step 28
+2022-03-18 18:37:40,815 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:40,841 [deep_q_learning_code] INFO: Action WAIT at step 29
+2022-03-18 18:37:40,917 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:40,946 [deep_q_learning_code] INFO: Action WAIT at step 30
+2022-03-18 18:37:41,019 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:41,046 [deep_q_learning_code] INFO: Action WAIT at step 31
+2022-03-18 18:37:41,119 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:41,146 [deep_q_learning_code] INFO: Action WAIT at step 32
+2022-03-18 18:37:41,219 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:41,246 [deep_q_learning_code] INFO: Action WAIT at step 33
+2022-03-18 18:37:41,321 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:41,347 [deep_q_learning_code] INFO: Action WAIT at step 34
+2022-03-18 18:37:41,422 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:41,449 [deep_q_learning_code] INFO: Action WAIT at step 35
+2022-03-18 18:37:41,524 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:41,549 [deep_q_learning_code] INFO: Action WAIT at step 36
+2022-03-18 18:37:41,625 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:41,653 [deep_q_learning_code] INFO: Action WAIT at step 37
+2022-03-18 18:37:41,727 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:41,753 [deep_q_learning_code] INFO: Action WAIT at step 38
+2022-03-18 18:37:41,828 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:41,858 [deep_q_learning_code] INFO: Action WAIT at step 39
+2022-03-18 18:37:41,935 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:41,974 [deep_q_learning_code] INFO: Action WAIT at step 40
+2022-03-18 18:37:42,031 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:42,057 [deep_q_learning_code] INFO: Action WAIT at step 41
+2022-03-18 18:37:42,128 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:42,158 [deep_q_learning_code] INFO: Action WAIT at step 42
+2022-03-18 18:37:42,229 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:42,259 [deep_q_learning_code] INFO: Action WAIT at step 43
+2022-03-18 18:37:42,331 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:42,358 [deep_q_learning_code] INFO: Action WAIT at step 44
+2022-03-18 18:37:42,446 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:42,489 [deep_q_learning_code] INFO: Action WAIT at step 45
+2022-03-18 18:37:42,532 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:42,559 [deep_q_learning_code] INFO: Action WAIT at step 46
+2022-03-18 18:37:42,644 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:42,681 [deep_q_learning_code] INFO: Action WAIT at step 47
+2022-03-18 18:37:42,745 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:42,780 [deep_q_learning_code] INFO: Action WAIT at step 48
+2022-03-18 18:37:42,837 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:42,861 [deep_q_learning_code] INFO: Action WAIT at step 49
+2022-03-18 18:37:42,939 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:42,964 [deep_q_learning_code] INFO: Action WAIT at step 50
+2022-03-18 18:37:43,962 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:43,999 [deep_q_learning_code] INFO: Action WAIT at step 1
+2022-03-18 18:37:44,046 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:44,071 [deep_q_learning_code] INFO: Action WAIT at step 2
+2022-03-18 18:37:44,147 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:44,175 [deep_q_learning_code] INFO: Action WAIT at step 3
+2022-03-18 18:37:44,247 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:44,272 [deep_q_learning_code] INFO: Action WAIT at step 4
+2022-03-18 18:37:44,348 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:44,374 [deep_q_learning_code] INFO: Action WAIT at step 5
+2022-03-18 18:37:44,466 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:44,504 [deep_q_learning_code] INFO: Action WAIT at step 6
+2022-03-18 18:37:44,550 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:44,577 [deep_q_learning_code] INFO: Action WAIT at step 7
+2022-03-18 18:37:44,654 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:44,682 [deep_q_learning_code] INFO: Action WAIT at step 8
+2022-03-18 18:37:44,768 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:44,806 [deep_q_learning_code] INFO: Action WAIT at step 9
+2022-03-18 18:37:44,857 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:44,882 [deep_q_learning_code] INFO: Action WAIT at step 10
+2022-03-18 18:37:44,971 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:45,008 [deep_q_learning_code] INFO: Action WAIT at step 11
+2022-03-18 18:37:45,063 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:45,092 [deep_q_learning_code] INFO: Action WAIT at step 12
+2022-03-18 18:37:45,183 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:45,210 [deep_q_learning_code] INFO: Action WAIT at step 13
+2022-03-18 18:37:45,302 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:45,331 [deep_q_learning_code] INFO: Action WAIT at step 14
+2022-03-18 18:37:45,385 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:45,410 [deep_q_learning_code] INFO: Action WAIT at step 15
+2022-03-18 18:37:45,487 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:45,514 [deep_q_learning_code] INFO: Action WAIT at step 16
+2022-03-18 18:37:45,588 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:45,615 [deep_q_learning_code] INFO: Action WAIT at step 17
+2022-03-18 18:37:45,689 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:45,714 [deep_q_learning_code] INFO: Action WAIT at step 18
+2022-03-18 18:37:45,791 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:45,817 [deep_q_learning_code] INFO: Action WAIT at step 19
+2022-03-18 18:37:45,892 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:45,917 [deep_q_learning_code] INFO: Action WAIT at step 20
+2022-03-18 18:37:45,996 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:46,022 [deep_q_learning_code] INFO: Action WAIT at step 21
+2022-03-18 18:37:46,092 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:46,117 [deep_q_learning_code] INFO: Action WAIT at step 22
+2022-03-18 18:37:46,192 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:46,217 [deep_q_learning_code] INFO: Action WAIT at step 23
+2022-03-18 18:37:46,293 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:46,319 [deep_q_learning_code] INFO: Action WAIT at step 24
+2022-03-18 18:37:46,408 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:46,441 [deep_q_learning_code] INFO: Action WAIT at step 25
+2022-03-18 18:37:46,494 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:46,519 [deep_q_learning_code] INFO: Action WAIT at step 26
+2022-03-18 18:37:46,612 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:46,649 [deep_q_learning_code] INFO: Action WAIT at step 27
+2022-03-18 18:37:46,696 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:46,721 [deep_q_learning_code] INFO: Action WAIT at step 28
+2022-03-18 18:37:46,813 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:46,842 [deep_q_learning_code] INFO: Action WAIT at step 29
+2022-03-18 18:37:46,901 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:46,930 [deep_q_learning_code] INFO: Action WAIT at step 30
+2022-03-18 18:37:46,999 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:47,030 [deep_q_learning_code] INFO: Action WAIT at step 31
+2022-03-18 18:37:47,100 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:47,130 [deep_q_learning_code] INFO: Action WAIT at step 32
+2022-03-18 18:37:47,202 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:47,230 [deep_q_learning_code] INFO: Action WAIT at step 33
+2022-03-18 18:37:47,304 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:47,329 [deep_q_learning_code] INFO: Action WAIT at step 34
+2022-03-18 18:37:47,418 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:47,457 [deep_q_learning_code] INFO: Action WAIT at step 35
+2022-03-18 18:37:47,505 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:47,532 [deep_q_learning_code] INFO: Action WAIT at step 36
+2022-03-18 18:37:47,610 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:47,637 [deep_q_learning_code] INFO: Action WAIT at step 37
+2022-03-18 18:37:47,706 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:47,735 [deep_q_learning_code] INFO: Action WAIT at step 38
+2022-03-18 18:37:47,808 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:47,834 [deep_q_learning_code] INFO: Action WAIT at step 39
+2022-03-18 18:37:47,914 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:47,939 [deep_q_learning_code] INFO: Action WAIT at step 40
+2022-03-18 18:37:48,010 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:48,035 [deep_q_learning_code] INFO: Action WAIT at step 41
+2022-03-18 18:37:48,121 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:48,150 [deep_q_learning_code] INFO: Action WAIT at step 42
+2022-03-18 18:37:48,219 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:48,255 [deep_q_learning_code] INFO: Action WAIT at step 43
+2022-03-18 18:37:48,313 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:48,338 [deep_q_learning_code] INFO: Action WAIT at step 44
+2022-03-18 18:37:48,428 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:48,465 [deep_q_learning_code] INFO: Action WAIT at step 45
+2022-03-18 18:37:48,524 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:48,549 [deep_q_learning_code] INFO: Action WAIT at step 46
+2022-03-18 18:37:48,629 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:48,668 [deep_q_learning_code] INFO: Action WAIT at step 47
+2022-03-18 18:37:48,715 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:48,740 [deep_q_learning_code] INFO: Action WAIT at step 48
+2022-03-18 18:37:48,832 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:48,870 [deep_q_learning_code] INFO: Action WAIT at step 49
+2022-03-18 18:37:48,930 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:48,961 [deep_q_learning_code] INFO: Action WAIT at step 50
+2022-03-18 18:37:49,730 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:49,755 [deep_q_learning_code] INFO: Action WAIT at step 1
+2022-03-18 18:37:49,836 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:49,875 [deep_q_learning_code] INFO: Action WAIT at step 2
+2022-03-18 18:37:49,938 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:49,973 [deep_q_learning_code] INFO: Action WAIT at step 3
+2022-03-18 18:37:50,028 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:50,055 [deep_q_learning_code] INFO: Action WAIT at step 4
+2022-03-18 18:37:50,130 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:50,159 [deep_q_learning_code] INFO: Action WAIT at step 5
+2022-03-18 18:37:50,231 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:50,257 [deep_q_learning_code] INFO: Action WAIT at step 6
+2022-03-18 18:37:50,331 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:50,358 [deep_q_learning_code] INFO: Action WAIT at step 7
+2022-03-18 18:37:50,432 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:50,458 [deep_q_learning_code] INFO: Action WAIT at step 8
+2022-03-18 18:37:50,533 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:50,560 [deep_q_learning_code] INFO: Action WAIT at step 9
+2022-03-18 18:37:50,635 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:50,666 [deep_q_learning_code] INFO: Action WAIT at step 10
+2022-03-18 18:37:50,735 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:50,761 [deep_q_learning_code] INFO: Action WAIT at step 11
+2022-03-18 18:37:50,853 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:50,891 [deep_q_learning_code] INFO: Action WAIT at step 12
+2022-03-18 18:37:50,937 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:50,962 [deep_q_learning_code] INFO: Action WAIT at step 13
+2022-03-18 18:37:51,039 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:51,067 [deep_q_learning_code] INFO: Action WAIT at step 14
+2022-03-18 18:37:51,148 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:51,184 [deep_q_learning_code] INFO: Action WAIT at step 15
+2022-03-18 18:37:51,245 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:51,291 [deep_q_learning_code] INFO: Action WAIT at step 16
+2022-03-18 18:37:51,339 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:51,368 [deep_q_learning_code] INFO: Action WAIT at step 17
+2022-03-18 18:37:51,445 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:51,471 [deep_q_learning_code] INFO: Action WAIT at step 18
+2022-03-18 18:37:51,555 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:51,590 [deep_q_learning_code] INFO: Action WAIT at step 19
+2022-03-18 18:37:51,643 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:51,671 [deep_q_learning_code] INFO: Action WAIT at step 20
+2022-03-18 18:37:51,756 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:51,791 [deep_q_learning_code] INFO: Action WAIT at step 21
+2022-03-18 18:37:51,858 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:51,887 [deep_q_learning_code] INFO: Action WAIT at step 22
+2022-03-18 18:37:51,959 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:51,995 [deep_q_learning_code] INFO: Action WAIT at step 23
+2022-03-18 18:37:52,059 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:52,096 [deep_q_learning_code] INFO: Action WAIT at step 24
+2022-03-18 18:37:52,161 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:52,195 [deep_q_learning_code] INFO: Action WAIT at step 25
+2022-03-18 18:37:52,261 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:52,290 [deep_q_learning_code] INFO: Action WAIT at step 26
+2022-03-18 18:37:52,350 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:52,376 [deep_q_learning_code] INFO: Action WAIT at step 27
+2022-03-18 18:37:52,466 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:52,502 [deep_q_learning_code] INFO: Action WAIT at step 28
+2022-03-18 18:37:52,552 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:52,576 [deep_q_learning_code] INFO: Action WAIT at step 29
+2022-03-18 18:37:52,668 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:52,701 [deep_q_learning_code] INFO: Action WAIT at step 30
+2022-03-18 18:37:52,766 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:52,802 [deep_q_learning_code] INFO: Action WAIT at step 31
+2022-03-18 18:37:52,868 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:52,909 [deep_q_learning_code] INFO: Action WAIT at step 32
+2022-03-18 18:37:52,969 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:53,007 [deep_q_learning_code] INFO: Action WAIT at step 33
+2022-03-18 18:37:53,072 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:53,113 [deep_q_learning_code] INFO: Action WAIT at step 34
+2022-03-18 18:37:53,168 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:53,206 [deep_q_learning_code] INFO: Action WAIT at step 35
+2022-03-18 18:37:53,271 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:53,305 [deep_q_learning_code] INFO: Action WAIT at step 36
+2022-03-18 18:37:53,371 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:53,407 [deep_q_learning_code] INFO: Action WAIT at step 37
+2022-03-18 18:37:53,474 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:53,512 [deep_q_learning_code] INFO: Action WAIT at step 38
+2022-03-18 18:37:53,560 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:53,589 [deep_q_learning_code] INFO: Action WAIT at step 39
+2022-03-18 18:37:53,678 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:53,716 [deep_q_learning_code] INFO: Action WAIT at step 40
+2022-03-18 18:37:53,776 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:53,806 [deep_q_learning_code] INFO: Action WAIT at step 41
+2022-03-18 18:37:53,878 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:53,915 [deep_q_learning_code] INFO: Action WAIT at step 42
+2022-03-18 18:37:53,973 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:54,008 [deep_q_learning_code] INFO: Action WAIT at step 43
+2022-03-18 18:37:54,079 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:54,116 [deep_q_learning_code] INFO: Action WAIT at step 44
+2022-03-18 18:37:54,180 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:54,210 [deep_q_learning_code] INFO: Action WAIT at step 45
+2022-03-18 18:37:54,284 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:54,320 [deep_q_learning_code] INFO: Action WAIT at step 46
+2022-03-18 18:37:54,381 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:54,417 [deep_q_learning_code] INFO: Action WAIT at step 47
+2022-03-18 18:37:54,492 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:54,524 [deep_q_learning_code] INFO: Action WAIT at step 48
+2022-03-18 18:37:54,582 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:54,615 [deep_q_learning_code] INFO: Action WAIT at step 49
+2022-03-18 18:37:54,673 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:54,698 [deep_q_learning_code] INFO: Action WAIT at step 50
+2022-03-18 18:37:55,683 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:55,710 [deep_q_learning_code] INFO: Action WAIT at step 1
+2022-03-18 18:37:55,784 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:55,814 [deep_q_learning_code] INFO: Action WAIT at step 2
+2022-03-18 18:37:55,901 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:55,941 [deep_q_learning_code] INFO: Action WAIT at step 3
+2022-03-18 18:37:55,992 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:56,028 [deep_q_learning_code] INFO: Action WAIT at step 4
+2022-03-18 18:37:56,102 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:56,147 [deep_q_learning_code] INFO: Action WAIT at step 5
+2022-03-18 18:37:56,195 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:56,221 [deep_q_learning_code] INFO: Action WAIT at step 6
+2022-03-18 18:37:56,288 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:56,314 [deep_q_learning_code] INFO: Action WAIT at step 7
+2022-03-18 18:37:56,405 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:56,442 [deep_q_learning_code] INFO: Action WAIT at step 8
+2022-03-18 18:37:56,496 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:56,528 [deep_q_learning_code] INFO: Action WAIT at step 9
+2022-03-18 18:37:56,607 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:56,644 [deep_q_learning_code] INFO: Action WAIT at step 10
+2022-03-18 18:37:56,697 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:56,725 [deep_q_learning_code] INFO: Action WAIT at step 11
+2022-03-18 18:37:56,795 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:56,821 [deep_q_learning_code] INFO: Action WAIT at step 12
+2022-03-18 18:37:56,912 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:56,941 [deep_q_learning_code] INFO: Action WAIT at step 13
+2022-03-18 18:37:57,013 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:57,050 [deep_q_learning_code] INFO: Action WAIT at step 14
+2022-03-18 18:37:57,098 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:57,128 [deep_q_learning_code] INFO: Action WAIT at step 15
+2022-03-18 18:37:57,199 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:57,225 [deep_q_learning_code] INFO: Action WAIT at step 16
+2022-03-18 18:37:57,313 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:57,350 [deep_q_learning_code] INFO: Action WAIT at step 17
+2022-03-18 18:37:57,400 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:57,427 [deep_q_learning_code] INFO: Action WAIT at step 18
+2022-03-18 18:37:57,502 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:57,531 [deep_q_learning_code] INFO: Action WAIT at step 19
+2022-03-18 18:37:57,604 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:57,629 [deep_q_learning_code] INFO: Action WAIT at step 20
+2022-03-18 18:37:57,705 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:57,731 [deep_q_learning_code] INFO: Action WAIT at step 21
+2022-03-18 18:37:57,806 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:57,835 [deep_q_learning_code] INFO: Action WAIT at step 22
+2022-03-18 18:37:57,910 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:57,935 [deep_q_learning_code] INFO: Action WAIT at step 23
+2022-03-18 18:37:58,010 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:58,041 [deep_q_learning_code] INFO: Action WAIT at step 24
+2022-03-18 18:37:58,109 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:58,137 [deep_q_learning_code] INFO: Action WAIT at step 25
+2022-03-18 18:37:58,211 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:58,240 [deep_q_learning_code] INFO: Action WAIT at step 26
+2022-03-18 18:37:58,312 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:58,340 [deep_q_learning_code] INFO: Action WAIT at step 27
+2022-03-18 18:37:58,417 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:58,442 [deep_q_learning_code] INFO: Action WAIT at step 28
+2022-03-18 18:37:58,513 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:58,539 [deep_q_learning_code] INFO: Action WAIT at step 29
+2022-03-18 18:37:58,630 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:58,657 [deep_q_learning_code] INFO: Action WAIT at step 30
+2022-03-18 18:37:58,715 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:58,741 [deep_q_learning_code] INFO: Action WAIT at step 31
+2022-03-18 18:37:58,816 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:58,847 [deep_q_learning_code] INFO: Action WAIT at step 32
+2022-03-18 18:37:58,929 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:58,958 [deep_q_learning_code] INFO: Action WAIT at step 33
+2022-03-18 18:37:59,033 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:59,070 [deep_q_learning_code] INFO: Action WAIT at step 34
+2022-03-18 18:37:59,120 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:59,144 [deep_q_learning_code] INFO: Action WAIT at step 35
+2022-03-18 18:37:59,237 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:59,275 [deep_q_learning_code] INFO: Action WAIT at step 36
+2022-03-18 18:37:59,321 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:59,345 [deep_q_learning_code] INFO: Action WAIT at step 37
+2022-03-18 18:37:59,437 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:59,479 [deep_q_learning_code] INFO: Action WAIT at step 38
+2022-03-18 18:37:59,523 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:59,547 [deep_q_learning_code] INFO: Action WAIT at step 39
+2022-03-18 18:37:59,629 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:59,654 [deep_q_learning_code] INFO: Action WAIT at step 40
+2022-03-18 18:37:59,726 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:59,750 [deep_q_learning_code] INFO: Action WAIT at step 41
+2022-03-18 18:37:59,827 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:59,852 [deep_q_learning_code] INFO: Action WAIT at step 42
+2022-03-18 18:37:59,929 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:37:59,954 [deep_q_learning_code] INFO: Action WAIT at step 43
+2022-03-18 18:38:00,029 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:00,058 [deep_q_learning_code] INFO: Action WAIT at step 44
+2022-03-18 18:38:00,130 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:00,158 [deep_q_learning_code] INFO: Action WAIT at step 45
+2022-03-18 18:38:00,244 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:00,276 [deep_q_learning_code] INFO: Action WAIT at step 46
+2022-03-18 18:38:00,332 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:00,358 [deep_q_learning_code] INFO: Action WAIT at step 47
+2022-03-18 18:38:00,433 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:00,463 [deep_q_learning_code] INFO: Action WAIT at step 48
+2022-03-18 18:38:00,534 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:00,562 [deep_q_learning_code] INFO: Action WAIT at step 49
+2022-03-18 18:38:00,636 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:00,664 [deep_q_learning_code] INFO: Action WAIT at step 50
+2022-03-18 18:38:01,560 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:01,590 [deep_q_learning_code] INFO: Action LEFT at step 1
+2022-03-18 18:38:01,652 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:01,688 [deep_q_learning_code] INFO: Action LEFT at step 2
+2022-03-18 18:38:01,746 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:01,771 [deep_q_learning_code] INFO: Action WAIT at step 3
+2022-03-18 18:38:01,847 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:01,874 [deep_q_learning_code] INFO: Action WAIT at step 4
+2022-03-18 18:38:01,947 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:01,972 [deep_q_learning_code] INFO: Action WAIT at step 5
+2022-03-18 18:38:02,049 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:02,075 [deep_q_learning_code] INFO: Action WAIT at step 6
+2022-03-18 18:38:02,148 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:02,173 [deep_q_learning_code] INFO: Action WAIT at step 7
+2022-03-18 18:38:02,252 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:02,277 [deep_q_learning_code] INFO: Action WAIT at step 8
+2022-03-18 18:38:02,349 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:02,374 [deep_q_learning_code] INFO: Action WAIT at step 9
+2022-03-18 18:38:02,451 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:02,483 [deep_q_learning_code] INFO: Action WAIT at step 10
+2022-03-18 18:38:02,552 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:02,579 [deep_q_learning_code] INFO: Action WAIT at step 11
+2022-03-18 18:38:02,652 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:02,681 [deep_q_learning_code] INFO: Action WAIT at step 12
+2022-03-18 18:38:02,752 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:02,778 [deep_q_learning_code] INFO: Action WAIT at step 13
+2022-03-18 18:38:02,854 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:02,882 [deep_q_learning_code] INFO: Action WAIT at step 14
+2022-03-18 18:38:02,959 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:02,988 [deep_q_learning_code] INFO: Action WAIT at step 15
+2022-03-18 18:38:03,055 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:03,082 [deep_q_learning_code] INFO: Action WAIT at step 16
+2022-03-18 18:38:03,170 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:03,196 [deep_q_learning_code] INFO: Action WAIT at step 17
+2022-03-18 18:38:03,257 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:03,283 [deep_q_learning_code] INFO: Action WAIT at step 18
+2022-03-18 18:38:03,359 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:03,384 [deep_q_learning_code] INFO: Action WAIT at step 19
+2022-03-18 18:38:03,462 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:03,487 [deep_q_learning_code] INFO: Action WAIT at step 20
+2022-03-18 18:38:03,574 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:03,598 [deep_q_learning_code] INFO: Action WAIT at step 21
+2022-03-18 18:38:03,662 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:03,688 [deep_q_learning_code] INFO: Action WAIT at step 22
+2022-03-18 18:38:03,765 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:03,792 [deep_q_learning_code] INFO: Action WAIT at step 23
+2022-03-18 18:38:03,878 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:03,919 [deep_q_learning_code] INFO: Action WAIT at step 24
+2022-03-18 18:38:03,965 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:03,995 [deep_q_learning_code] INFO: Action WAIT at step 25
+2022-03-18 18:38:04,067 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:04,095 [deep_q_learning_code] INFO: Action WAIT at step 26
+2022-03-18 18:38:04,169 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:04,196 [deep_q_learning_code] INFO: Action WAIT at step 27
+2022-03-18 18:38:04,269 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:04,297 [deep_q_learning_code] INFO: Action WAIT at step 28
+2022-03-18 18:38:04,370 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:04,398 [deep_q_learning_code] INFO: Action WAIT at step 29
+2022-03-18 18:38:04,472 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:04,498 [deep_q_learning_code] INFO: Action WAIT at step 30
+2022-03-18 18:38:04,572 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:04,599 [deep_q_learning_code] INFO: Action WAIT at step 31
+2022-03-18 18:38:04,673 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:04,703 [deep_q_learning_code] INFO: Action WAIT at step 32
+2022-03-18 18:38:04,773 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:04,800 [deep_q_learning_code] INFO: Action WAIT at step 33
+2022-03-18 18:38:04,872 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:04,899 [deep_q_learning_code] INFO: Action WAIT at step 34
+2022-03-18 18:38:04,973 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:04,999 [deep_q_learning_code] INFO: Action WAIT at step 35
+2022-03-18 18:38:05,073 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:05,100 [deep_q_learning_code] INFO: Action WAIT at step 36
+2022-03-18 18:38:05,175 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:05,201 [deep_q_learning_code] INFO: Action WAIT at step 37
+2022-03-18 18:38:05,294 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:05,320 [deep_q_learning_code] INFO: Action WAIT at step 38
+2022-03-18 18:38:05,380 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:05,417 [deep_q_learning_code] INFO: Action WAIT at step 39
+2022-03-18 18:38:05,484 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:05,531 [deep_q_learning_code] INFO: Action WAIT at step 40
+2022-03-18 18:38:05,587 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:05,622 [deep_q_learning_code] INFO: Action WAIT at step 41
+2022-03-18 18:38:05,678 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:05,707 [deep_q_learning_code] INFO: Action WAIT at step 42
+2022-03-18 18:38:05,784 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:05,814 [deep_q_learning_code] INFO: Action WAIT at step 43
+2022-03-18 18:38:05,897 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:05,932 [deep_q_learning_code] INFO: Action WAIT at step 44
+2022-03-18 18:38:05,993 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:06,028 [deep_q_learning_code] INFO: Action WAIT at step 45
+2022-03-18 18:38:06,089 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:06,124 [deep_q_learning_code] INFO: Action WAIT at step 46
+2022-03-18 18:38:06,184 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:06,209 [deep_q_learning_code] INFO: Action WAIT at step 47
+2022-03-18 18:38:06,284 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:06,315 [deep_q_learning_code] INFO: Action WAIT at step 48
+2022-03-18 18:38:06,385 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:06,414 [deep_q_learning_code] INFO: Action WAIT at step 49
+2022-03-18 18:38:06,487 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:06,516 [deep_q_learning_code] INFO: Action WAIT at step 50
+2022-03-18 18:38:07,095 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:07,126 [deep_q_learning_code] INFO: Action WAIT at step 1
+2022-03-18 18:38:07,201 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:07,237 [deep_q_learning_code] INFO: Action WAIT at step 2
+2022-03-18 18:38:07,310 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:07,348 [deep_q_learning_code] INFO: Action WAIT at step 3
+2022-03-18 18:38:07,410 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:07,449 [deep_q_learning_code] INFO: Action WAIT at step 4
+2022-03-18 18:38:07,499 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:07,527 [deep_q_learning_code] INFO: Action WAIT at step 5
+2022-03-18 18:38:07,614 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:07,651 [deep_q_learning_code] INFO: Action WAIT at step 6
+2022-03-18 18:38:07,712 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:07,747 [deep_q_learning_code] INFO: Action WAIT at step 7
+2022-03-18 18:38:07,800 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:07,827 [deep_q_learning_code] INFO: Action WAIT at step 8
+2022-03-18 18:38:07,918 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:07,959 [deep_q_learning_code] INFO: Action WAIT at step 9
+2022-03-18 18:38:08,013 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:08,048 [deep_q_learning_code] INFO: Action WAIT at step 10
+2022-03-18 18:38:08,105 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:08,135 [deep_q_learning_code] INFO: Action WAIT at step 11
+2022-03-18 18:38:08,220 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:08,256 [deep_q_learning_code] INFO: Action WAIT at step 12
+2022-03-18 18:38:08,320 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:08,357 [deep_q_learning_code] INFO: Action WAIT at step 13
+2022-03-18 18:38:08,417 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:08,453 [deep_q_learning_code] INFO: Action WAIT at step 14
+2022-03-18 18:38:08,508 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:08,533 [deep_q_learning_code] INFO: Action WAIT at step 15
+2022-03-18 18:38:08,625 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:08,654 [deep_q_learning_code] INFO: Action WAIT at step 16
+2022-03-18 18:38:08,725 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:08,761 [deep_q_learning_code] INFO: Action WAIT at step 17
+2022-03-18 18:38:08,826 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:08,856 [deep_q_learning_code] INFO: Action WAIT at step 18
+2022-03-18 18:38:08,926 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:08,953 [deep_q_learning_code] INFO: Action WAIT at step 19
+2022-03-18 18:38:09,029 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:09,069 [deep_q_learning_code] INFO: Action WAIT at step 20
+2022-03-18 18:38:09,126 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:09,162 [deep_q_learning_code] INFO: Action WAIT at step 21
+2022-03-18 18:38:09,225 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:09,254 [deep_q_learning_code] INFO: Action WAIT at step 22
+2022-03-18 18:38:09,329 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:09,358 [deep_q_learning_code] INFO: Action WAIT at step 23
+2022-03-18 18:38:09,430 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:09,461 [deep_q_learning_code] INFO: Action WAIT at step 24
+2022-03-18 18:38:09,534 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:09,559 [deep_q_learning_code] INFO: Action WAIT at step 25
+2022-03-18 18:38:09,620 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:09,645 [deep_q_learning_code] INFO: Action WAIT at step 26
+2022-03-18 18:38:09,740 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:09,777 [deep_q_learning_code] INFO: Action WAIT at step 27
+2022-03-18 18:38:09,828 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:09,860 [deep_q_learning_code] INFO: Action WAIT at step 28
+2022-03-18 18:38:09,924 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:09,952 [deep_q_learning_code] INFO: Action WAIT at step 29
+2022-03-18 18:38:10,026 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:10,050 [deep_q_learning_code] INFO: Action WAIT at step 30
+2022-03-18 18:38:10,142 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:10,180 [deep_q_learning_code] INFO: Action WAIT at step 31
+2022-03-18 18:38:10,240 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:10,277 [deep_q_learning_code] INFO: Action WAIT at step 32
+2022-03-18 18:38:10,341 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:10,370 [deep_q_learning_code] INFO: Action WAIT at step 33
+2022-03-18 18:38:10,443 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:10,472 [deep_q_learning_code] INFO: Action WAIT at step 34
+2022-03-18 18:38:10,543 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:10,585 [deep_q_learning_code] INFO: Action WAIT at step 35
+2022-03-18 18:38:10,639 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:10,664 [deep_q_learning_code] INFO: Action WAIT at step 36
+2022-03-18 18:38:10,732 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:10,757 [deep_q_learning_code] INFO: Action WAIT at step 37
+2022-03-18 18:38:10,832 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:10,858 [deep_q_learning_code] INFO: Action WAIT at step 38
+2022-03-18 18:38:10,935 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:10,965 [deep_q_learning_code] INFO: Action WAIT at step 39
+2022-03-18 18:38:11,035 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:11,060 [deep_q_learning_code] INFO: Action WAIT at step 40
+2022-03-18 18:38:11,152 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:11,186 [deep_q_learning_code] INFO: Action WAIT at step 41
+2022-03-18 18:38:11,238 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:11,262 [deep_q_learning_code] INFO: Action WAIT at step 42
+2022-03-18 18:38:11,343 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:11,370 [deep_q_learning_code] INFO: Action WAIT at step 43
+2022-03-18 18:38:11,439 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:11,464 [deep_q_learning_code] INFO: Action WAIT at step 44
+2022-03-18 18:38:11,541 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:11,566 [deep_q_learning_code] INFO: Action WAIT at step 45
+2022-03-18 18:38:11,657 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:11,696 [deep_q_learning_code] INFO: Action WAIT at step 46
+2022-03-18 18:38:11,743 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:11,771 [deep_q_learning_code] INFO: Action WAIT at step 47
+2022-03-18 18:38:11,849 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:11,876 [deep_q_learning_code] INFO: Action WAIT at step 48
+2022-03-18 18:38:11,961 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:11,999 [deep_q_learning_code] INFO: Action WAIT at step 49
+2022-03-18 18:38:12,047 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:12,072 [deep_q_learning_code] INFO: Action WAIT at step 50
+2022-03-18 18:38:12,756 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:12,788 [deep_q_learning_code] INFO: Action WAIT at step 1
+2022-03-18 18:38:12,855 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:12,888 [deep_q_learning_code] INFO: Action WAIT at step 2
+2022-03-18 18:38:12,962 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:12,988 [deep_q_learning_code] INFO: Action WAIT at step 3
+2022-03-18 18:38:13,057 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:13,088 [deep_q_learning_code] INFO: Action WAIT at step 4
+2022-03-18 18:38:13,157 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:13,183 [deep_q_learning_code] INFO: Action WAIT at step 5
+2022-03-18 18:38:13,259 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:13,288 [deep_q_learning_code] INFO: Action WAIT at step 6
+2022-03-18 18:38:13,359 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:13,388 [deep_q_learning_code] INFO: Action WAIT at step 7
+2022-03-18 18:38:13,460 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:13,489 [deep_q_learning_code] INFO: Action WAIT at step 8
+2022-03-18 18:38:13,561 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:13,589 [deep_q_learning_code] INFO: Action WAIT at step 9
+2022-03-18 18:38:13,663 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:13,688 [deep_q_learning_code] INFO: Action WAIT at step 10
+2022-03-18 18:38:13,763 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:13,789 [deep_q_learning_code] INFO: Action WAIT at step 11
+2022-03-18 18:38:13,865 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:13,891 [deep_q_learning_code] INFO: Action WAIT at step 12
+2022-03-18 18:38:13,966 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:13,993 [deep_q_learning_code] INFO: Action WAIT at step 13
+2022-03-18 18:38:14,068 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:14,097 [deep_q_learning_code] INFO: Action WAIT at step 14
+2022-03-18 18:38:14,168 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:14,197 [deep_q_learning_code] INFO: Action WAIT at step 15
+2022-03-18 18:38:14,269 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:14,296 [deep_q_learning_code] INFO: Action WAIT at step 16
+2022-03-18 18:38:14,369 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:14,394 [deep_q_learning_code] INFO: Action WAIT at step 17
+2022-03-18 18:38:14,471 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:14,498 [deep_q_learning_code] INFO: Action WAIT at step 18
+2022-03-18 18:38:14,572 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:14,601 [deep_q_learning_code] INFO: Action WAIT at step 19
+2022-03-18 18:38:14,688 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:14,725 [deep_q_learning_code] INFO: Action WAIT at step 20
+2022-03-18 18:38:14,773 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:14,798 [deep_q_learning_code] INFO: Action WAIT at step 21
+2022-03-18 18:38:14,875 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:14,907 [deep_q_learning_code] INFO: Action WAIT at step 22
+2022-03-18 18:38:14,975 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:15,000 [deep_q_learning_code] INFO: Action WAIT at step 23
+2022-03-18 18:38:15,091 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:15,130 [deep_q_learning_code] INFO: Action WAIT at step 24
+2022-03-18 18:38:15,180 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:15,205 [deep_q_learning_code] INFO: Action WAIT at step 25
+2022-03-18 18:38:15,290 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:15,316 [deep_q_learning_code] INFO: Action WAIT at step 26
+2022-03-18 18:38:15,383 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:15,407 [deep_q_learning_code] INFO: Action WAIT at step 27
+2022-03-18 18:38:15,503 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:15,536 [deep_q_learning_code] INFO: Action WAIT at step 28
+2022-03-18 18:38:15,583 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:15,610 [deep_q_learning_code] INFO: Action WAIT at step 29
+2022-03-18 18:38:15,695 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:15,732 [deep_q_learning_code] INFO: Action WAIT at step 30
+2022-03-18 18:38:15,785 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:15,810 [deep_q_learning_code] INFO: Action WAIT at step 31
+2022-03-18 18:38:15,882 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:15,911 [deep_q_learning_code] INFO: Action WAIT at step 32
+2022-03-18 18:38:15,988 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:16,014 [deep_q_learning_code] INFO: Action WAIT at step 33
+2022-03-18 18:38:16,100 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:16,143 [deep_q_learning_code] INFO: Action WAIT at step 34
+2022-03-18 18:38:16,185 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:16,210 [deep_q_learning_code] INFO: Action WAIT at step 35
+2022-03-18 18:38:16,288 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:16,314 [deep_q_learning_code] INFO: Action WAIT at step 36
+2022-03-18 18:38:16,388 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:16,413 [deep_q_learning_code] INFO: Action WAIT at step 37
+2022-03-18 18:38:16,505 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:16,533 [deep_q_learning_code] INFO: Action WAIT at step 38
+2022-03-18 18:38:16,590 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:16,615 [deep_q_learning_code] INFO: Action WAIT at step 39
+2022-03-18 18:38:16,692 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:16,725 [deep_q_learning_code] INFO: Action WAIT at step 40
+2022-03-18 18:38:16,793 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:16,818 [deep_q_learning_code] INFO: Action WAIT at step 41
+2022-03-18 18:38:16,908 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:16,942 [deep_q_learning_code] INFO: Action WAIT at step 42
+2022-03-18 18:38:16,994 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:17,018 [deep_q_learning_code] INFO: Action WAIT at step 43
+2022-03-18 18:38:17,093 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:17,119 [deep_q_learning_code] INFO: Action WAIT at step 44
+2022-03-18 18:38:17,194 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:17,222 [deep_q_learning_code] INFO: Action WAIT at step 45
+2022-03-18 18:38:17,331 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:17,356 [deep_q_learning_code] INFO: Action WAIT at step 46
+2022-03-18 18:38:17,449 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:17,487 [deep_q_learning_code] INFO: Action WAIT at step 47
+2022-03-18 18:38:17,543 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:17,578 [deep_q_learning_code] INFO: Action WAIT at step 48
+2022-03-18 18:38:17,646 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:17,682 [deep_q_learning_code] INFO: Action WAIT at step 49
+2022-03-18 18:38:17,743 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:17,771 [deep_q_learning_code] INFO: Action WAIT at step 50
+2022-03-18 18:38:18,546 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:18,572 [deep_q_learning_code] INFO: Action LEFT at step 1
+2022-03-18 18:38:18,644 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:18,669 [deep_q_learning_code] INFO: Action LEFT at step 2
+2022-03-18 18:38:18,755 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:18,780 [deep_q_learning_code] INFO: Action WAIT at step 3
+2022-03-18 18:38:18,860 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:18,891 [deep_q_learning_code] INFO: Action WAIT at step 4
+2022-03-18 18:38:18,960 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:18,997 [deep_q_learning_code] INFO: Action WAIT at step 5
+2022-03-18 18:38:19,047 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:19,072 [deep_q_learning_code] INFO: Action WAIT at step 6
+2022-03-18 18:38:19,154 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:19,180 [deep_q_learning_code] INFO: Action WAIT at step 7
+2022-03-18 18:38:19,250 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:19,277 [deep_q_learning_code] INFO: Action WAIT at step 8
+2022-03-18 18:38:19,348 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:19,378 [deep_q_learning_code] INFO: Action WAIT at step 9
+2022-03-18 18:38:19,465 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:19,503 [deep_q_learning_code] INFO: Action WAIT at step 10
+2022-03-18 18:38:19,563 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:19,598 [deep_q_learning_code] INFO: Action WAIT at step 11
+2022-03-18 18:38:19,664 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:19,702 [deep_q_learning_code] INFO: Action WAIT at step 12
+2022-03-18 18:38:19,763 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:19,798 [deep_q_learning_code] INFO: Action WAIT at step 13
+2022-03-18 18:38:19,852 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:19,877 [deep_q_learning_code] INFO: Action WAIT at step 14
+2022-03-18 18:38:19,954 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:19,981 [deep_q_learning_code] INFO: Action WAIT at step 15
+2022-03-18 18:38:20,054 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:20,079 [deep_q_learning_code] INFO: Action WAIT at step 16
+2022-03-18 18:38:20,156 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:20,180 [deep_q_learning_code] INFO: Action WAIT at step 17
+2022-03-18 18:38:20,256 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:20,282 [deep_q_learning_code] INFO: Action WAIT at step 18
+2022-03-18 18:38:20,358 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:20,384 [deep_q_learning_code] INFO: Action WAIT at step 19
+2022-03-18 18:38:20,475 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:20,512 [deep_q_learning_code] INFO: Action WAIT at step 20
+2022-03-18 18:38:20,566 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:20,599 [deep_q_learning_code] INFO: Action WAIT at step 21
+2022-03-18 18:38:20,666 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:20,695 [deep_q_learning_code] INFO: Action WAIT at step 22
+2022-03-18 18:38:20,776 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:20,805 [deep_q_learning_code] INFO: Action WAIT at step 23
+2022-03-18 18:38:20,861 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:20,887 [deep_q_learning_code] INFO: Action WAIT at step 24
+2022-03-18 18:38:20,963 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:20,991 [deep_q_learning_code] INFO: Action WAIT at step 25
+2022-03-18 18:38:21,079 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:21,117 [deep_q_learning_code] INFO: Action WAIT at step 26
+2022-03-18 18:38:21,169 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:21,194 [deep_q_learning_code] INFO: Action WAIT at step 27
+2022-03-18 18:38:21,266 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:21,296 [deep_q_learning_code] INFO: Action WAIT at step 28
+2022-03-18 18:38:21,373 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:21,403 [deep_q_learning_code] INFO: Action WAIT at step 29
+2022-03-18 18:38:21,467 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:21,496 [deep_q_learning_code] INFO: Action WAIT at step 30
+2022-03-18 18:38:21,585 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:21,613 [deep_q_learning_code] INFO: Action WAIT at step 31
+2022-03-18 18:38:21,682 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:21,708 [deep_q_learning_code] INFO: Action WAIT at step 32
+2022-03-18 18:38:21,771 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:21,796 [deep_q_learning_code] INFO: Action WAIT at step 33
+2022-03-18 18:38:21,871 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:21,897 [deep_q_learning_code] INFO: Action WAIT at step 34
+2022-03-18 18:38:21,988 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:22,028 [deep_q_learning_code] INFO: Action WAIT at step 35
+2022-03-18 18:38:22,079 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:22,105 [deep_q_learning_code] INFO: Action WAIT at step 36
+2022-03-18 18:38:22,190 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:22,218 [deep_q_learning_code] INFO: Action WAIT at step 37
+2022-03-18 18:38:22,277 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:22,303 [deep_q_learning_code] INFO: Action WAIT at step 38
+2022-03-18 18:38:22,390 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:22,428 [deep_q_learning_code] INFO: Action WAIT at step 39
+2022-03-18 18:38:22,476 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:22,501 [deep_q_learning_code] INFO: Action WAIT at step 40
+2022-03-18 18:38:22,593 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:22,630 [deep_q_learning_code] INFO: Action WAIT at step 41
+2022-03-18 18:38:22,695 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:22,723 [deep_q_learning_code] INFO: Action WAIT at step 42
+2022-03-18 18:38:22,792 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:22,820 [deep_q_learning_code] INFO: Action WAIT at step 43
+2022-03-18 18:38:22,895 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:22,920 [deep_q_learning_code] INFO: Action WAIT at step 44
+2022-03-18 18:38:22,986 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:23,014 [deep_q_learning_code] INFO: Action WAIT at step 45
+2022-03-18 18:38:23,098 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:23,123 [deep_q_learning_code] INFO: Action WAIT at step 46
+2022-03-18 18:38:23,197 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:23,233 [deep_q_learning_code] INFO: Action WAIT at step 47
+2022-03-18 18:38:23,291 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:23,319 [deep_q_learning_code] INFO: Action WAIT at step 48
+2022-03-18 18:38:23,400 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:23,438 [deep_q_learning_code] INFO: Action WAIT at step 49
+2022-03-18 18:38:23,498 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:23,526 [deep_q_learning_code] INFO: Action WAIT at step 50
+2022-03-18 18:38:24,106 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:24,132 [deep_q_learning_code] INFO: Action LEFT at step 1
+2022-03-18 18:38:24,191 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:24,216 [deep_q_learning_code] INFO: Action LEFT at step 2
+2022-03-18 18:38:24,292 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:24,319 [deep_q_learning_code] INFO: Action WAIT at step 3
+2022-03-18 18:38:24,392 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:24,420 [deep_q_learning_code] INFO: Action WAIT at step 4
+2022-03-18 18:38:24,502 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:24,544 [deep_q_learning_code] INFO: Action WAIT at step 5
+2022-03-18 18:38:24,593 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:24,619 [deep_q_learning_code] INFO: Action WAIT at step 6
+2022-03-18 18:38:24,695 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:24,724 [deep_q_learning_code] INFO: Action WAIT at step 7
+2022-03-18 18:38:24,809 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:24,836 [deep_q_learning_code] INFO: Action WAIT at step 8
+2022-03-18 18:38:24,895 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:24,924 [deep_q_learning_code] INFO: Action WAIT at step 9
+2022-03-18 18:38:25,011 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:25,037 [deep_q_learning_code] INFO: Action WAIT at step 10
+2022-03-18 18:38:25,098 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:25,124 [deep_q_learning_code] INFO: Action WAIT at step 11
+2022-03-18 18:38:25,200 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:25,226 [deep_q_learning_code] INFO: Action WAIT at step 12
+2022-03-18 18:38:25,305 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:25,334 [deep_q_learning_code] INFO: Action WAIT at step 13
+2022-03-18 18:38:25,401 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:25,426 [deep_q_learning_code] INFO: Action WAIT at step 14
+2022-03-18 18:38:25,503 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:25,534 [deep_q_learning_code] INFO: Action WAIT at step 15
+2022-03-18 18:38:25,603 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:25,629 [deep_q_learning_code] INFO: Action WAIT at step 16
+2022-03-18 18:38:25,704 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:25,733 [deep_q_learning_code] INFO: Action WAIT at step 17
+2022-03-18 18:38:25,809 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:25,834 [deep_q_learning_code] INFO: Action WAIT at step 18
+2022-03-18 18:38:25,907 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:25,936 [deep_q_learning_code] INFO: Action WAIT at step 19
+2022-03-18 18:38:26,007 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:26,033 [deep_q_learning_code] INFO: Action WAIT at step 20
+2022-03-18 18:38:26,125 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:26,157 [deep_q_learning_code] INFO: Action WAIT at step 21
+2022-03-18 18:38:26,222 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:26,261 [deep_q_learning_code] INFO: Action WAIT at step 22
+2022-03-18 18:38:26,322 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:26,352 [deep_q_learning_code] INFO: Action WAIT at step 23
+2022-03-18 18:38:26,425 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:26,453 [deep_q_learning_code] INFO: Action WAIT at step 24
+2022-03-18 18:38:26,526 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:26,560 [deep_q_learning_code] INFO: Action WAIT at step 25
+2022-03-18 18:38:26,626 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:26,662 [deep_q_learning_code] INFO: Action WAIT at step 26
+2022-03-18 18:38:26,720 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:26,752 [deep_q_learning_code] INFO: Action WAIT at step 27
+2022-03-18 18:38:26,830 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:26,867 [deep_q_learning_code] INFO: Action WAIT at step 28
+2022-03-18 18:38:26,927 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:26,962 [deep_q_learning_code] INFO: Action WAIT at step 29
+2022-03-18 18:38:27,030 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:27,059 [deep_q_learning_code] INFO: Action WAIT at step 30
+2022-03-18 18:38:27,131 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:27,166 [deep_q_learning_code] INFO: Action WAIT at step 31
+2022-03-18 18:38:27,231 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:27,268 [deep_q_learning_code] INFO: Action WAIT at step 32
+2022-03-18 18:38:27,332 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:27,367 [deep_q_learning_code] INFO: Action WAIT at step 33
+2022-03-18 18:38:27,436 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:27,473 [deep_q_learning_code] INFO: Action WAIT at step 34
+2022-03-18 18:38:27,530 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:27,567 [deep_q_learning_code] INFO: Action WAIT at step 35
+2022-03-18 18:38:27,636 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:27,662 [deep_q_learning_code] INFO: Action WAIT at step 36
+2022-03-18 18:38:27,739 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:27,775 [deep_q_learning_code] INFO: Action WAIT at step 37
+2022-03-18 18:38:27,825 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:27,852 [deep_q_learning_code] INFO: Action WAIT at step 38
+2022-03-18 18:38:27,927 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:27,959 [deep_q_learning_code] INFO: Action WAIT at step 39
+2022-03-18 18:38:28,041 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:28,078 [deep_q_learning_code] INFO: Action WAIT at step 40
+2022-03-18 18:38:28,142 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:28,170 [deep_q_learning_code] INFO: Action WAIT at step 41
+2022-03-18 18:38:28,244 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:28,282 [deep_q_learning_code] INFO: Action WAIT at step 42
+2022-03-18 18:38:28,343 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:28,376 [deep_q_learning_code] INFO: Action WAIT at step 43
+2022-03-18 18:38:28,446 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:28,483 [deep_q_learning_code] INFO: Action WAIT at step 44
+2022-03-18 18:38:28,546 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:28,584 [deep_q_learning_code] INFO: Action WAIT at step 45
+2022-03-18 18:38:28,647 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:28,675 [deep_q_learning_code] INFO: Action WAIT at step 46
+2022-03-18 18:38:28,742 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:28,771 [deep_q_learning_code] INFO: Action WAIT at step 47
+2022-03-18 18:38:28,857 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:28,886 [deep_q_learning_code] INFO: Action WAIT at step 48
+2022-03-18 18:38:28,935 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:28,960 [deep_q_learning_code] INFO: Action WAIT at step 49
+2022-03-18 18:38:29,045 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-18 18:38:29,070 [deep_q_learning_code] INFO: Action WAIT at step 50

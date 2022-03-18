@@ -226,6 +226,10 @@ def state_to_features(self,game_state: dict) -> np.array:
         x_b = x_bomb[n]
         y_b = y_bomb[n]
         timer = bomb_timer[n]
+
+        if advanced_explosion_field[x_b,y_b] == 0:
+            advanced_explosion_field[x_b,y_b] = timer
+
         #print("bomb",x_b,y_b,timer)
         for direction in [np.array([0,1]),np.array([0,-1]),np.array([1,0]),np.array([-1,0])]:
             current_position = np.copy(np.array([x_b,y_b]))
@@ -237,7 +241,7 @@ def state_to_features(self,game_state: dict) -> np.array:
                     break
 
                 else:
-                    if advanced_explosion_field[current_position[0],current_position[1]] >= 0:#condition needed becuase a timer should not overwrite a current explosion
+                    if advanced_explosion_field[current_position[0],current_position[1]] == 0:#condition needed becuase a timer should not overwrite a current explosion or lower timer
                         advanced_explosion_field[current_position[0], current_position[1]] = timer
                         #print("timer_added")
 
@@ -354,6 +358,8 @@ def state_to_features(self,game_state: dict) -> np.array:
         feature[:, :, 0] = (field_map + bomb_map)
         feature[:, :, 1] = coin_map
         feature[:,:,2] = advanced_explosion_map
+
+        print(advanced_explosion_map)
         return feature
 
 

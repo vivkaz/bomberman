@@ -46,6 +46,7 @@ def setup_training(self):
 
     self.buffer_states = deque(maxlen=6)
 
+    self.training_history = deque(maxlen = 3000)
 
 def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_state: dict, events: List[str]):
     """
@@ -66,15 +67,15 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     """
 
     # function "buffer_information" saves the experience of one step in the variable self.replay_memory starts a step 2 since in setp 1 the old_game_state is none
-    def buffer_information():
-        if new_game_state["step"] >= 2:
-            self.replay_memory.append((state_to_features(self, old_game_state), self_action,
-                                       reward_from_events(self, events), state_to_features(self, new_game_state)))
+
 
     self.old_game_state = old_game_state
     self.new_game_state = new_game_state
 
-    buffer_information()
+
+
+
+    ###
 
     def update_buffer_states():
         if new_game_state is not None:
@@ -170,7 +171,18 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     #print(events)
     self.logger.debug(f'Encountered game event(s) {", ".join(map(repr, events))} in step {new_game_state["step"]}')
 
-    print(events)
+    #print(events)
+    print(f"events occured :  {events} \n"
+          f"in step {new_game_state['step']}")
+
+
+    def buffer_information():
+        if new_game_state["step"] >= 2:
+            self.replay_memory.append((state_to_features(self, old_game_state), self_action,
+                                       reward_from_events(self, events), state_to_features(self, new_game_state)))
+
+    buffer_information()
+
 
 def end_of_round(self, last_game_state: dict, last_action: str, events: List[str]):
     """
@@ -217,11 +229,7 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
         optimizer.apply_gradients(zip(grads, self.model.trainable_variables))
         self.logger.info("update model")
 
-    # save model
-    if self.Hyperparameter["episoden"] <= last_game_state["round"]:
-        self.model.save(self.Hyperparameter["save_name"])
-        with open(f'{self.Hyperparameter["save_name"]}/Hyperparameter.pkl', 'wb') as f:
-            pickle.dump(self.Hyperparameter, f)
+
 
     self.logger.debug(f'Encountered event(s) {", ".join(map(repr, events))} in final step')
 
@@ -236,12 +244,9 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
     self.rewards.append(sum)
     self.logger.info(f'end of round {last_game_state["round"]} with total reward : {sum}')
 
-    if last_game_state["round"] == 1:
-        now = datetime.now()
-        self.date_time = now.strftime("%m_%d_%Y_%H_%M_%S")
-    with open(f"rewards_{self.date_time}.txt", 'a') as f:
-        f.write(f'{sum}')
-        f.write('\n')
+    self.training_history.append(sum)
+
+
 
     # reset protokoll file in first round
     if last_game_state["round"] == 1:
@@ -254,6 +259,18 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
             f"[{datetime.now().strftime('%H_%M_%S')}] finished epoche {last_game_state['round']} with total reward {sum}")
         f.write("\n")
 
+        # save model and training_history
+        if last_game_state["round"] == 1:
+            now = datetime.now()
+            self.date_time = now.strftime("%m_%d_%Y_%H_%M_%S")
+
+        if self.Hyperparameter["episoden"] <= last_game_state["round"]:
+            self.model.save(self.Hyperparameter["save_name"])
+
+            with open(f'{self.Hyperparameter["save_name"]}/Hyperparameter.pkl', 'wb') as f:
+                pickle.dump(self.Hyperparameter, f)
+
+            np.save(f"{self.Hyperparameter['save_name']}/rewards_{self.date_time}.npy", self.training_history)
 
 def reward_from_events(self, events: List[str]) -> int:
     def distance_to_nearest_coin(state):

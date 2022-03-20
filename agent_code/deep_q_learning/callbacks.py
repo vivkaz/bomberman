@@ -38,7 +38,8 @@ def setup(self):
         load_model = "initialize_model"
     else:
         load_model = "saved_model"
-    #load_model = "recent_best_coin_collector"
+    #load_model = "agent/recent_best_coin_collector"
+
 
     try:
         self.model = tf.keras.models.load_model(load_model)
@@ -70,7 +71,7 @@ def act(self, game_state: dict) -> str:
     #epsilon = 0
 
     inputs = state_to_features(self,game_state)
-    print(inputs)
+    #print(inputs)
     # todo Exploration vs exploitation
 
     self.logger.debug("Querying model for action.")
@@ -359,7 +360,7 @@ def state_to_features(self,game_state: dict) -> np.array:
         feature[:, :, 1] = coin_map
         feature[:,:,2] = advanced_explosion_map
 
-        print(advanced_explosion_map)
+        #print(advanced_explosion_map)
         return feature
 
 

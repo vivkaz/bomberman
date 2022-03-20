@@ -22,6 +22,7 @@ def transform_actions_to_number(action):
 # function "sample_experiences" samples a random set of experiences. A experience is the information about the state the action the reward and the next state of one step in the game.
 # the parameter batch_size defines the number of experiences that are use for one training iteration
 def sample_experiences(self, batch_size):
+    print("länger replay_memory : ", len(self.replay_memory))
     indices = np.random.randint(len(self.replay_memory), size=batch_size)
     batch = [self.replay_memory[index] for index in indices]
     states, actions, rewards, next_states = [np.array([experience[field_index] for experience in batch])
@@ -82,9 +83,24 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             self.buffer_states.append(np.array(new_game_state['self'][3]))  # save position as array not as tuple
 
     def risky_area(pos):
-        vertical = np.array([[x, pos[1]] for x in range(pos[0] - 3, pos[0] + 4)])
-        horizontal = np.array([[pos[0], y] for y in range(pos[1] - 3, pos[1] + 4)])
-        return np.concatenate((vertical, horizontal), axis=0)
+        #vertical = np.array([[x, pos[1]] for x in range(pos[0] - 3, pos[0] + 4)])
+        #horizontal = np.array([[pos[0], y] for y in range(pos[1] - 3, pos[1] + 4)])
+        buffer = []
+        pos = np.array([pos[0],pos[1]])
+        for direction in [np.array([0,1]),np.array([0,-1]),np.array([1,0]),np.array([-1,0])]:
+            current_position = np.copy(pos)
+
+            for i in range(3):
+                current_position += direction
+
+                if old_game_state["field"][current_position[0],current_position[1]] == -1:
+                    break
+                else:
+                    buffer.append(np.copy(current_position))
+
+
+        buffer = np.array(buffer)
+        return buffer
 
     def in_danger(area, bombs):
         danger = False
@@ -92,6 +108,18 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             for a in area:
                 if (b == a).all():
                     danger = True
+
+                    break
+        return danger
+
+    def in_danger_with_timer(area, bombs, timer):
+        danger = False
+        bombs = bombs[timer < 2]
+        for b in bombs:
+            for a in area:
+                if (b == a).all():
+                    danger = True
+
                     break
         return danger
 
@@ -111,6 +139,20 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             old_danger = in_danger(old_risky_area, bombs)
             new_danger = in_danger(new_risky_area, bombs)
             return old_danger and not new_danger
+    # if a bomb with a timer lower than 3 ist in potential lethal range to the agnet the agent will get a penalty
+    def agent_is_in_danger():
+        bombs = np.empty((2,len(old_game_state["bombs"])))
+        timer = np.empty(len(old_game_state["bombs"]))
+        if bombs.size != 0:
+            for count,bomb in enumerate(old_game_state["bombs"]):
+                bombs[0,count] = bomb[0][0]
+                bombs[1,count] = bomb[0][1]
+                timer[count] = bomb[1]
+            bombs = bombs.transpose()
+            return in_danger_with_timer(risky_area(new_game_state["self"][3]),bombs,timer)
+
+
+
 
     def get_collectable_coins():
 
@@ -153,9 +195,11 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     if old_game_state is not None:
         if bomb_avoided():
             events.append(e.BOMB_AVOIDED)
+        if agent_is_in_danger():
+            events.append(e.IN_DANGER)
 
-        if bomb_dropped():
-            events.append(e.BOMB_DROPPED)
+        #if bomb_dropped():
+        #    events.append(e.BOMB_DROPPED)
 
         collectable_coins, reduced_dist = coin_distance_reduced()
         if collectable_coins:
@@ -165,7 +209,6 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
                 events.append(e.COIN_DISTANCE_INCREASED)
 
     if run_in_loop():
-        print(self.buffer_states)
         events.append(e.RUN_IN_LOOP)
 
     #print(events)
@@ -182,7 +225,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
                                        reward_from_events(self, events), state_to_features(self, new_game_state)))
 
     buffer_information()
-
+    #print("events: ", events)
 
 def end_of_round(self, last_game_state: dict, last_action: str, events: List[str]):
     """

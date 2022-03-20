@@ -39,7 +39,7 @@ def setup(self):
     else:
         load_model = "saved_model"
     #load_model = "agent/recent_best_coin_collector"
-
+    load_model = "saved_model"
 
     try:
         self.model = tf.keras.models.load_model(load_model)
@@ -68,7 +68,7 @@ def act(self, game_state: dict) -> str:
 
     #epsilon is a hyperparameter that introduces a random factor for the decisoin process for the first trained rounds. This supports the agent to discover the enviroment
     epsilon = max(1 - game_state["round"] / self.Hyperparameter["epsilon_scale"], 0.01)
-    #epsilon = 0
+    epsilon = 0
 
     inputs = state_to_features(self,game_state)
     #print(inputs)

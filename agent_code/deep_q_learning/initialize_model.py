@@ -25,7 +25,7 @@ Hyperparameter = {
 "epsilon_scale" : 700,
 "learning_rate" : 1e-3,
 "batch_size" : 30,
-"steps" : 30,
+"steps" : 100,
 "episoden" : 2000,
 "discount_factor" : 0.9,
 "rewards" : {
@@ -40,10 +40,10 @@ Hyperparameter = {
         #e.COIN_DISTANCE_INCREASED: -5,
         e.RUN_IN_LOOP:-10,
         #e.CRATE_DESTROYED: 40,
-        e.BOMB_AVOIDED : 20,
+        e.BOMB_AVOIDED : 30,
         e.SURVIVED_ROUND : 5,
         e.KILLED_SELF: -50,
-        e.IN_DANGER: -10,
+        e.IN_DANGER: -20,
         #e.COIN_FOUND : 20,
         e.GOT_KILLED : -50,
         e.BOMB_DROPPED : 10

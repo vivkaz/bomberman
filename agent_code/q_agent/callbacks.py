@@ -13,9 +13,9 @@ ACTIONS = ['UP', 'RIGHT', 'DOWN', 'LEFT', 'WAIT', 'BOMB']
 N_STATES = 3072 # 4^4*3*4 = 3072 states, reduced by exploiting rotation
 M_ACTIONS = len(ACTIONS)
 #STEPS = 100
-MAX_DIST_NEIGHBOUR = np.sqrt(8) # max distance from neighbour
+MAX_DIST_NEIGHBOUR = np.sqrt(32) # max distance from neighbour
 MAX_DIST_FROM_ME = np.sqrt(32) # max distance from agent
-epsilon = 0.4 # exploration vs exproitation?
+epsilon = 0.1 # exploration vs exproitation?
 dic = {} # for mapping states to indices
 
 NEIGHBOURING_FIELDS = [-1,0,1,2] # the possible values for neighbouring fields
@@ -46,6 +46,8 @@ def setup(self):
     if self.train or not os.path.isfile("my-saved-model.npy"): # how could we train the model again?
         self.logger.info("Setting up model from scratch.")
         q_table = np.zeros((N_STATES, M_ACTIONS)) # init Q-table
+
+        # random samples from a uniform distribution over [0, 1)
         #q_table = np.random.rand(N_STATES, M_ACTIONS) # find good initialization?
         self.model = q_table
         
@@ -53,7 +55,7 @@ def setup(self):
         self.logger.info("Loading model from saved state.")
         self.model = np.load("my-saved-model.npy")
 
-        print(f"# nonzero rows { sum(np.apply_along_axis(np.any, axis=1, arr=self.model)) }")
+        #print(f"# nonzero rows { sum(np.apply_along_axis(np.any, axis=1, arr=self.model)) }")
 
         #with open("my-saved-model.pt", "rb") as file:
         #    self.model = pickle.load(file)
@@ -68,27 +70,36 @@ def get_variations(array, r=4):
 
 # compute state to index for the Q-table
 def build_state_to_index(arr1 = NEIGHBOURING_FIELDS, arr2 = GAME_MODE, arr3 = CURRENT_FIELD):
+    i = 0
     perm = get_variations(arr1)
+    comb = np.array(np.meshgrid(arr2, arr3)).T.reshape(-1,2) # combinations of arr2 and arr3
+    step = len(comb)
     for p in perm:
-        arrangements = get_arrangements(p)
-        for a in arrangements:
-            #a_with_mode = [ np.append(a, j) for j in arr2 ] # add game mode
-            comb = np.array(np.meshgrid(arr2, arr3)).T.reshape(-1,2) # combinations of arr2 and arr3
-            a_completed = [ np.append(a, j) for j in comb ]
-            for a_c in a_completed:
-                if tuple(a_c) in dic.keys():
-                    continue # already in dictionary
-                i = len(dic)
-                dic.update({tuple(a_c) : i})
+        ar = get_arrangements(p)
+        for a in ar:
+            if tuple(a) not in dic.keys():
+                value = [v for v in range(i, i+step)]
+                i += step
+                dic.update({tuple(a) : value})  
 
-# give corresponding index
+# give corresponding index and rotation from keys
 def get_state_index(state):
     temp = get_arrangements(state[1:5]) # rotations of neighbouring fields
     mode_and_field = [ state[-1], state[0] ]
-    arrangements = [ np.append(t, mode_and_field) for t in temp]
-    for rotation, a in enumerate(arrangements):
+    value_index = 0
+    comb = np.array(np.meshgrid(GAME_MODE, CURRENT_FIELD)).T.reshape(-1,2)
+    for i, c in enumerate(comb):
+        if (c == mode_and_field).all():
+            value_index = i
+            break
+    rotation = 0
+    for i, t in enumerate(temp):
+        if (t == state[1:5]).all():
+            rotation = i
+    for j, a in enumerate(temp):
         if tuple(a) in dic.keys():
-            return dic[tuple(a)], rotation
+            #print("state: ", state, "index", dic[tuple(a)][value_index])
+            return dic[tuple(a)][value_index], rotation
 
     assert True == 0, "Dictionary should not be updated!"
     """i = len(dic)
@@ -106,10 +117,11 @@ def act(self, game_state: dict) -> str:
     :return: The action to take as a string.
     """
     # todo Exploration vs exploitation
-    if (self.train and random.uniform(0, 1) < epsilon ) or game_state is None: # it was random.random()?
+    if (self.train and random.uniform(0, 1) < epsilon ) or game_state is None: # it was random.random() ?
         self.logger.debug("Choosing action purely at random.")
-        # 80%: walk in any direction. 10% wait. 10% bomb.
-        return np.random.choice(ACTIONS, p=[.2, .2, .2, .2, .1, .1]) # Explore action space softmax ro ?
+        # 80%: walk in any direction. 10% wait. 10% bomb. (random action is selected with regards to the weight associated with each action)
+        #print("random")
+        return np.random.choice(ACTIONS, p=[.2, .2, .2, .2, .2, .0]) # softmax; e-greedy or e-soft (select random actions uniformly with probability e or 1-e) instead ?
 
     self.logger.debug("Querying model for action.")
     
@@ -123,7 +135,8 @@ def act(self, game_state: dict) -> str:
     #if not self.train:
     #    self.logger.info(f"Action {ACTIONS[action]} at step {game_state['step']}")
     #    print(f" STEP : {game_state['step']}, ACTION : {ACTIONS[action]}")
-        
+    #print ("m",self.model[index])    
+    
     return ACTIONS[action]
 
 
@@ -149,7 +162,7 @@ def state_to_features(game_state: dict) -> np.array:
         return np.sqrt( np.power(np.subtract(objects, pos).transpose()[0], 2) + np.power(np.subtract(objects, pos).transpose()[1], 2) )
     
     # get vertical and horizontal region from the position
-    def get_vh_region(pos, n):
+    def get_vh_region(pos, n=3):
         horizontal = np.array([ [x, pos[1]] for x in range(pos[0]-n, pos[0]+(n+1)) ])
         vertical = np.array([ [pos[0], y] for y in range(pos[1]-n, pos[1]+(n+1)) ])
         return np.concatenate((vertical, horizontal), axis = 0)
@@ -157,27 +170,27 @@ def state_to_features(game_state: dict) -> np.array:
     # get forward region from position
     def get_region(my_pos, pos):
         if pos[0] == my_pos[0] and pos[1] > my_pos[1]: # up
-            r1 = np.array([ [pos[0]-1, y] for y in range(pos[1], pos[1]+3) ])
-            r2 = np.array([ [pos[0], y] for y in range(pos[1], pos[1]+3) ])
-            r3 = np.array([ [pos[0]+1, y] for y in range(pos[1], pos[1]+3) ])
+            r1 = np.array([ [pos[0]-1, y] for y in range(pos[1], pos[1]+4) ])
+            r2 = np.array([ [pos[0], y] for y in range(pos[1], pos[1]+4) ])
+            r3 = np.array([ [pos[0]+1, y] for y in range(pos[1], pos[1]+4) ])
             r12 = np.concatenate((r1, r2), axis = 0)
             return np.append(r12,r3).reshape(-1,2)
         elif pos[0] == my_pos[0] and pos[1] < my_pos[1]: # down
-            r1 = np.array([ [pos[0]-1, y] for y in range(pos[1]-3, pos[1]) ])
-            r2 = np.array([ [pos[0], y] for y in range(pos[1]-3, pos[1]) ])
-            r3 = np.array([ [pos[0]+1, y] for y in range(pos[1]-3, pos[1]) ])
+            r1 = np.array([ [pos[0]-1, y] for y in range(pos[1]-3, pos[1]+1) ])
+            r2 = np.array([ [pos[0], y] for y in range(pos[1]-3, pos[1]+1) ])
+            r3 = np.array([ [pos[0]+1, y] for y in range(pos[1]-3, pos[1]+1) ])
             r12 = np.concatenate((r1, r2), axis = 0)
             return np.append(r12,r3).reshape(-1,2)
         elif pos[1] == my_pos[1] and pos[0] > my_pos[0]: # right
-            r1 = np.array([ [x, pos[1]+1] for x in range(pos[0], pos[0]+3) ])
-            r2 = np.array([ [x, pos[1]] for x in range(pos[0], pos[0]+3) ])
-            r3 = np.array([ [x, pos[1]-1] for x in range(pos[0], pos[0]+3) ])
+            r1 = np.array([ [x, pos[1]+1] for x in range(pos[0], pos[0]+4) ])
+            r2 = np.array([ [x, pos[1]] for x in range(pos[0], pos[0]+4) ])
+            r3 = np.array([ [x, pos[1]-1] for x in range(pos[0], pos[0]+4) ])
             r12 = np.concatenate((r1, r2), axis = 0)
             return np.append(r12,r3).reshape(-1,2)
         else: # left
-            r1 = np.array([ [x, pos[1]+1] for x in range(pos[0]-3, pos[0]) ])
-            r2 = np.array([ [x, pos[1]] for x in range(pos[0]-3, pos[0]) ])
-            r3 = np.array([ [x, pos[1]-1] for x in range(pos[0]-3, pos[0]) ])
+            r1 = np.array([ [x, pos[1]+1] for x in range(pos[0]-3, pos[0]+1) ])
+            r2 = np.array([ [x, pos[1]] for x in range(pos[0]-3, pos[0]+1) ])
+            r3 = np.array([ [x, pos[1]-1] for x in range(pos[0]-3, pos[0]+1) ])
             r12 = np.concatenate((r1, r2), axis = 0)
             return np.append(r12,r3).reshape(-1,2)
 
@@ -187,7 +200,8 @@ def state_to_features(game_state: dict) -> np.array:
         if len(game_state['coins']) > 0:
             if me == True: # check if coin in radius
                 return np.min(dist(pos, game_state['coins'])) <= MAX_DIST_FROM_ME
-            return game_state['coins'][np.argmin(dist(pos, game_state['coins']))] in get_region(my_pos, pos) # check if coin in region
+            # check if coin in region or in radius
+            return game_state['coins'][np.argmin(dist(pos, game_state['coins']))] in get_region(my_pos, pos) or np.min(dist(pos, game_state['coins'])) <= MAX_DIST_NEIGHBOUR
         return False
 
         """area = get_region(my_pos, pos)
@@ -258,18 +272,21 @@ def state_to_features(game_state: dict) -> np.array:
         count = 0
         area = get_vh_region(pos, 3)
         for a in area:
-            if game_state['field'][a[0]][a[1]] == 1: # crate
-                count += 1
+            if a[0] < 17 and a[1] < 17: # game board
+                if game_state['field'][a[0]][a[1]] == 1: # crate
+                    count += 1
         return count
 
     def count_opponents(pos):
         count = 0
         area = get_vh_region(pos)
-        others = game_state['others'][0][3]
-        for opponent in others:
-            for a in area:
-                if a == opponent:
-                    count += 1
+        if len(game_state['others']) > 0:
+            others = game_state['others'][0][3]
+            for opponent in others:
+                for a in area:
+                    if a[0] < 17 and a[1] < 17: # game board
+                        if a == opponent:
+                            count += 1
         return count
 
     def coin_behind_crate(my_pos, crate_pos): # ?
@@ -301,7 +318,15 @@ def state_to_features(game_state: dict) -> np.array:
     neighbours = get_neighbours(my_position)
     neighbours_values = get_neighbours_values(neighbours)
 
-    my_position_value = 0
+
+    # calculate value of game mode
+    mode = 0 # destroy crates
+    if collectable_coin(my_position): # collectable coin near the agent
+        mode = 2 # collect coins
+    elif attackable_opponent(my_position, MAX_DIST_FROM_ME): # opponent near the agent
+        mode = 1 # kill opponents
+
+    my_position_value = 0 # move
 
     # TODO value of current position?
     # wait or bomb would lead to safe death
@@ -310,6 +335,17 @@ def state_to_features(game_state: dict) -> np.array:
             my_position_value = 0 # move
         else: # safe death
             my_position_value = 1 # bomb
+
+    # if there are many crates/opponents in agent's region, drop bomb
+    elif (count_crates(my_position) + count_opponents(my_position)) > 5 and game_state['self'][2]==True and mode != 2: # ?
+        my_position_value = 2 # drop bomb, destroy crates/ kill opponents
+
+    elif (count_crates(my_position) + count_opponents(my_position)) > 3 and game_state['self'][2]==True and mode != 2: # ?
+        my_position_value = 1 # drop bomb, destroy crates/ kill opponents
+
+    # should wait
+    elif all(True == danger(neighbour, 0) for neighbour in neighbours): #or game_state['self'][2]==False or count_crates(my_position) == 0: ?
+        my_position_value = 2 # wait
 
     # tricky: if neighbour is blocked opponent in danger, wait until agent is not in safe death       
     elif any(True == blocked_opponent(opponent, neighbours) for opponent in game_state['others']):
@@ -323,17 +359,6 @@ def state_to_features(game_state: dict) -> np.array:
                 if game_state['field'][a[0]][a[1]] == 1:
                     if coin_behind_crate(my_position, a):
                         my_position_value = 3 # set a trap ? yourself be careful in such situations ? 
-
-    # if there are many crates/opponents in agent's region, drop bomb
-    elif (count_crates(my_position) + count_opponents(my_position)) > 5 and game_state['self'][2]==True: # ?
-        my_position_value = 2 # drop bomb, destroy crates/ kill opponents
-
-    elif (count_crates(my_position) + count_opponents(my_position)) > 3 and game_state['self'][2]==True: # ?
-        my_position_value = 1 # drop bomb, destroy crates/ kill opponents
-
-    # should wait
-    elif all(True == danger(neighbour, 0) for neighbour in neighbours): #or game_state['self'][2]==False or count_crates(my_position) == 0: ?
-        my_position_value = 2 # wait
 
     #else: #game_state['self'][2]==False: 
     #    my_position_value = 0 # move
@@ -361,18 +386,11 @@ def state_to_features(game_state: dict) -> np.array:
                
         else:
             channels.append(-1) # wall, opponent
-    
-
-    # calculate value of game mode
-    mode = 0 # destroy crates
-    if collectable_coin(my_position): # collectable coin near the agent
-        mode = 2 # collect coins
-    elif attackable_opponent(my_position, MAX_DIST_FROM_ME): # opponent near the agent
-        mode = 1 # kill opponents
 
     channels.append(mode)
     
-    
+    assert len(channels) == 6, "Not all features in channels"
+
     # concatenate them as a feature tensor (they must have the same shape)
     stacked_channels = np.stack(channels)
     

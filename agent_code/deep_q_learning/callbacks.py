@@ -71,7 +71,7 @@ def act(self, game_state: dict) -> str:
     epsilon = 0
 
     inputs = state_to_features(self,game_state)
-    #print(inputs)
+    print("inputs",inputs)
     # todo Exploration vs exploitation
 
     self.logger.debug("Querying model for action.")
@@ -149,6 +149,9 @@ def state_to_features(self,game_state: dict) -> np.array:
     :param game_state:  A dictionary describing the current game board.
     :return: np.array
     """
+
+    print(f"explosion_map at setp {game_state['step']} : {game_state['explosion_map']}")
+
     # This is the dict before the game begins and after it ends
     if game_state is None:
         return None
@@ -220,6 +223,7 @@ def state_to_features(self,game_state: dict) -> np.array:
 
 
     explosion_field = np.where(game_state["explosion_map"] != 0, -game_state["explosion_map"]-3,0)
+    #print("explosion_field : ",explosion_field)
     # timer infromation auf die felder mit zukünftiger explosion erweitern
     advanced_explosion_field = np.zeros(np.shape(field)) + explosion_field
 

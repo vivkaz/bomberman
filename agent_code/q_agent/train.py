@@ -1,4 +1,5 @@
 from collections import namedtuple, deque
+from datetime import datetime
 from pathlib import PosixPath
 #from turtle import position
 from matplotlib.pyplot import new_figure_manager
@@ -22,7 +23,7 @@ ALPHA = 0.1
 GAMMA = 0.6
 
 # Events
-PLACEHOLDER_EVENT = "PLACEHOLDER"
+#PLACEHOLDER_EVENT = "PLACEHOLDER"
 
 
 def setup_training(self):
@@ -66,28 +67,35 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
     def update_buffer_states():
         if new_game_state is not None:
-            self.buffer_states.append(new_game_state['self'][3])
+            self.buffer_states.append(new_game_state['self'][3]) # save as array and nos as tuple ?
 
     def risky_area(pos):
-        vertical = np.array([ [x, pos[1]] for x in range(pos[0]-3, pos[0]+4) ])
-        horizontal = np.array([ [pos[0], y] for y in range(pos[1]-3, pos[1]+4) ])
+        horizontal = np.array([ [x, pos[1]] for x in range(pos[0]-3, pos[0]+4) ])
+        vertical = np.array([ [pos[0], y] for y in range(pos[1]-3, pos[1]+4) ])
         return np.concatenate((vertical, horizontal), axis = 0)
 
     def in_danger(area, bombs):
-        for b in bombs:
+        for bomb in bombs:
             for a in area:
-                if (b == a).all():
+                #if (bomb == a).all():
+                if (np.array(bomb[0]) == a).all():
                     return True
         return False
 
-    def bomb_dropped():
-        return old_game_state['self'][2] == True and new_game_state['self'][2] == False
+    #def bomb_dropped(): # covered in environment.py
+    #    return old_game_state['self'][2] == True and new_game_state['self'][2] == False
 
     def bomb_avoided(): 
-        old_risky_area = risky_area(old_game_state['self'][3])
-        new_risky_area = risky_area(new_game_state['self'][3])
+        if len(old_game_state['bombs']) > 0:
+            bombs = old_game_state['bombs']
+            old_risky_area = risky_area(old_game_state['self'][3])
+            new_risky_area = risky_area(new_game_state['self'][3])
 
-        bombs = np.empty((2, len(old_game_state['bombs'])))
+            old_danger = in_danger(old_risky_area, bombs)
+            new_danger = in_danger(new_risky_area, bombs)
+            return old_danger and not new_danger
+
+        """bombs = np.empty((2, len(old_game_state['bombs'])))
         if bombs.size != 0:
             for count, bomb in enumerate(old_game_state['bombs']):
                 bombs[0, count] = bomb[0][0]
@@ -95,7 +103,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             bombs = bombs.transpose()
             old_danger = in_danger(old_risky_area, bombs)
             new_danger = in_danger(new_risky_area, bombs)
-            return old_danger and not new_danger
+            return old_danger and not new_danger"""
     
     def get_collectable_coins():
         coins = np.empty((2, len(old_game_state['coins'])))
@@ -137,8 +145,8 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         if bomb_avoided():
             events.append(e.BOMB_AVOIDED)
 
-        if bomb_dropped():
-            events.append(e.BOMB_DROPPED)
+        #if bomb_dropped(): #covered in environment.py
+        #    events.append(e.BOMB_DROPPED)
 
         collectable_coins, reduced_dist = coin_distance_reduced()
         if collectable_coins: 
@@ -158,14 +166,15 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
     # Recalculate Q-values
     state, action, next_state, reward = self.transitions[-1]
+
     # check if states are None
     if state is not None and next_state is not None:
         
         index, rotation = get_state_index(state)
         
         action = np.argmax(self.model[index]) # Exploit learned values
-        if action in [0,1,2,3]:
-            action = (action + rotation) % 4
+        if action < 4 and rotation != 0: # move and rotated state
+            action = (action + rotation) % 4 # compute rotated move
 
         q_value = self.model[index, action]
 
@@ -196,10 +205,21 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
 
     # Store the model
     np.save("my-saved-model", self.model)
-    print(len(np.unique(self.model, axis = 0)))
+    
+    #print(len(np.unique(self.model, axis = 0)))
     #with open("my-saved-model.pt", "wb") as file:
     #    pickle.dump(self.model, file)
 
+    self.logger.info(f'End of round {last_game_state["round"]} with total reward : {self.rewards[-1]}')
+
+    # Store training report
+    date = datetime.now().strftime("%d-%m-%Y")
+    file = "training_report_" + date
+    
+    with open(file, 'a') as f:
+        f.write(f"[{datetime.now().strftime('%d/%m %H_%M_%S')}] finished round {last_game_state['round']} with total reward {self.rewards[-1]} \n")
+
+    #np.save(f"q_agent/rewards_{datetime.now().strftime('%d/%m %H_%M')}.npy", self.rewards[-1]))
 
 def reward_from_events(self, events: List[str]) -> int:
     """
@@ -227,6 +247,7 @@ def reward_from_events(self, events: List[str]) -> int:
         e.SURVIVED_ROUND: 1,
         e.CRATE_DESTROYED: 20,
         e.COIN_FOUND: 15
+        #e.BOMB_EXPLODED: ?
     }
 
     reward_sum = 0

@@ -90,6 +90,9 @@ def act(self, game_state):
     which is a dictionary. Consult 'get_state_for_agent' in environment.py to see
     what it contains.
     """
+    print(f"explosion_map at setp {game_state['step']} : {game_state['explosion_map']}")
+
+
     self.logger.info('Picking action according to rule set')
     # Check if we are in a different round
     if game_state["round"] != self.current_round:

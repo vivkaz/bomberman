@@ -24,9 +24,9 @@ Hyperparameter = {
 "save_name" : "saved_model",#check, that the model name is not redefined in callbacks
 "epsilon_scale" : 700,#check if epsilon is not redefined in callbacks
 "learning_rate" : 1e-3,
-"batch_size" : 50,
-"steps" : 100,
-"episoden" : 2000,
+"batch_size" : 20,
+"steps" : 30,
+"episoden" : 1000,
 "discount_factor" : 0.9,
 "rewards" : {
         e.INVALID_ACTION: -10,
@@ -39,17 +39,17 @@ Hyperparameter = {
         #e.COIN_DISTANCE_REDUCED: 5,
         #e.COIN_DISTANCE_INCREASED: -5,
         e.RUN_IN_LOOP:-10,
-        #e.CRATE_DESTROYED: 40,
+        e.CRATE_DESTROYED: 40,
         e.BOMB_AVOIDED : 30,
         e.SURVIVED_ROUND : 5,
         e.KILLED_SELF: -50,
         e.IN_DANGER: -20,
         #e.COIN_FOUND : 20,
         e.GOT_KILLED : -50,
-        e.BOMB_DROPPED : 5
+        e.BOMB_DROPPED : -2
 },
 "coin_density" : 0,#25
-"crate_density" : 0.2,#0.5
+"crate_density" : 0.4,#0.5
 "feature_setup" : {"feature_function" : "fake_coin_field_bombs",
                    "INPUTS" : [2,inputs_shape]}
 

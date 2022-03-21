@@ -39,6 +39,7 @@ def setup(self):
     else:
         load_model = "saved_model"
     #load_model = "agent/recent_best_coin_collector"
+    #load_model = "recent_best_coin_collector"
     #load_model = "saved_model"
 
     try:
@@ -76,6 +77,7 @@ def act(self, game_state: dict) -> str:
 
     #print("callbacks - act")
     inputs = state_to_features(self,game_state)
+    #print(f"inputs at setp {game_state['step']} : \n {inputs}")
     #print("inputs",inputs)
     # todo Exploration vs exploitation
 

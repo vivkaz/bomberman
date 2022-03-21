@@ -11,6 +11,7 @@ from datetime import datetime
 ACTIONS = ['UP', 'RIGHT', 'DOWN', 'LEFT', 'WAIT', 'BOMB']
 
 
+
 # function to give an action like "WAIT" a specific number
 def transform_actions_to_number(action):
     result = []
@@ -25,9 +26,9 @@ def sample_experiences(self, batch_size):
     print("länger replay_memory : ", len(self.replay_memory))
     indices = np.random.randint(len(self.replay_memory), size=batch_size)
     batch = [self.replay_memory[index] for index in indices]
-    states, actions, rewards, next_states = [np.array([experience[field_index] for experience in batch])
-                                             for field_index in range(4)]
-    return states, actions, rewards, next_states
+    states, actions, rewards, next_states, dones = [np.array([experience[field_index] for experience in batch])
+                                             for field_index in range(5)]
+    return states, actions, rewards, next_states, dones
 
 
 def setup_training(self):
@@ -48,6 +49,11 @@ def setup_training(self):
     self.buffer_states = deque(maxlen=6)
 
     self.training_history = deque(maxlen = 3000)
+
+    #setup target model:
+    #self.target = tf.keras.models.clone_model(self.model)
+    #self.target.set_weights(self.model.get_weights())
+
 
 def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_state: dict, events: List[str]):
     """
@@ -114,7 +120,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
     def in_danger_with_timer(area, bombs, timer):
         danger = False
-        bombs = bombs[timer < 2]
+        bombs = bombs[timer < 3]
         for b in bombs:
             for a in area:
                 if (b == a).all():
@@ -215,18 +221,25 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     self.logger.debug(f'Encountered game event(s) {", ".join(map(repr, events))} in step {new_game_state["step"]}')
 
     #print(events)
-    print(f"events occured :  {events} \n"
-          f"in step {new_game_state['step']}")
-
 
     def buffer_information():
-        if new_game_state["step"] >= 2:
-            #print("train - buffer")
-            self.replay_memory.append((state_to_features(self, old_game_state), self_action,
-                                       reward_from_events(self, events), state_to_features(self, new_game_state)))
+        #print(f"old_game_state : ", old_game_state)
+        #print(f"game_state : ", new_game_state)
+        # print("train - buffer")
+        done = False
+        self.replay_memory.append((state_to_features(self, old_game_state), self_action,
+                                       reward_from_events(self, events), state_to_features(self, new_game_state),done))
+
+        #print(f"events occured buffered :  {events} \n"
+        #      f"in step {new_game_state['step']}")
+        #print(f"action : {self_action} at step {new_game_state['step']}")
+
+
+
+
 
     buffer_information()
-    #print("events: ", events)
+    print(events)
 
 def end_of_round(self, last_game_state: dict, last_action: str, events: List[str]):
     """
@@ -242,20 +255,31 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
     :param self: The same object that is passed to all of your callbacks.
     """
 
+    #add last action to buffer
+    done = True
+    self.replay_memory.append((state_to_features(self,last_game_state),last_action,
+                        reward_from_events(self,events),state_to_features(self,last_game_state), done))
+
+
+
+    #print("end of round : ",events)
+
     batch_size = self.Hyperparameter["batch_size"]  # number of old experience used for updating the model
     discount_factor = self.Hyperparameter["discount_factor"]  # value which weights
     optimizer = tf.keras.optimizers.Adam(learning_rate=self.Hyperparameter["learning_rate"])
     loss_fn = tf.keras.losses.mean_squared_error
 
+#normal DQN
+
     if last_game_state["round"] >= 1:
         experiences = sample_experiences(self, batch_size)
-        states, actions, rewards, next_states = experiences
+        states, actions, rewards, next_states, dones = experiences
         states = np.array(states)
         next_states = np.array(next_states)
 
         next_Q_values = self.model.predict(next_states)
         max_next_Q_values = np.max(next_Q_values, axis=1)
-        target_Q_values = (rewards + (1) * discount_factor * max_next_Q_values)
+        target_Q_values = (rewards + (1-dones) * discount_factor * max_next_Q_values)
         target_Q_values = target_Q_values.reshape(-1, 1)
         # print("actions : ",actions)
         actions = transform_actions_to_number(actions)
@@ -272,8 +296,40 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
         # print("grads: ",grads)
         optimizer.apply_gradients(zip(grads, self.model.trainable_variables))
         self.logger.info("update model")
+#double DQN
+    """
+    if last_game_state["round"] >= 1:
+        experiences = sample_experiences(self, batch_size)
+        states, actions, rewards, next_states = experiences
+        states = np.array(states)
+        next_states = np.array(next_states)
 
+        next_Q_values = self.model.predict(next_states)#
+        best_next_action = np.argmax(next_Q_values, axis=1)
+        next_mask = tf.ones_hot(best_next_action, self.n_outputs).numpy()
 
+        next_best_Q_values = (self.target.predict(next_states)*next_mask).sum(axis = 1)
+
+        target_Q_values = (rewards + (1) * discount_factor * next_best_Q_values)
+        target_Q_values = target_Q_values.reshape(-1, 1)
+
+        # print("actions : ",actions)
+        actions = transform_actions_to_number(actions)
+        # print("actions : ", actions)
+        mask = tf.one_hot(actions, self.n_outputs)
+        with tf.GradientTape() as tape:
+            # print("states",states)
+            # print(self.model(states))
+            all_Q_values = self.model(states)
+            Q_values = tf.reduce_sum(all_Q_values * mask, axis=1, keepdims=True)
+            loss = tf.reduce_mean(loss_fn(target_Q_values, Q_values))
+
+        grads = tape.gradient(loss, self.model.trainable_variables)
+        # print("grads: ",grads)
+        optimizer.apply_gradients(zip(grads, self.model.trainable_variables))
+        self.logger.info("update model")
+
+    """
 
     self.logger.debug(f'Encountered event(s) {", ".join(map(repr, events))} in final step')
 

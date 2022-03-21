@@ -72,10 +72,10 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         if new_game_state is not None:
             self.buffer_states.append(new_game_state['self'][3]) # save as array and nos as tuple ?
 
-    def risky_area(pos):
-        horizontal = np.array([ [x, pos[1]] for x in range(pos[0]-3, pos[0]+4) ])
-        vertical = np.array([ [pos[0], y] for y in range(pos[1]-3, pos[1]+4) ])
-        return np.concatenate((vertical, horizontal), axis = 0)
+    #def risky_area(pos):
+    #    horizontal = np.array([ [x, pos[1]] for x in range(pos[0]-3, pos[0]+4) ])
+    #    vertical = np.array([ [pos[0], y] for y in range(pos[1]-3, pos[1]+4) ])
+    #    return np.concatenate((vertical, horizontal), axis = 0)
 
     def in_danger(area, bombs):
         for bomb in bombs:
@@ -88,11 +88,73 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     #def bomb_dropped(): # covered in environment.py
     #    return old_game_state['self'][2] == True and new_game_state['self'][2] == False
 
-    def bomb_avoided(): 
+
+    def bomb_avoided():
+        def check_for_wall(x, y, field=old_game_state['field']):
+            #if (0 < pos[0] <= 17) and (0 < pos[1] <= 17):
+            #if (position >= 17).any() or (position < 0).any():
+            #    print("out of field")
+            #    return True
+            if (0 <= x < 17) and (0 <= y < 17):
+                return field[x, y] == -1 # wall
+            return False
+
+        def get_left(pos, n=3):
+            left = []
+            for x in range(pos[0]-n, pos[0]):
+                if check_for_wall(x, pos[1]):
+                    left = []
+                    continue
+                else:
+                    left.append([x, pos[1]])
+            return left
+
+        def get_right(pos, n=3):
+            right = []
+            for x in range(pos[0]+1, pos[0]+(n+1)):
+                if check_for_wall(x, pos[1]):
+                    break
+                else:
+                    right.append([x, pos[1]])
+            return right
+
+        def get_up(pos, n=3):
+            up = []
+            for y in range(pos[1]+1, pos[1]+(n+1)):
+                if check_for_wall(pos[0],y):
+                    break
+                else:
+                    up.append([pos[0], y])
+            return up
+
+        def get_down(pos, n=3):
+            down = []
+            for y in range(pos[1]-n, pos[1]):
+                if check_for_wall(pos[0], y):
+                    down = []
+                    continue
+                else:
+                    down.append([pos[0], y])
+            return down
+
+        # get vertical and horizontal region from the position
+        def get_vh_region(pos, n=3):
+            left = get_left(pos, n)
+            right = get_right(pos, n)
+            up = get_up(pos, n)
+            down = get_down(pos, n)
+            for r in right:
+                left.append(r)
+            for u in up:
+                down.append(u)
+            for d in down:
+                left.append(d)
+            return left       
+
         if len(old_game_state['bombs']) > 0:
             bombs = old_game_state['bombs']
-            old_risky_area = risky_area(old_game_state['self'][3])
-            new_risky_area = risky_area(new_game_state['self'][3])
+            old_risky_area = get_vh_region(old_game_state['self'][3])
+            new_risky_area = get_vh_region(new_game_state['self'][3])
 
             old_danger = in_danger(old_risky_area, bombs)
             new_danger = in_danger(new_risky_area, bombs)
@@ -170,8 +232,8 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     # Recalculate Q-values
     state, action, next_state, reward = self.transitions[-1]
 
-    # check if states are None
-    if state is not None and next_state is not None:
+    # check if state is None
+    if next_state is not None:
         
         index, _ = get_state_index(state)
         next_index, rotation = get_state_index(next_state)

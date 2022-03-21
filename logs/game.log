@@ -1,55 +1,583 @@
-2022-03-20 14:51:18,626 [BombeRLeWorld] INFO: Initializing game world
-2022-03-20 14:51:18,627 [BombeRLeWorld] INFO: Loading replay file "replays/Round 01 (2022-03-20 14-49-53).pt"
-2022-03-20 14:51:19,525 [BombeRLeWorld] INFO: STARTING ROUND #1
-2022-03-20 14:51:23,417 [BombeRLeWorld] INFO: STARTING STEP 1
-2022-03-20 14:51:23,418 [BombeRLeWorld] INFO: Agent <rule_based_agent> chose action LEFT.
-2022-03-20 14:51:24,021 [BombeRLeWorld] INFO: STARTING STEP 2
-2022-03-20 14:51:24,022 [BombeRLeWorld] INFO: Agent <rule_based_agent> chose action BOMB.
-2022-03-20 14:51:24,022 [BombeRLeWorld] INFO: Agent <rule_based_agent> drops bomb at (14, 15)
-2022-03-20 14:51:56,609 [BombeRLeWorld] INFO: STARTING STEP 3
-2022-03-20 14:51:56,609 [BombeRLeWorld] INFO: Agent <rule_based_agent> chose action RIGHT.
-2022-03-20 14:51:56,909 [BombeRLeWorld] INFO: STARTING STEP 4
-2022-03-20 14:51:56,909 [BombeRLeWorld] INFO: Agent <rule_based_agent> chose action UP.
-2022-03-20 14:51:57,510 [BombeRLeWorld] INFO: STARTING STEP 5
-2022-03-20 14:51:57,511 [BombeRLeWorld] INFO: Agent <rule_based_agent> chose action DOWN.
-2022-03-20 14:51:58,215 [BombeRLeWorld] INFO: STARTING STEP 6
-2022-03-20 14:51:58,215 [BombeRLeWorld] INFO: Agent <rule_based_agent> chose action UP.
-2022-03-20 14:51:58,215 [BombeRLeWorld] INFO: Agent <rule_based_agent>'s bomb at (14, 15) explodes
-2022-03-20 14:53:23,104 [BombeRLeWorld] INFO: STARTING STEP 7
-2022-03-20 14:53:23,104 [BombeRLeWorld] INFO: Agent <rule_based_agent> chose action None.
-2022-03-20 14:53:25,113 [BombeRLeWorld] INFO: STARTING STEP 8
-2022-03-20 14:53:25,113 [BombeRLeWorld] INFO: Agent <rule_based_agent> chose action DOWN.
-2022-03-20 14:53:27,228 [BombeRLeWorld] INFO: STARTING STEP 9
-2022-03-20 14:53:27,228 [BombeRLeWorld] INFO: Agent <rule_based_agent> chose action UP.
-2022-03-20 14:53:28,032 [BombeRLeWorld] INFO: STARTING STEP 10
-2022-03-20 14:53:28,032 [BombeRLeWorld] INFO: Agent <rule_based_agent> chose action BOMB.
-2022-03-20 14:53:28,032 [BombeRLeWorld] INFO: Agent <rule_based_agent> drops bomb at (15, 14)
-2022-03-20 14:58:43,681 [BombeRLeWorld] INFO: STARTING STEP 11
-2022-03-20 14:58:43,682 [BombeRLeWorld] INFO: Agent <rule_based_agent> chose action DOWN.
-2022-03-20 14:58:44,086 [BombeRLeWorld] INFO: STARTING STEP 12
-2022-03-20 14:58:44,086 [BombeRLeWorld] INFO: Agent <rule_based_agent> chose action LEFT.
-2022-03-20 14:58:44,488 [BombeRLeWorld] INFO: STARTING STEP 13
-2022-03-20 14:58:44,488 [BombeRLeWorld] INFO: Agent <rule_based_agent> chose action LEFT.
-2022-03-20 14:58:44,789 [BombeRLeWorld] INFO: STARTING STEP 14
-2022-03-20 14:58:44,790 [BombeRLeWorld] INFO: Agent <rule_based_agent> chose action RIGHT.
-2022-03-20 14:58:44,790 [BombeRLeWorld] INFO: Agent <rule_based_agent>'s bomb at (15, 14) explodes
-2022-03-20 14:58:45,191 [BombeRLeWorld] INFO: STARTING STEP 15
-2022-03-20 14:58:45,191 [BombeRLeWorld] INFO: Agent <rule_based_agent> chose action LEFT.
-2022-03-20 14:58:45,596 [BombeRLeWorld] INFO: STARTING STEP 16
-2022-03-20 14:58:45,596 [BombeRLeWorld] INFO: Agent <rule_based_agent> chose action UP.
-2022-03-20 14:58:46,200 [BombeRLeWorld] INFO: STARTING STEP 17
-2022-03-20 14:58:46,200 [BombeRLeWorld] INFO: Agent <rule_based_agent> chose action BOMB.
-2022-03-20 14:58:46,200 [BombeRLeWorld] INFO: Agent <rule_based_agent> drops bomb at (13, 14)
-2022-03-20 14:58:46,906 [BombeRLeWorld] INFO: STARTING STEP 18
-2022-03-20 14:58:46,906 [BombeRLeWorld] INFO: Agent <rule_based_agent> chose action DOWN.
-2022-03-20 14:58:47,406 [BombeRLeWorld] INFO: STARTING STEP 19
-2022-03-20 14:58:47,407 [BombeRLeWorld] INFO: Agent <rule_based_agent> chose action RIGHT.
-2022-03-20 14:58:47,809 [BombeRLeWorld] INFO: STARTING STEP 20
-2022-03-20 14:58:47,810 [BombeRLeWorld] INFO: Agent <rule_based_agent> chose action RIGHT.
-2022-03-20 14:58:48,513 [BombeRLeWorld] INFO: STARTING STEP 21
-2022-03-20 14:58:48,513 [BombeRLeWorld] INFO: Agent <rule_based_agent> chose action LEFT.
-2022-03-20 14:58:48,513 [BombeRLeWorld] INFO: Agent <rule_based_agent>'s bomb at (13, 14) explodes
-2022-03-20 14:58:54,449 [BombeRLeWorld] INFO: STARTING STEP 22
-2022-03-20 14:58:54,449 [BombeRLeWorld] INFO: Agent <rule_based_agent> chose action RIGHT.
-2022-03-20 14:58:55,358 [BombeRLeWorld] INFO: STARTING STEP 23
-2022-03-20 14:58:55,359 [BombeRLeWorld] INFO: Agent <rule_based_agent> chose action UP.
+2022-03-21 10:32:50,680 [BombeRLeWorld] INFO: Initializing game world
+2022-03-21 10:32:55,241 [BombeRLeWorld] INFO: STARTING ROUND #1
+2022-03-21 10:32:55,246 [BombeRLeWorld] INFO: STARTING STEP 1
+2022-03-21 10:32:55,299 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action BOMB in 0.05s.
+2022-03-21 10:32:55,299 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:55,299 [BombeRLeWorld] INFO: Agent <deep_q_learning> drops bomb at (15, 15)
+2022-03-21 10:32:55,357 [BombeRLeWorld] INFO: STARTING STEP 2
+2022-03-21 10:32:55,424 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.07s.
+2022-03-21 10:32:55,424 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:55,445 [BombeRLeWorld] INFO: STARTING STEP 3
+2022-03-21 10:32:55,498 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.05s.
+2022-03-21 10:32:55,498 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:55,547 [BombeRLeWorld] INFO: STARTING STEP 4
+2022-03-21 10:32:55,597 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.05s.
+2022-03-21 10:32:55,597 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:55,649 [BombeRLeWorld] INFO: STARTING STEP 5
+2022-03-21 10:32:55,702 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action UP in 0.05s.
+2022-03-21 10:32:55,702 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:55,702 [BombeRLeWorld] INFO: Agent <deep_q_learning>'s bomb at (15, 15) explodes
+2022-03-21 10:32:55,702 [BombeRLeWorld] INFO: Agent <deep_q_learning> blown up by own bomb
+2022-03-21 10:32:55,702 [BombeRLeWorld] INFO: No agent left alive, wrap up round
+2022-03-21 10:32:55,702 [BombeRLeWorld] INFO: WRAPPING UP ROUND #1
+2022-03-21 10:32:57,177 [BombeRLeWorld] INFO: STARTING ROUND #2
+2022-03-21 10:32:57,267 [BombeRLeWorld] INFO: STARTING STEP 1
+2022-03-21 10:32:57,316 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action UP in 0.05s.
+2022-03-21 10:32:57,316 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:57,367 [BombeRLeWorld] INFO: STARTING STEP 2
+2022-03-21 10:32:57,422 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action BOMB in 0.05s.
+2022-03-21 10:32:57,422 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:57,422 [BombeRLeWorld] INFO: Agent <deep_q_learning> drops bomb at (15, 14)
+2022-03-21 10:32:57,467 [BombeRLeWorld] INFO: STARTING STEP 3
+2022-03-21 10:32:57,516 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action DOWN in 0.05s.
+2022-03-21 10:32:57,516 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:57,567 [BombeRLeWorld] INFO: STARTING STEP 4
+2022-03-21 10:32:57,625 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.06s.
+2022-03-21 10:32:57,625 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:57,671 [BombeRLeWorld] INFO: STARTING STEP 5
+2022-03-21 10:32:57,720 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.05s.
+2022-03-21 10:32:57,720 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:57,777 [BombeRLeWorld] INFO: STARTING STEP 6
+2022-03-21 10:32:57,841 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action LEFT in 0.06s.
+2022-03-21 10:32:57,841 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:57,841 [BombeRLeWorld] INFO: Agent <deep_q_learning>'s bomb at (15, 14) explodes
+2022-03-21 10:32:57,870 [BombeRLeWorld] INFO: STARTING STEP 7
+2022-03-21 10:32:57,919 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action LEFT in 0.05s.
+2022-03-21 10:32:57,919 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:57,971 [BombeRLeWorld] INFO: STARTING STEP 8
+2022-03-21 10:32:58,021 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action BOMB in 0.05s.
+2022-03-21 10:32:58,021 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:58,072 [BombeRLeWorld] INFO: STARTING STEP 9
+2022-03-21 10:32:58,126 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action BOMB in 0.05s.
+2022-03-21 10:32:58,126 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:58,126 [BombeRLeWorld] INFO: Agent <deep_q_learning> drops bomb at (13, 15)
+2022-03-21 10:32:58,173 [BombeRLeWorld] INFO: STARTING STEP 10
+2022-03-21 10:32:58,227 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.05s.
+2022-03-21 10:32:58,228 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:58,274 [BombeRLeWorld] INFO: STARTING STEP 11
+2022-03-21 10:32:58,325 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.05s.
+2022-03-21 10:32:58,325 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:58,375 [BombeRLeWorld] INFO: STARTING STEP 12
+2022-03-21 10:32:58,425 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.05s.
+2022-03-21 10:32:58,425 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:58,476 [BombeRLeWorld] INFO: STARTING STEP 13
+2022-03-21 10:32:58,531 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action UP in 0.05s.
+2022-03-21 10:32:58,531 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:58,531 [BombeRLeWorld] INFO: Agent <deep_q_learning>'s bomb at (13, 15) explodes
+2022-03-21 10:32:58,577 [BombeRLeWorld] INFO: STARTING STEP 14
+2022-03-21 10:32:58,626 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action DOWN in 0.05s.
+2022-03-21 10:32:58,626 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:58,626 [BombeRLeWorld] INFO: Agent <deep_q_learning> blown up by own bomb
+2022-03-21 10:32:58,626 [BombeRLeWorld] INFO: No agent left alive, wrap up round
+2022-03-21 10:32:58,626 [BombeRLeWorld] INFO: WRAPPING UP ROUND #2
+2022-03-21 10:32:59,184 [BombeRLeWorld] INFO: STARTING ROUND #3
+2022-03-21 10:32:59,288 [BombeRLeWorld] INFO: STARTING STEP 1
+2022-03-21 10:32:59,338 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action BOMB in 0.05s.
+2022-03-21 10:32:59,338 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:59,338 [BombeRLeWorld] INFO: Agent <deep_q_learning> drops bomb at (1, 1)
+2022-03-21 10:32:59,384 [BombeRLeWorld] INFO: STARTING STEP 2
+2022-03-21 10:32:59,435 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.05s.
+2022-03-21 10:32:59,435 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:59,496 [BombeRLeWorld] INFO: STARTING STEP 3
+2022-03-21 10:32:59,559 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.06s.
+2022-03-21 10:32:59,559 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:59,586 [BombeRLeWorld] INFO: STARTING STEP 4
+2022-03-21 10:32:59,637 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.05s.
+2022-03-21 10:32:59,637 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:59,688 [BombeRLeWorld] INFO: STARTING STEP 5
+2022-03-21 10:32:59,738 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action BOMB in 0.05s.
+2022-03-21 10:32:59,738 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:32:59,738 [BombeRLeWorld] INFO: Agent <deep_q_learning>'s bomb at (1, 1) explodes
+2022-03-21 10:32:59,738 [BombeRLeWorld] INFO: Agent <deep_q_learning> blown up by own bomb
+2022-03-21 10:32:59,739 [BombeRLeWorld] INFO: No agent left alive, wrap up round
+2022-03-21 10:32:59,739 [BombeRLeWorld] INFO: WRAPPING UP ROUND #3
+2022-03-21 10:33:00,396 [BombeRLeWorld] INFO: STARTING ROUND #4
+2022-03-21 10:33:00,496 [BombeRLeWorld] INFO: STARTING STEP 1
+2022-03-21 10:33:00,554 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action DOWN in 0.06s.
+2022-03-21 10:33:00,554 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:00,597 [BombeRLeWorld] INFO: STARTING STEP 2
+2022-03-21 10:33:00,653 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action BOMB in 0.06s.
+2022-03-21 10:33:00,653 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:00,653 [BombeRLeWorld] INFO: Agent <deep_q_learning> drops bomb at (15, 2)
+2022-03-21 10:33:00,698 [BombeRLeWorld] INFO: STARTING STEP 3
+2022-03-21 10:33:00,754 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action DOWN in 0.05s.
+2022-03-21 10:33:00,754 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:00,801 [BombeRLeWorld] INFO: STARTING STEP 4
+2022-03-21 10:33:00,853 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action DOWN in 0.05s.
+2022-03-21 10:33:00,853 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:00,902 [BombeRLeWorld] INFO: STARTING STEP 5
+2022-03-21 10:33:00,953 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action DOWN in 0.05s.
+2022-03-21 10:33:00,953 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:01,002 [BombeRLeWorld] INFO: STARTING STEP 6
+2022-03-21 10:33:01,053 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action LEFT in 0.05s.
+2022-03-21 10:33:01,053 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:01,053 [BombeRLeWorld] INFO: Agent <deep_q_learning>'s bomb at (15, 2) explodes
+2022-03-21 10:33:01,104 [BombeRLeWorld] INFO: STARTING STEP 7
+2022-03-21 10:33:01,166 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action LEFT in 0.06s.
+2022-03-21 10:33:01,166 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:01,204 [BombeRLeWorld] INFO: STARTING STEP 8
+2022-03-21 10:33:01,256 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action UP in 0.05s.
+2022-03-21 10:33:01,257 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:01,306 [BombeRLeWorld] INFO: STARTING STEP 9
+2022-03-21 10:33:01,358 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action BOMB in 0.05s.
+2022-03-21 10:33:01,358 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:01,358 [BombeRLeWorld] INFO: Agent <deep_q_learning> drops bomb at (13, 4)
+2022-03-21 10:33:01,407 [BombeRLeWorld] INFO: STARTING STEP 10
+2022-03-21 10:33:01,458 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action DOWN in 0.05s.
+2022-03-21 10:33:01,458 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:01,507 [BombeRLeWorld] INFO: STARTING STEP 11
+2022-03-21 10:33:01,564 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.06s.
+2022-03-21 10:33:01,564 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:01,609 [BombeRLeWorld] INFO: STARTING STEP 12
+2022-03-21 10:33:01,661 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.05s.
+2022-03-21 10:33:01,661 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:01,710 [BombeRLeWorld] INFO: STARTING STEP 13
+2022-03-21 10:33:01,762 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action DOWN in 0.05s.
+2022-03-21 10:33:01,762 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:01,762 [BombeRLeWorld] INFO: Agent <deep_q_learning>'s bomb at (13, 4) explodes
+2022-03-21 10:33:01,811 [BombeRLeWorld] INFO: STARTING STEP 14
+2022-03-21 10:33:01,863 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action DOWN in 0.05s.
+2022-03-21 10:33:01,863 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:01,913 [BombeRLeWorld] INFO: STARTING STEP 15
+2022-03-21 10:33:01,966 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action BOMB in 0.05s.
+2022-03-21 10:33:01,966 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:02,013 [BombeRLeWorld] INFO: STARTING STEP 16
+2022-03-21 10:33:02,073 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action BOMB in 0.06s.
+2022-03-21 10:33:02,073 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:02,073 [BombeRLeWorld] INFO: Agent <deep_q_learning> drops bomb at (15, 7)
+2022-03-21 10:33:02,113 [BombeRLeWorld] INFO: STARTING STEP 17
+2022-03-21 10:33:02,176 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action DOWN in 0.06s.
+2022-03-21 10:33:02,176 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:02,214 [BombeRLeWorld] INFO: STARTING STEP 18
+2022-03-21 10:33:02,273 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action DOWN in 0.06s.
+2022-03-21 10:33:02,273 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:02,315 [BombeRLeWorld] INFO: STARTING STEP 19
+2022-03-21 10:33:02,372 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action BOMB in 0.06s.
+2022-03-21 10:33:02,373 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:02,416 [BombeRLeWorld] INFO: STARTING STEP 20
+2022-03-21 10:33:02,471 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action LEFT in 0.06s.
+2022-03-21 10:33:02,471 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:02,471 [BombeRLeWorld] INFO: Agent <deep_q_learning>'s bomb at (15, 7) explodes
+2022-03-21 10:33:02,517 [BombeRLeWorld] INFO: STARTING STEP 21
+2022-03-21 10:33:02,573 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.05s.
+2022-03-21 10:33:02,573 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:02,573 [BombeRLeWorld] INFO: Agent <deep_q_learning> blown up by own bomb
+2022-03-21 10:33:02,573 [BombeRLeWorld] INFO: No agent left alive, wrap up round
+2022-03-21 10:33:02,573 [BombeRLeWorld] INFO: WRAPPING UP ROUND #4
+2022-03-21 10:33:03,126 [BombeRLeWorld] INFO: STARTING ROUND #5
+2022-03-21 10:33:03,225 [BombeRLeWorld] INFO: STARTING STEP 1
+2022-03-21 10:33:03,277 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action BOMB in 0.05s.
+2022-03-21 10:33:03,277 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:03,277 [BombeRLeWorld] INFO: Agent <deep_q_learning> drops bomb at (15, 15)
+2022-03-21 10:33:03,325 [BombeRLeWorld] INFO: STARTING STEP 2
+2022-03-21 10:33:03,378 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.05s.
+2022-03-21 10:33:03,378 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:03,426 [BombeRLeWorld] INFO: STARTING STEP 3
+2022-03-21 10:33:03,484 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.06s.
+2022-03-21 10:33:03,484 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:03,537 [BombeRLeWorld] INFO: STARTING STEP 4
+2022-03-21 10:33:03,592 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.05s.
+2022-03-21 10:33:03,592 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:03,628 [BombeRLeWorld] INFO: STARTING STEP 5
+2022-03-21 10:33:03,682 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action UP in 0.05s.
+2022-03-21 10:33:03,682 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:03,682 [BombeRLeWorld] INFO: Agent <deep_q_learning>'s bomb at (15, 15) explodes
+2022-03-21 10:33:03,682 [BombeRLeWorld] INFO: Agent <deep_q_learning> blown up by own bomb
+2022-03-21 10:33:03,682 [BombeRLeWorld] INFO: No agent left alive, wrap up round
+2022-03-21 10:33:03,682 [BombeRLeWorld] INFO: WRAPPING UP ROUND #5
+2022-03-21 10:33:04,340 [BombeRLeWorld] INFO: STARTING ROUND #6
+2022-03-21 10:33:04,436 [BombeRLeWorld] INFO: STARTING STEP 1
+2022-03-21 10:33:04,493 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action DOWN in 0.06s.
+2022-03-21 10:33:04,493 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:04,535 [BombeRLeWorld] INFO: STARTING STEP 2
+2022-03-21 10:33:04,596 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action BOMB in 0.06s.
+2022-03-21 10:33:04,596 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:04,596 [BombeRLeWorld] INFO: Agent <deep_q_learning> drops bomb at (1, 2)
+2022-03-21 10:33:04,637 [BombeRLeWorld] INFO: STARTING STEP 3
+2022-03-21 10:33:04,691 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action DOWN in 0.05s.
+2022-03-21 10:33:04,691 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:04,749 [BombeRLeWorld] INFO: STARTING STEP 4
+2022-03-21 10:33:04,801 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action DOWN in 0.05s.
+2022-03-21 10:33:04,801 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:04,839 [BombeRLeWorld] INFO: STARTING STEP 5
+2022-03-21 10:33:04,892 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.05s.
+2022-03-21 10:33:04,892 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:04,952 [BombeRLeWorld] INFO: STARTING STEP 6
+2022-03-21 10:33:05,021 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.07s.
+2022-03-21 10:33:05,021 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:05,021 [BombeRLeWorld] INFO: Agent <deep_q_learning>'s bomb at (1, 2) explodes
+2022-03-21 10:33:05,021 [BombeRLeWorld] INFO: Agent <deep_q_learning> blown up by own bomb
+2022-03-21 10:33:05,021 [BombeRLeWorld] INFO: No agent left alive, wrap up round
+2022-03-21 10:33:05,021 [BombeRLeWorld] INFO: WRAPPING UP ROUND #6
+2022-03-21 10:33:05,564 [BombeRLeWorld] INFO: STARTING ROUND #7
+2022-03-21 10:33:05,656 [BombeRLeWorld] INFO: STARTING STEP 1
+2022-03-21 10:33:05,712 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action DOWN in 0.06s.
+2022-03-21 10:33:05,712 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:05,751 [BombeRLeWorld] INFO: STARTING STEP 2
+2022-03-21 10:33:05,811 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action BOMB in 0.06s.
+2022-03-21 10:33:05,811 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:05,811 [BombeRLeWorld] INFO: Agent <deep_q_learning> drops bomb at (1, 2)
+2022-03-21 10:33:05,852 [BombeRLeWorld] INFO: STARTING STEP 3
+2022-03-21 10:33:05,910 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action DOWN in 0.06s.
+2022-03-21 10:33:05,910 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:05,954 [BombeRLeWorld] INFO: STARTING STEP 4
+2022-03-21 10:33:06,009 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action DOWN in 0.05s.
+2022-03-21 10:33:06,009 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:06,062 [BombeRLeWorld] INFO: STARTING STEP 5
+2022-03-21 10:33:06,144 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action DOWN in 0.08s.
+2022-03-21 10:33:06,144 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:06,157 [BombeRLeWorld] INFO: STARTING STEP 6
+2022-03-21 10:33:06,210 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.05s.
+2022-03-21 10:33:06,210 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:06,210 [BombeRLeWorld] INFO: Agent <deep_q_learning>'s bomb at (1, 2) explodes
+2022-03-21 10:33:06,259 [BombeRLeWorld] INFO: STARTING STEP 7
+2022-03-21 10:33:06,323 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.06s.
+2022-03-21 10:33:06,323 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:06,358 [BombeRLeWorld] INFO: STARTING STEP 8
+2022-03-21 10:33:06,410 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:06,410 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:06,459 [BombeRLeWorld] INFO: STARTING STEP 9
+2022-03-21 10:33:06,520 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:06,520 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:06,561 [BombeRLeWorld] INFO: STARTING STEP 10
+2022-03-21 10:33:06,613 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:06,613 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:06,661 [BombeRLeWorld] INFO: STARTING STEP 11
+2022-03-21 10:33:06,716 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:06,716 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:06,763 [BombeRLeWorld] INFO: STARTING STEP 12
+2022-03-21 10:33:06,820 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:06,820 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:06,863 [BombeRLeWorld] INFO: STARTING STEP 13
+2022-03-21 10:33:06,917 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:06,917 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:06,965 [BombeRLeWorld] INFO: STARTING STEP 14
+2022-03-21 10:33:07,028 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:07,028 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:07,066 [BombeRLeWorld] INFO: STARTING STEP 15
+2022-03-21 10:33:07,121 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:07,121 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:07,178 [BombeRLeWorld] INFO: STARTING STEP 16
+2022-03-21 10:33:07,234 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:07,234 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:07,267 [BombeRLeWorld] INFO: STARTING STEP 17
+2022-03-21 10:33:07,321 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:07,321 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:07,379 [BombeRLeWorld] INFO: STARTING STEP 18
+2022-03-21 10:33:07,456 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.08s.
+2022-03-21 10:33:07,456 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:07,468 [BombeRLeWorld] INFO: STARTING STEP 19
+2022-03-21 10:33:07,520 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:07,520 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:07,581 [BombeRLeWorld] INFO: STARTING STEP 20
+2022-03-21 10:33:07,656 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.08s.
+2022-03-21 10:33:07,656 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:07,670 [BombeRLeWorld] INFO: STARTING STEP 21
+2022-03-21 10:33:07,728 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:07,728 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:07,771 [BombeRLeWorld] INFO: STARTING STEP 22
+2022-03-21 10:33:07,830 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:07,830 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:07,872 [BombeRLeWorld] INFO: STARTING STEP 23
+2022-03-21 10:33:07,929 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:07,929 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:07,980 [BombeRLeWorld] INFO: STARTING STEP 24
+2022-03-21 10:33:08,035 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:08,035 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:08,075 [BombeRLeWorld] INFO: STARTING STEP 25
+2022-03-21 10:33:08,130 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:08,130 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:08,176 [BombeRLeWorld] INFO: STARTING STEP 26
+2022-03-21 10:33:08,229 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:08,229 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:08,275 [BombeRLeWorld] INFO: STARTING STEP 27
+2022-03-21 10:33:08,331 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:08,331 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:08,377 [BombeRLeWorld] INFO: STARTING STEP 28
+2022-03-21 10:33:08,433 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:08,433 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:08,477 [BombeRLeWorld] INFO: STARTING STEP 29
+2022-03-21 10:33:08,535 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:08,535 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:08,582 [BombeRLeWorld] INFO: STARTING STEP 30
+2022-03-21 10:33:08,633 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:08,633 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:08,679 [BombeRLeWorld] INFO: STARTING STEP 31
+2022-03-21 10:33:08,737 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:08,737 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:08,780 [BombeRLeWorld] INFO: STARTING STEP 32
+2022-03-21 10:33:08,832 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:08,832 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:08,881 [BombeRLeWorld] INFO: STARTING STEP 33
+2022-03-21 10:33:08,935 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:08,935 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:08,981 [BombeRLeWorld] INFO: STARTING STEP 34
+2022-03-21 10:33:09,034 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:09,034 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:09,082 [BombeRLeWorld] INFO: STARTING STEP 35
+2022-03-21 10:33:09,142 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:09,142 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:09,184 [BombeRLeWorld] INFO: STARTING STEP 36
+2022-03-21 10:33:09,239 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:09,239 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:09,285 [BombeRLeWorld] INFO: STARTING STEP 37
+2022-03-21 10:33:09,347 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:09,347 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:09,386 [BombeRLeWorld] INFO: STARTING STEP 38
+2022-03-21 10:33:09,439 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:09,439 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:09,498 [BombeRLeWorld] INFO: STARTING STEP 39
+2022-03-21 10:33:09,576 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.08s.
+2022-03-21 10:33:09,576 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:09,587 [BombeRLeWorld] INFO: STARTING STEP 40
+2022-03-21 10:33:09,648 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:09,648 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:09,689 [BombeRLeWorld] INFO: STARTING STEP 41
+2022-03-21 10:33:09,747 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:09,747 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:09,790 [BombeRLeWorld] INFO: STARTING STEP 42
+2022-03-21 10:33:09,848 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:09,849 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:09,892 [BombeRLeWorld] INFO: STARTING STEP 43
+2022-03-21 10:33:09,946 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:09,946 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:09,991 [BombeRLeWorld] INFO: STARTING STEP 44
+2022-03-21 10:33:10,118 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.13s.
+2022-03-21 10:33:10,118 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:10,121 [BombeRLeWorld] INFO: STARTING STEP 45
+2022-03-21 10:33:10,174 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:10,174 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:10,222 [BombeRLeWorld] INFO: STARTING STEP 46
+2022-03-21 10:33:10,282 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:10,282 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:10,323 [BombeRLeWorld] INFO: STARTING STEP 47
+2022-03-21 10:33:10,382 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:10,382 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:10,424 [BombeRLeWorld] INFO: STARTING STEP 48
+2022-03-21 10:33:10,483 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:10,483 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:10,525 [BombeRLeWorld] INFO: STARTING STEP 49
+2022-03-21 10:33:10,581 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:10,581 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:10,627 [BombeRLeWorld] INFO: STARTING STEP 50
+2022-03-21 10:33:10,682 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:10,682 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:10,727 [BombeRLeWorld] INFO: STARTING STEP 51
+2022-03-21 10:33:10,781 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:10,781 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:10,840 [BombeRLeWorld] INFO: STARTING STEP 52
+2022-03-21 10:33:10,904 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:10,904 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:10,929 [BombeRLeWorld] INFO: STARTING STEP 53
+2022-03-21 10:33:10,987 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:10,987 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:11,031 [BombeRLeWorld] INFO: STARTING STEP 54
+2022-03-21 10:33:11,085 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:11,085 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:11,143 [BombeRLeWorld] INFO: STARTING STEP 55
+2022-03-21 10:33:11,221 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.08s.
+2022-03-21 10:33:11,221 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:11,232 [BombeRLeWorld] INFO: STARTING STEP 56
+2022-03-21 10:33:11,284 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:11,284 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:11,334 [BombeRLeWorld] INFO: STARTING STEP 57
+2022-03-21 10:33:11,395 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:11,395 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:11,433 [BombeRLeWorld] INFO: STARTING STEP 58
+2022-03-21 10:33:11,485 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:11,485 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:11,535 [BombeRLeWorld] INFO: STARTING STEP 59
+2022-03-21 10:33:11,588 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:11,588 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:11,637 [BombeRLeWorld] INFO: STARTING STEP 60
+2022-03-21 10:33:11,691 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:11,691 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:11,737 [BombeRLeWorld] INFO: STARTING STEP 61
+2022-03-21 10:33:11,803 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.07s.
+2022-03-21 10:33:11,803 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:11,838 [BombeRLeWorld] INFO: STARTING STEP 62
+2022-03-21 10:33:11,893 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:11,893 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:11,939 [BombeRLeWorld] INFO: STARTING STEP 63
+2022-03-21 10:33:11,992 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:11,992 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:12,040 [BombeRLeWorld] INFO: STARTING STEP 64
+2022-03-21 10:33:12,092 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:12,092 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:12,141 [BombeRLeWorld] INFO: STARTING STEP 65
+2022-03-21 10:33:12,199 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:12,199 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:12,254 [BombeRLeWorld] INFO: STARTING STEP 66
+2022-03-21 10:33:12,336 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.08s.
+2022-03-21 10:33:12,336 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:12,343 [BombeRLeWorld] INFO: STARTING STEP 67
+2022-03-21 10:33:12,398 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:12,398 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:12,445 [BombeRLeWorld] INFO: STARTING STEP 68
+2022-03-21 10:33:12,505 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:12,505 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:12,546 [BombeRLeWorld] INFO: STARTING STEP 69
+2022-03-21 10:33:12,601 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:12,601 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:12,658 [BombeRLeWorld] INFO: STARTING STEP 70
+2022-03-21 10:33:12,735 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.08s.
+2022-03-21 10:33:12,735 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:12,751 [BombeRLeWorld] INFO: STARTING STEP 71
+2022-03-21 10:33:12,818 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.07s.
+2022-03-21 10:33:12,818 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:12,847 [BombeRLeWorld] INFO: STARTING STEP 72
+2022-03-21 10:33:12,899 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:12,899 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:12,949 [BombeRLeWorld] INFO: STARTING STEP 73
+2022-03-21 10:33:13,003 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:13,003 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:13,050 [BombeRLeWorld] INFO: STARTING STEP 74
+2022-03-21 10:33:13,106 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:13,106 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:13,150 [BombeRLeWorld] INFO: STARTING STEP 75
+2022-03-21 10:33:13,203 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:13,203 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:13,251 [BombeRLeWorld] INFO: STARTING STEP 76
+2022-03-21 10:33:13,307 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:13,307 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:13,351 [BombeRLeWorld] INFO: STARTING STEP 77
+2022-03-21 10:33:13,404 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:13,404 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:13,464 [BombeRLeWorld] INFO: STARTING STEP 78
+2022-03-21 10:33:13,520 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:13,521 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:13,555 [BombeRLeWorld] INFO: STARTING STEP 79
+2022-03-21 10:33:13,611 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:13,611 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:13,655 [BombeRLeWorld] INFO: STARTING STEP 80
+2022-03-21 10:33:13,709 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:13,709 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:13,760 [BombeRLeWorld] INFO: STARTING STEP 81
+2022-03-21 10:33:13,812 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:13,812 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:13,857 [BombeRLeWorld] INFO: STARTING STEP 82
+2022-03-21 10:33:13,913 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:13,913 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:13,958 [BombeRLeWorld] INFO: STARTING STEP 83
+2022-03-21 10:33:14,017 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:14,017 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:14,059 [BombeRLeWorld] INFO: STARTING STEP 84
+2022-03-21 10:33:14,113 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:14,113 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:14,159 [BombeRLeWorld] INFO: STARTING STEP 85
+2022-03-21 10:33:14,212 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:14,213 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:14,261 [BombeRLeWorld] INFO: STARTING STEP 86
+2022-03-21 10:33:14,314 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:14,314 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:14,362 [BombeRLeWorld] INFO: STARTING STEP 87
+2022-03-21 10:33:14,419 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:14,419 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:14,472 [BombeRLeWorld] INFO: STARTING STEP 88
+2022-03-21 10:33:14,527 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:14,527 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:14,565 [BombeRLeWorld] INFO: STARTING STEP 89
+2022-03-21 10:33:14,618 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:14,618 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:14,666 [BombeRLeWorld] INFO: STARTING STEP 90
+2022-03-21 10:33:14,719 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:14,719 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:14,766 [BombeRLeWorld] INFO: STARTING STEP 91
+2022-03-21 10:33:14,826 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:14,826 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:14,867 [BombeRLeWorld] INFO: STARTING STEP 92
+2022-03-21 10:33:14,921 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:14,921 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:14,967 [BombeRLeWorld] INFO: STARTING STEP 93
+2022-03-21 10:33:15,020 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:15,020 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:15,068 [BombeRLeWorld] INFO: STARTING STEP 94
+2022-03-21 10:33:15,120 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:15,120 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:15,169 [BombeRLeWorld] INFO: STARTING STEP 95
+2022-03-21 10:33:15,227 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:15,227 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:15,270 [BombeRLeWorld] INFO: STARTING STEP 96
+2022-03-21 10:33:15,327 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:15,327 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:15,371 [BombeRLeWorld] INFO: STARTING STEP 97
+2022-03-21 10:33:15,423 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:15,423 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:15,472 [BombeRLeWorld] INFO: STARTING STEP 98
+2022-03-21 10:33:15,529 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:15,529 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:15,577 [BombeRLeWorld] INFO: STARTING STEP 99
+2022-03-21 10:33:15,629 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.05s.
+2022-03-21 10:33:15,629 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:15,674 [BombeRLeWorld] INFO: STARTING STEP 100
+2022-03-21 10:33:15,733 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action WAIT in 0.06s.
+2022-03-21 10:33:15,733 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:15,733 [BombeRLeWorld] INFO: Maximum number of steps reached, wrap up round
+2022-03-21 10:33:15,733 [BombeRLeWorld] INFO: WRAPPING UP ROUND #7
+2022-03-21 10:33:16,384 [BombeRLeWorld] INFO: STARTING ROUND #8
+2022-03-21 10:33:16,485 [BombeRLeWorld] INFO: STARTING STEP 1
+2022-03-21 10:33:16,541 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action BOMB in 0.06s.
+2022-03-21 10:33:16,541 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:16,541 [BombeRLeWorld] INFO: Agent <deep_q_learning> drops bomb at (1, 15)
+2022-03-21 10:33:16,592 [BombeRLeWorld] INFO: STARTING STEP 2
+2022-03-21 10:33:16,653 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.06s.
+2022-03-21 10:33:16,653 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:16,686 [BombeRLeWorld] INFO: STARTING STEP 3
+2022-03-21 10:33:16,740 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action UP in 0.05s.
+2022-03-21 10:33:16,740 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:16,788 [BombeRLeWorld] INFO: STARTING STEP 4
+2022-03-21 10:33:16,844 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action UP in 0.06s.
+2022-03-21 10:33:16,844 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:16,901 [BombeRLeWorld] INFO: STARTING STEP 5
+2022-03-21 10:33:16,971 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.07s.
+2022-03-21 10:33:16,971 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:16,971 [BombeRLeWorld] INFO: Agent <deep_q_learning>'s bomb at (1, 15) explodes
+2022-03-21 10:33:16,971 [BombeRLeWorld] INFO: Agent <deep_q_learning> blown up by own bomb
+2022-03-21 10:33:16,971 [BombeRLeWorld] INFO: No agent left alive, wrap up round
+2022-03-21 10:33:16,971 [BombeRLeWorld] INFO: WRAPPING UP ROUND #8
+2022-03-21 10:33:17,496 [BombeRLeWorld] INFO: STARTING ROUND #9
+2022-03-21 10:33:17,602 [BombeRLeWorld] INFO: STARTING STEP 1
+2022-03-21 10:33:17,655 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action DOWN in 0.05s.
+2022-03-21 10:33:17,655 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:17,699 [BombeRLeWorld] INFO: STARTING STEP 2
+2022-03-21 10:33:17,756 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action BOMB in 0.06s.
+2022-03-21 10:33:17,756 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:17,756 [BombeRLeWorld] INFO: Agent <deep_q_learning> drops bomb at (1, 2)
+2022-03-21 10:33:17,800 [BombeRLeWorld] INFO: STARTING STEP 3
+2022-03-21 10:33:17,854 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action DOWN in 0.05s.
+2022-03-21 10:33:17,855 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:17,902 [BombeRLeWorld] INFO: STARTING STEP 4
+2022-03-21 10:33:17,957 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action DOWN in 0.06s.
+2022-03-21 10:33:17,957 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:18,003 [BombeRLeWorld] INFO: STARTING STEP 5
+2022-03-21 10:33:18,056 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action DOWN in 0.05s.
+2022-03-21 10:33:18,056 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:18,104 [BombeRLeWorld] INFO: STARTING STEP 6
+2022-03-21 10:33:18,157 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action UP in 0.05s.
+2022-03-21 10:33:18,157 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:18,157 [BombeRLeWorld] INFO: Agent <deep_q_learning>'s bomb at (1, 2) explodes
+2022-03-21 10:33:18,157 [BombeRLeWorld] INFO: Agent <deep_q_learning> blown up by own bomb
+2022-03-21 10:33:18,157 [BombeRLeWorld] INFO: No agent left alive, wrap up round
+2022-03-21 10:33:18,157 [BombeRLeWorld] INFO: WRAPPING UP ROUND #9
+2022-03-21 10:33:18,815 [BombeRLeWorld] INFO: STARTING ROUND #10
+2022-03-21 10:33:18,918 [BombeRLeWorld] INFO: STARTING STEP 1
+2022-03-21 10:33:18,993 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action BOMB in 0.07s.
+2022-03-21 10:33:18,994 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:18,994 [BombeRLeWorld] INFO: Agent <deep_q_learning> drops bomb at (15, 15)
+2022-03-21 10:33:19,014 [BombeRLeWorld] INFO: STARTING STEP 2
+2022-03-21 10:33:19,072 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.06s.
+2022-03-21 10:33:19,072 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:19,115 [BombeRLeWorld] INFO: STARTING STEP 3
+2022-03-21 10:33:19,174 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.06s.
+2022-03-21 10:33:19,174 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:19,216 [BombeRLeWorld] INFO: STARTING STEP 4
+2022-03-21 10:33:19,273 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action RIGHT in 0.06s.
+2022-03-21 10:33:19,273 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:19,322 [BombeRLeWorld] INFO: STARTING STEP 5
+2022-03-21 10:33:19,375 [BombeRLeWorld] INFO: Agent <deep_q_learning> chose action UP in 0.05s.
+2022-03-21 10:33:19,375 [BombeRLeWorld] INFO: Agent <deep_q_learning> stayed within acceptable think time.
+2022-03-21 10:33:19,375 [BombeRLeWorld] INFO: Agent <deep_q_learning>'s bomb at (15, 15) explodes
+2022-03-21 10:33:19,375 [BombeRLeWorld] INFO: Agent <deep_q_learning> blown up by own bomb
+2022-03-21 10:33:19,375 [BombeRLeWorld] INFO: No agent left alive, wrap up round
+2022-03-21 10:33:19,375 [BombeRLeWorld] INFO: WRAPPING UP ROUND #10
+2022-03-21 10:33:20,029 [BombeRLeWorld] INFO: SHUT DOWN

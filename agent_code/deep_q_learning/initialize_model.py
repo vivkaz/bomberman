@@ -21,10 +21,10 @@ model.summary()
 
 #Hyperparameter
 Hyperparameter = {
-"save_name" : "saved_model",
-"epsilon_scale" : 700,
+"save_name" : "saved_model",#check, that the model name is not redefined in callbacks
+"epsilon_scale" : 700,#check if epsilon is not redefined in callbacks
 "learning_rate" : 1e-3,
-"batch_size" : 30,
+"batch_size" : 50,
 "steps" : 100,
 "episoden" : 2000,
 "discount_factor" : 0.9,
@@ -46,7 +46,7 @@ Hyperparameter = {
         e.IN_DANGER: -20,
         #e.COIN_FOUND : 20,
         e.GOT_KILLED : -50,
-        e.BOMB_DROPPED : 10
+        e.BOMB_DROPPED : 5
 },
 "coin_density" : 0,#25
 "crate_density" : 0.2,#0.5

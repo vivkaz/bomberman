@@ -221,6 +221,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
     def buffer_information():
         if new_game_state["step"] >= 2:
+            #print("train - buffer")
             self.replay_memory.append((state_to_features(self, old_game_state), self_action,
                                        reward_from_events(self, events), state_to_features(self, new_game_state)))
 

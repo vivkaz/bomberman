@@ -1,6 +1,7 @@
 from collections import namedtuple, deque
 from datetime import datetime
 from pathlib import PosixPath
+import random
 #from turtle import position
 from matplotlib.pyplot import new_figure_manager
 import numpy as np
@@ -9,7 +10,7 @@ import pickle
 from typing import List
 
 import events as e
-from .callbacks import get_state_index, state_to_features, ACTIONS
+from .callbacks import get_state_index, state_to_features, ACTIONS, epsilon
 
 # This is only an example!
 Transition = namedtuple('Transition',
@@ -19,8 +20,10 @@ Transition = namedtuple('Transition',
 TRANSITION_HISTORY_SIZE = 4  # keep only 4 last transitions
 BUFFER_HISTORY_SIZE = 6 # keep only 6 last states
 RECORD_ENEMY_TRANSITIONS = 1.0  # record enemy transitions with probability 
-ALPHA = 0.1
-GAMMA = 0.6
+# determines to what extent newly acquired information overrides old information
+ALPHA = 0.9 # in fully deterministic environments 1 is optimal; when problem is stochastic, often const learning rate such as 0.1
+# determines the importance of future rewards
+GAMMA = 0.6 
 
 # Events
 #PLACEHOLDER_EVENT = "PLACEHOLDER"
@@ -170,21 +173,35 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     # check if states are None
     if state is not None and next_state is not None:
         
-        index, rotation = get_state_index(state)
-        
-        action = np.argmax(self.model[index]) # Exploit learned values
-        if action < 4 and rotation != 0: # move and rotated state
-            action = (action + rotation) % 4 # compute rotated move
+        index, _ = get_state_index(state)
+        next_index, rotation = get_state_index(next_state)
 
-        q_value = self.model[index, action]
+        q_value = self.model[index, ACTIONS.index(action)]
+        next_value = np.max(self.model[next_index]) 
 
-        next_index, _ = get_state_index(next_state)
-
-        max_value = np.max(self.model[next_index])
-        new_q_value = (1 - ALPHA) * q_value + ALPHA * (reward + GAMMA * max_value)
+        new_q_value = (1 - ALPHA) * q_value + ALPHA * (reward + GAMMA * next_value)
         
         # Update Q-table
+        self.model[index, ACTIONS.index(action)] = new_q_value
+        
+        # Or SARSA (On-Policy algorithm for TD-Learning) ?
+        """the maximum reward for the next state is not necessarily used for updating the Q-values.
+        Instead, a new action, and therefore reward, is selected using the same policy (eg e-greedy) that determined the original action.
+        
+        if random.uniform(0, 1) < epsilon:
+            next_action = ACTIONS.index(np.random.choice(ACTIONS, p=[.2, .2, .2, .2, .1, .1]))
+        else:
+            next_action = np.argmax(self.model[index])
+            if action < 4 and rotation != 0:
+                action = (action + rotation) % 4
+            
+        next_value = self.model[next_index, next_action]
+
+        new_q_value = (1 - ALPHA) * q_value + ALPHA * (reward + GAMMA * next_value)
+        
         self.model[index, action] = new_q_value
+
+        """
 
 
 def end_of_round(self, last_game_state: dict, last_action: str, events: List[str]):

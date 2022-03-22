@@ -8,7 +8,7 @@ COLS = 17
 ROWS = 17
 SCENARIOS = {
     "coin-heaven": {
-        "CRATE_DENSITY": 0,
+        "CRATE_DENSITY": 0.2,
         "COIN_COUNT": 50
     },
     # This is the tournament game mode
@@ -17,7 +17,7 @@ SCENARIOS = {
         "COIN_COUNT": 25
     }, 
     "clean": {
-        "CRATE_DENSITY": 0.4,
+        "CRATE_DENSITY": 0.2,
         "COIN_COUNT": 0
     }
     # Feel free to add more game modes and properties

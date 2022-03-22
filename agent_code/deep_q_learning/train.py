@@ -225,6 +225,35 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
     #print(events)
 
+    def reach_create():
+        if old_game_state["step"] == 1:
+            crate_coord = np.where(old_game_state["field"] == 1)
+            self.visitable_crates = np.array([crate_coord[0],crate_coord[1]]).transpose()
+        agents_neigh = np.array([np.array(new_game_state["self"][3]) + a for a in [np.array([0,1]),np.array([1,0]),np.array([0,-1]),np.array([-1,0])]])
+        for j in agents_neigh:
+            for i in self.visitable_crates:
+                if (i == j).all():
+
+                    #print(i,j)
+                    events.append(e.CRATE_REACHED)
+                    index = list(range(0,len(self.visitable_crates),1))
+
+                    for n,crates in enumerate(self.visitable_crates):
+                        if (crates == i).all():
+                            #print(i,crates)
+                            n_index = n
+                    #print(n_index)
+                    #print(self.visitable_crates[n_index])
+                    #print(len(self.visitable_crates))
+                    index.remove(n_index)
+                    self.visitable_crates = self.visitable_crates[index]
+                    #print(len(self.visitable_crates))
+                    break
+    reach_create()
+
+
+
+
     def buffer_information():
         #print(f"old_game_state : ", old_game_state)
         #print(f"game_state : ", new_game_state)

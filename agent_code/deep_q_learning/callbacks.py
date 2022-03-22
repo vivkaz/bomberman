@@ -41,7 +41,7 @@ def setup(self):
     #load_model = "agent/recent_best_coin_collector"
     #load_model = "saved_model_TASK_2-1"
     #load_model = "saved_model"
-    load_model = "saved_model_double_dqn"
+    #load_model = "saved_model_double_dqn_coin"
 
     try:
         self.model = tf.keras.models.load_model(load_model)
@@ -88,7 +88,7 @@ def act(self, game_state: dict) -> str:
 
     if self.train:
         if np.random.rand() < epsilon:
-            decision =  np.random.randint(6)
+            decision =  np.random.randint(self.Hyperparameter["n_outputs"])
         else:
             Q_values = self.model.predict(inputs[np.newaxis])[0]
             decision = np.argmax(Q_values)
@@ -161,6 +161,13 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
 
 
 
+    try:
+        size = self.Hyperparameter["field_size"]
+    except:
+        size = 17
+    print("size = ",size)
+
+
     # This is the dict before the game begins and after it ends
     if game_state is None:
         return None
@@ -171,10 +178,10 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
             agents_view = np.zeros((2 * view_range + 1, 2 * view_range + 1))
         agents_position_borders = np.broadcast_to(agents_position, (2, 2)) + np.array([[-1, -1], [+1, +1]]) * view_range
         border_information_1 = np.where(agents_position_borders < 0, -agents_position_borders, 0)
-        border_information_2 = np.where(agents_position_borders > 16, agents_position_borders - 16, 0)
+        border_information_2 = np.where(agents_position_borders > size -1 , agents_position_borders - (size -1), 0)
         border_information = border_information_2 + border_information_1
         agents_position_borders = np.where(agents_position_borders < 0, 0, agents_position_borders)
-        agents_position_borders = np.where(agents_position_borders > 16, 16, agents_position_borders)
+        agents_position_borders = np.where(agents_position_borders > (size -1), size-1, agents_position_borders)
         agents_real_view = map[agents_position_borders[0, 0]:agents_position_borders[1, 0] + 1,
                            agents_position_borders[0, 1]:agents_position_borders[1, 1] + 1]
 
@@ -392,8 +399,8 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
         coin_map = get_agents_view(coin_field, view_range, agents_position, "coin_field")
 
         def check_index(index):
-            if index > 16:
-                return 16
+            if index > (size -1) :
+                return size -1
             elif index < 0:
                 return 0
             else:
@@ -431,8 +438,8 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
         advanced_explosion_map = get_agents_view(advanced_explosion_field,view_range,agents_position,"coin_field")
 
         def check_index(index):
-            if index > 16:
-                return 16
+            if index > size -1 :
+                return size -1
             elif index < 0:
                 return 0
             else:

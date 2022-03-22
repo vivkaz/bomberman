@@ -45,14 +45,17 @@ def setup_training(self):
 
     # variavle to save the rewards per step
     self.rewards = []
+    self.loss = []
 
     self.buffer_states = deque(maxlen=6)
 
     self.training_history = deque(maxlen = 3000)
 
     #setup target model:
-    #self.target = tf.keras.models.clone_model(self.model)
-    #self.target.set_weights(self.model.get_weights())
+    if self.Hyperparameter["train_method"]["algo"] == "double_DQN":
+        self.target = tf.keras.models.clone_model(self.model)
+        self.target.set_weights(self.model.get_weights())
+
 
 
 def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_state: dict, events: List[str]):
@@ -225,10 +228,10 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     def buffer_information():
         #print(f"old_game_state : ", old_game_state)
         #print(f"game_state : ", new_game_state)
-        # print("train - buffer")
+        #print("train - buffer")
         done = False
-        self.replay_memory.append((state_to_features(self, old_game_state), self_action,
-                                       reward_from_events(self, events), state_to_features(self, new_game_state),done))
+        self.replay_memory.append((state_to_features(self, old_game_state,mode = "normal"), self_action,
+                                       reward_from_events(self, events), state_to_features(self, new_game_state,mode = "next_state"),done))
 
         #print(f"events occured buffered :  {events} \n"
         #      f"in step {new_game_state['step']}")
@@ -239,7 +242,10 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
 
     buffer_information()
+    self.rewards.append(reward_from_events(self,events))
     print(events)
+    print(reward_from_events(self,events))
+
 
 def end_of_round(self, last_game_state: dict, last_action: str, events: List[str]):
     """
@@ -259,8 +265,7 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
     done = True
     self.replay_memory.append((state_to_features(self,last_game_state),last_action,
                         reward_from_events(self,events),state_to_features(self,last_game_state), done))
-
-
+    self.rewards.append(reward_from_events(self,events))
 
     #print("end of round : ",events)
 
@@ -269,82 +274,90 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
     optimizer = tf.keras.optimizers.Adam(learning_rate=self.Hyperparameter["learning_rate"])
     loss_fn = tf.keras.losses.mean_squared_error
 
+
+
 #normal DQN
+    def DQN(input):
+        if last_game_state["round"] >= input[0]:
+            experiences = sample_experiences(self, batch_size)
+            states, actions, rewards, next_states, dones = experiences
+            states = np.array(states)
+            next_states = np.array(next_states)
 
-    if last_game_state["round"] >= 1:
-        experiences = sample_experiences(self, batch_size)
-        states, actions, rewards, next_states, dones = experiences
-        states = np.array(states)
-        next_states = np.array(next_states)
+            next_Q_values = self.model.predict(next_states)
+            max_next_Q_values = np.max(next_Q_values, axis=1)
+            target_Q_values = (rewards + (1-dones) * discount_factor * max_next_Q_values)
+            target_Q_values = target_Q_values.reshape(-1, 1)
+            # print("actions : ",actions)
+            actions = transform_actions_to_number(actions)
+            # print("actions : ", actions)
+            mask = tf.one_hot(actions, self.n_outputs)
+            with tf.GradientTape() as tape:
+                # print("states",states)
+                # print(self.model(states))
+                all_Q_values = self.model(states)
+                Q_values = tf.reduce_sum(all_Q_values * mask, axis=1, keepdims=True)
+                loss = tf.reduce_mean(loss_fn(target_Q_values, Q_values))
+                self.loss.append(loss)
 
-        next_Q_values = self.model.predict(next_states)
-        max_next_Q_values = np.max(next_Q_values, axis=1)
-        target_Q_values = (rewards + (1-dones) * discount_factor * max_next_Q_values)
-        target_Q_values = target_Q_values.reshape(-1, 1)
-        # print("actions : ",actions)
-        actions = transform_actions_to_number(actions)
-        # print("actions : ", actions)
-        mask = tf.one_hot(actions, self.n_outputs)
-        with tf.GradientTape() as tape:
-            # print("states",states)
-            # print(self.model(states))
-            all_Q_values = self.model(states)
-            Q_values = tf.reduce_sum(all_Q_values * mask, axis=1, keepdims=True)
-            loss = tf.reduce_mean(loss_fn(target_Q_values, Q_values))
-
-        grads = tape.gradient(loss, self.model.trainable_variables)
-        # print("grads: ",grads)
-        optimizer.apply_gradients(zip(grads, self.model.trainable_variables))
-        self.logger.info("update model")
+            grads = tape.gradient(loss, self.model.trainable_variables)
+            # print("grads: ",grads)
+            optimizer.apply_gradients(zip(grads, self.model.trainable_variables))
+            self.logger.info("update model")
 #double DQN
-    """
-    if last_game_state["round"] >= 1:
-        experiences = sample_experiences(self, batch_size)
-        states, actions, rewards, next_states = experiences
-        states = np.array(states)
-        next_states = np.array(next_states)
+    def Double_DQN(input):
+        if last_game_state["round"] >= input[0]:
+            experiences = sample_experiences(self, batch_size)
+            states, actions, rewards, next_states, dones = experiences
+            states = np.array(states)
+            next_states = np.array(next_states)
 
-        next_Q_values = self.model.predict(next_states)#
-        best_next_action = np.argmax(next_Q_values, axis=1)
-        next_mask = tf.ones_hot(best_next_action, self.n_outputs).numpy()
+            next_Q_values = self.model.predict(next_states)#
+            best_next_action = np.argmax(next_Q_values, axis=1)
+            next_mask = tf.one_hot(best_next_action, self.n_outputs).numpy()
 
-        next_best_Q_values = (self.target.predict(next_states)*next_mask).sum(axis = 1)
+            next_best_Q_values = (self.target.predict(next_states)*next_mask).sum(axis = 1)
 
-        target_Q_values = (rewards + (1) * discount_factor * next_best_Q_values)
-        target_Q_values = target_Q_values.reshape(-1, 1)
+            target_Q_values = (rewards + (1-dones) * discount_factor * next_best_Q_values)
+            target_Q_values = target_Q_values.reshape(-1, 1)
 
-        # print("actions : ",actions)
-        actions = transform_actions_to_number(actions)
-        # print("actions : ", actions)
-        mask = tf.one_hot(actions, self.n_outputs)
-        with tf.GradientTape() as tape:
-            # print("states",states)
-            # print(self.model(states))
-            all_Q_values = self.model(states)
-            Q_values = tf.reduce_sum(all_Q_values * mask, axis=1, keepdims=True)
-            loss = tf.reduce_mean(loss_fn(target_Q_values, Q_values))
+            actions = transform_actions_to_number(actions)
+            mask = tf.one_hot(actions, self.n_outputs)
+            with tf.GradientTape() as tape:
+                # print("states",states)
+                # print(self.model(states))
+                all_Q_values = self.model(states)
+                Q_values = tf.reduce_sum(all_Q_values * mask, axis=1, keepdims=True)
+                loss = tf.reduce_mean(loss_fn(target_Q_values, Q_values))
+                self.loss.append(loss)
 
-        grads = tape.gradient(loss, self.model.trainable_variables)
-        # print("grads: ",grads)
-        optimizer.apply_gradients(zip(grads, self.model.trainable_variables))
-        self.logger.info("update model")
+            grads = tape.gradient(loss, self.model.trainable_variables)
+            # print("grads: ",grads)
+            optimizer.apply_gradients(zip(grads, self.model.trainable_variables))
+            self.logger.info("update model")
+        if last_game_state["round"] %  input[1] == 0:
+            self.target.set_weights(self.model.get_weights())
 
-    """
+    if self.Hyperparameter["train_method"]["algo"] == "DQN":
+        DQN(self.Hyperparameter["train_method"]["INPUTS"])
+    elif self.Hyperparameter["train_method"]["algo"] == "double_DQN":
+        Double_DQN(self.Hyperparameter["train_method"]["INPUTS"])
+
 
     self.logger.debug(f'Encountered event(s) {", ".join(map(repr, events))} in final step')
 
     # Store the model
     # with open("my-saved-model.pt", "wb") as file:
     #    pickle.dump(self.model, file)
-    sum = 0
-    for i in range(len(self.replay_memory)):
-        sum += self.replay_memory[i][2]
+    sum = np.sum(self.rewards)
+
     # self.rewards.append(np.sum(self.replay_memory[3]))
-    self.replay_memory.clear()
-    self.rewards.append(sum)
+
+    #self.replay_memory.clear()
     self.logger.info(f'end of round {last_game_state["round"]} with total reward : {sum}')
 
     self.training_history.append(sum)
+
 
 
 
@@ -356,7 +369,7 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
     # write data to protokoll such that the training status can be supervised during training
     with open("training_protokoll.txt", 'a') as f:
         f.write(
-            f"[{datetime.now().strftime('%H_%M_%S')}] finished epoche {last_game_state['round']} with total reward {sum}")
+            f"[{datetime.now().strftime('%H_%M_%S')}] finished epoche {last_game_state['round']} with total reward {sum} , {self.rewards}")
         f.write("\n")
 
         # save model and training_history
@@ -364,14 +377,24 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
             now = datetime.now()
             self.date_time = now.strftime("%m_%d_%Y_%H_%M_%S")
 
-        if self.Hyperparameter["episoden"] <= last_game_state["round"]:
-            self.model.save(self.Hyperparameter["save_name"])
+        if self.Hyperparameter["episoden"] <= last_game_state["round"]+1:
+            print("save_model")
+            print(self.Hyperparameter["train_method"]["algo"] is "DQN")
+            print("DQN",self.Hyperparameter["train_method"]["algo"])
+            print(type("DQN"), type(self.Hyperparameter["train_method"]["algo"]))
+            if self.Hyperparameter["train_method"]["algo"] == "DQN":
+                self.model.save(self.Hyperparameter["save_name"])
+                print(self.Hyperparameter['save_name'])
+                print(f"[info] model saved under name {self.Hyperparameter['save_name']}")
+            elif self.Hyperparameter["train_method"]["algo"] == "double_DQN":
+                self.target.save(self.Hyperparameter["save_name"])
+                print(f"[info] model saved under name {self.Hyperparameter['save_name']}")
 
             with open(f'{self.Hyperparameter["save_name"]}/Hyperparameter.pkl', 'wb') as f:
                 pickle.dump(self.Hyperparameter, f)
 
             np.save(f"{self.Hyperparameter['save_name']}/rewards_{self.date_time}.npy", self.training_history)
-
+    self.rewards.clear()
 def reward_from_events(self, events: List[str]) -> int:
     def distance_to_nearest_coin(state):
         position = state["self"][3]
@@ -387,6 +410,7 @@ def reward_from_events(self, events: List[str]) -> int:
         return d
 
     """
+    
     *This is not a required function, but an idea to structure your code.*
 
     Here you can modify the rewards your agent get so as to en/discourage

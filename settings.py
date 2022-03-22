@@ -26,7 +26,7 @@ SCENARIOS = {
 MAX_AGENTS = 4
 
 # Round properties
-MAX_STEPS = 30
+MAX_STEPS = 100
 
 # GUI properties
 GRID_SIZE = 30

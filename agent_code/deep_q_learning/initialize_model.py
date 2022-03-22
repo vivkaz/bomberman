@@ -6,13 +6,14 @@ import events as e
 n_outputs = 6
 inputs_shape = (5, 5, 3)
 model = tf.keras.models.Sequential([
-    tf.keras.layers.Conv2D(40, 3, activation="elu", padding='same', input_shape=inputs_shape),
+    tf.keras.layers.Conv2D(30, 3, activation="elu", padding='same', input_shape=inputs_shape),
     tf.keras.layers.MaxPooling2D(2),
-    tf.keras.layers.Conv2D(40, 3, activation="elu", padding='same'),
+    tf.keras.layers.Conv2D(20, 3, activation="elu", padding='same'),
     tf.keras.layers.MaxPooling2D(2),
     tf.keras.layers.Flatten(),
-    tf.keras.layers.Dense(40, activation="relu"),
     tf.keras.layers.Dense(30, activation="relu"),
+    tf.keras.layers.Dense(20, activation="relu"),
+    tf.keras.layers.Dense(20, activation="relu"),
     tf.keras.layers.Dense(n_outputs, activation="softmax")
 
 ])
@@ -21,39 +22,42 @@ model.summary()
 
 #Hyperparameter
 Hyperparameter = {
-"save_name" : "saved_model_double_dqn",#check, that the model name is not redefined in callbacks
-"epsilon_scale" : 1000,#check if epsilon is not redefined in callbacks
-"learning_rate" : 5e-4,
+"save_name" : "saved_model",#check, that the model name is not redefined in callbacks
+"epsilon_scale" : 500,#check if epsilon is not redefined in callbacks
+"learning_rate" : 1e-3,
 "batch_size" : 50,
-"steps" : 100,
-"episoden" : 1500,
+"steps" : 50, #check steps in settings
+"episoden" : 200,
 "discount_factor" : 0.9,
+"n_outputs" : n_outputs,
 "rewards" : {
-        e.INVALID_ACTION: -15,
+        e.INVALID_ACTION: -20,
         e.MOVED_UP: 2,
         e.MOVED_DOWN: 2,
         e.MOVED_LEFT: 2,
         e.WAITED: -5,
         e.MOVED_RIGHT: 2,
-        #e.COIN_COLLECTED: 30,
-        #e.COIN_DISTANCE_REDUCED: 5,
-        #e.COIN_DISTANCE_INCREASED: -5,
+        e.COIN_COLLECTED: 30,
+        e.COIN_DISTANCE_REDUCED: 5,
+        e.COIN_DISTANCE_INCREASED: -5,
         e.RUN_IN_LOOP:-10,
-        e.CRATE_DESTROYED: 20,
-        e.BOMB_AVOIDED : 20,
+        #e.CRATE_DESTROYED: 20,
+        e.BOMB_AVOIDED : 35,
         e.SURVIVED_ROUND : 5,
         e.KILLED_SELF: -50,
         e.IN_DANGER: -20,
-        #e.COIN_FOUND : 20,
+        e.COIN_FOUND : 20,
         e.GOT_KILLED : -50,
-        e.BOMB_DROPPED : -2
+        e.BOMB_DROPPED : -20,
+        e.CRATE_REACHED: 30
 },
 "coin_density" : 0,#25
-"crate_density" : 0.4,#0.5
+"crate_density" : 0.2,#0.5
+"field_size" : 17,#check in settings
 "feature_setup" : {"feature_function" : "fake_coin_field_bombs",
                    "INPUTS" : [2,inputs_shape]},
 
-"train_method" : {"algo": "double_DQN","INPUTS" : [50,50] }
+"train_method" : {"algo": "DQN","INPUTS" : [50] }
 
 
 

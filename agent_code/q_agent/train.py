@@ -10,7 +10,7 @@ import pickle
 from typing import List
 
 import events as e
-from .callbacks import get_state_index, state_to_features, ACTIONS, epsilon
+from .callbacks import get_state_index, state_to_features, get_arrangements, ACTIONS, dic, epsilon, GAME_MODE, CURRENT_FIELD
 
 # This is only an example!
 Transition = namedtuple('Transition',
@@ -21,9 +21,9 @@ TRANSITION_HISTORY_SIZE = 4  # keep only 4 last transitions
 BUFFER_HISTORY_SIZE = 6 # keep only 6 last states
 RECORD_ENEMY_TRANSITIONS = 1.0  # record enemy transitions with probability 
 # determines to what extent newly acquired information overrides old information
-ALPHA = 0.9 # in fully deterministic environments 1 is optimal; when problem is stochastic, often const learning rate such as 0.1
+ALPHA = 0.1 # in fully deterministic environments 1 is optimal; when problem is stochastic, often const learning rate such as 0.1
 # determines the importance of future rewards
-GAMMA = 0.6 
+GAMMA = 0.7 
 
 # Events
 #PLACEHOLDER_EVENT = "PLACEHOLDER"
@@ -72,11 +72,6 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         if new_game_state is not None:
             self.buffer_states.append(new_game_state['self'][3]) # save as array and nos as tuple ?
 
-    #def risky_area(pos):
-    #    horizontal = np.array([ [x, pos[1]] for x in range(pos[0]-3, pos[0]+4) ])
-    #    vertical = np.array([ [pos[0], y] for y in range(pos[1]-3, pos[1]+4) ])
-    #    return np.concatenate((vertical, horizontal), axis = 0)
-
     def in_danger(area, bombs):
         for bomb in bombs:
             for a in area:
@@ -88,13 +83,8 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     #def bomb_dropped(): # covered in environment.py
     #    return old_game_state['self'][2] == True and new_game_state['self'][2] == False
 
-
     def bomb_avoided():
         def check_for_wall(x, y, field=old_game_state['field']):
-            #if (0 < pos[0] <= 17) and (0 < pos[1] <= 17):
-            #if (position >= 17).any() or (position < 0).any():
-            #    print("out of field")
-            #    return True
             if (0 <= x < 17) and (0 <= y < 17):
                 return field[x, y] == -1 # wall
             return False
@@ -102,39 +92,43 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         def get_left(pos, n=3):
             left = []
             for x in range(pos[0]-n, pos[0]):
-                if check_for_wall(x, pos[1]):
-                    left = []
-                    continue
-                else:
-                    left.append([x, pos[1]])
+                if (0 <= x < 17):
+                    if check_for_wall(x, pos[1]):
+                        left = []
+                        continue
+                    else:
+                        left.append([x, pos[1]])
             return left
 
         def get_right(pos, n=3):
             right = []
             for x in range(pos[0]+1, pos[0]+(n+1)):
-                if check_for_wall(x, pos[1]):
-                    break
-                else:
-                    right.append([x, pos[1]])
+                if (0 <= x < 17):
+                    if check_for_wall(x, pos[1]):
+                        break
+                    else:
+                        right.append([x, pos[1]])
             return right
 
         def get_up(pos, n=3):
             up = []
             for y in range(pos[1]+1, pos[1]+(n+1)):
-                if check_for_wall(pos[0],y):
-                    break
-                else:
-                    up.append([pos[0], y])
+                if (0 <= y < 17):
+                    if check_for_wall(pos[0], y):
+                        break
+                    else:
+                        up.append([pos[0], y])
             return up
 
         def get_down(pos, n=3):
             down = []
             for y in range(pos[1]-n, pos[1]):
-                if check_for_wall(pos[0], y):
-                    down = []
-                    continue
-                else:
-                    down.append([pos[0], y])
+                if (0 <= y < 17):
+                    if check_for_wall(pos[0], y):
+                        down = []
+                        continue
+                    else:
+                        down.append([pos[0], y])
             return down
 
         # get vertical and horizontal region from the position
@@ -195,7 +189,6 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             
     def run_in_loop():
         update_buffer_states()
-
         if len(self.buffer_states) == BUFFER_HISTORY_SIZE:
             #return (self.buffer_states[0] == self.buffer_states[2]).all() and (self.buffer_states[1] == self.buffer_states[3]).all() and (self.buffer_states[0] != self.buffer_states[1]).any()
             buffer = np.array(self.buffer_states)
@@ -205,7 +198,8 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         else:
             return False
 
-    # Add your own events to hand out rewards 
+
+    """Add your own events to hand out rewards"""
     if old_game_state is not None:
         if bomb_avoided():
             events.append(e.BOMB_AVOIDED)
@@ -225,17 +219,20 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
      
     
     self.logger.debug(f'Encountered game event(s) {", ".join(map(repr, events))} in step {new_game_state["step"]}')
+    #print((f"Step {new_game_state['step']} : {events}"))
 
     # state_to_features is defined in callbacks.py
     self.transitions.append(Transition(state_to_features(old_game_state), self_action, state_to_features(new_game_state), reward_from_events(self, events)))
 
     # Recalculate Q-values
     state, action, next_state, reward = self.transitions[-1]
+    #print("action", action)
 
     # check if state is None
     if next_state is not None:
-        
         index, _ = get_state_index(state)
+        #print("model index",self.model[index])
+        #print("action", action)
         next_index, rotation = get_state_index(next_state)
 
         q_value = self.model[index, ACTIONS.index(action)]
@@ -245,6 +242,8 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         
         # Update Q-table
         self.model[index, ACTIONS.index(action)] = new_q_value
+
+        #print("Q-Learning\n", q_value, new_q_value)
         
         # Or SARSA (On-Policy algorithm for TD-Learning) ?
         """the maximum reward for the next state is not necessarily used for updating the Q-values.
@@ -265,7 +264,6 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
         """
 
-
 def end_of_round(self, last_game_state: dict, last_action: str, events: List[str]):
     """
     Called at the end of each game or when the agent died to hand out final rewards.
@@ -280,6 +278,7 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
     :param self: The same object that is passed to all of your callbacks.
     """
     self.logger.debug(f'Encountered event(s) {", ".join(map(repr, events))} in final step')
+    #print(f"End : {events}")
     self.transitions.append(Transition(state_to_features(last_game_state), last_action, None, reward_from_events(self, events)))
 
     # Store the model
@@ -290,6 +289,7 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
     #    pickle.dump(self.model, file)
 
     self.logger.info(f'End of round {last_game_state["round"]} with total reward : {self.rewards[-1]}')
+    #print(f"Round {last_game_state['round']} : {self.rewards[-1]}")
 
     # Store training report
     date = datetime.now().strftime("%d-%m-%Y")
@@ -298,7 +298,8 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
     with open(file, 'a') as f:
         f.write(f"[{datetime.now().strftime('%d/%m %H_%M_%S')}] finished round {last_game_state['round']} with total reward {self.rewards[-1]} \n")
 
-    #np.save(f"q_agent/rewards_{datetime.now().strftime('%d/%m %H_%M')}.npy", self.rewards[-1]))
+    #np.save(f"q_agent/rewards_{datetime.now().strftime('%d/%m %H_%M')}.npy", self.rewards[-1])
+
 
 def reward_from_events(self, events: List[str]) -> int:
     """
@@ -308,15 +309,15 @@ def reward_from_events(self, events: List[str]) -> int:
     certain behavior.
     """
     game_rewards = {
-        e.INVALID_ACTION: -20,
+        e.INVALID_ACTION: -100,
         e.RUN_IN_LOOP:-20,
         e.MOVED_UP:-2,
         e.MOVED_DOWN: -2,
         e.MOVED_LEFT: -2,
         e.MOVED_RIGHT: -2,
-        e.WAITED: -5,
+        e.WAITED: -10,
         e.COIN_COLLECTED: 70,
-        e.COIN_DISTANCE_REDUCED: 5,
+        e.COIN_DISTANCE_REDUCED: 10,
         e.COIN_DISTANCE_INCREASED: -5,
         e.BOMB_AVOIDED : 3,
         e.BOMB_DROPPED: -7,

@@ -21,9 +21,9 @@ TRANSITION_HISTORY_SIZE = 4  # keep only 4 last transitions
 BUFFER_HISTORY_SIZE = 6 # keep only 6 last states
 RECORD_ENEMY_TRANSITIONS = 1.0  # record enemy transitions with probability 
 # determines to what extent newly acquired information overrides old information
-ALPHA = 0.1 # in fully deterministic environments 1 is optimal; when problem is stochastic, often const learning rate such as 0.1
+ALPHA = 0.01 # in fully deterministic environments 1 is optimal; when problem is stochastic, often const learning rate such as 0.1
 # determines the importance of future rewards
-GAMMA = 0.7 
+GAMMA = 0.9
 
 # Events
 #PLACEHOLDER_EVENT = "PLACEHOLDER"
@@ -230,18 +230,23 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
     # check if state is None
     if next_state is not None:
-        index, _ = get_state_index(state)
-        #print("model index",self.model[index])
-        #print("action", action)
-        next_index, rotation = get_state_index(next_state)
+   
+        index, rotation = get_state_index(state)
 
-        q_value = self.model[index, ACTIONS.index(action)]
+        action = ACTIONS.index(action)
+
+        if action < 4 and rotation != 0:
+            action = (action + rotation) % 4
+        
+        q_value = self.model[index, action]
+
+        next_index, next_rotation = get_state_index(next_state)
         next_value = np.max(self.model[next_index]) 
 
         new_q_value = (1 - ALPHA) * q_value + ALPHA * (reward + GAMMA * next_value)
         
         # Update Q-table
-        self.model[index, ACTIONS.index(action)] = new_q_value
+        self.model[index, action] = new_q_value
 
         #print("Q-Learning\n", q_value, new_q_value)
         
@@ -253,8 +258,8 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             next_action = ACTIONS.index(np.random.choice(ACTIONS, p=[.2, .2, .2, .2, .1, .1]))
         else:
             next_action = np.argmax(self.model[index])
-            if action < 4 and rotation != 0:
-                action = (action + rotation) % 4
+            if next_action < 4 and next_rotation != 0:
+                next_action = (next_action + next_rotation) % 4
             
         next_value = self.model[next_index, next_action]
 

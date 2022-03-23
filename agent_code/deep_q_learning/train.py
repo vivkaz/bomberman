@@ -349,7 +349,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
         times = np.array([buffer_time_end, buffer_time_end,t_2, t_1]) - np.array(
             [buffer_time_start,t_2, t_1, buffer_time_start])
-        print("buffer time = ", np.round(times, 9))
+        #print("buffer time = ", np.round(times, 9))
         #print(f"events occured buffered :  {events} \n"
         #      f"in step {new_game_state['step']}")
         #print(f"action : {self_action} at step {new_game_state['step']}")
@@ -502,7 +502,6 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
 
     if self.Hyperparameter["episoden"] <= last_game_state["round"]+1:
         print("save_model")
-        print(self.Hyperparameter["train_method"]["algo"] is "DQN")
         print("DQN",self.Hyperparameter["train_method"]["algo"])
         print(type("DQN"), type(self.Hyperparameter["train_method"]["algo"]))
         if self.Hyperparameter["train_method"]["algo"] == "DQN":
@@ -519,7 +518,7 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
         np.save(f"{self.Hyperparameter['save_name']}/rewards_{self.date_time}.npy", self.training_history)
     self.rewards.clear()
     end_time = time.time()
-    print("end of round : time = ",np.round(end_time-start_time,5))
+    #print("end of round : time = ",np.round(end_time-start_time,5))
 def reward_from_events(self, events: List[str]) -> int:
     def distance_to_nearest_coin(state):
         position = state["self"][3]

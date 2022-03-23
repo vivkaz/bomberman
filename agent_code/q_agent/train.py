@@ -21,7 +21,7 @@ TRANSITION_HISTORY_SIZE = 4  # keep only 4 last transitions
 BUFFER_HISTORY_SIZE = 6 # keep only 6 last states
 RECORD_ENEMY_TRANSITIONS = 1.0  # record enemy transitions with probability 
 # determines to what extent newly acquired information overrides old information
-ALPHA = 0.01 # in fully deterministic environments 1 is optimal; when problem is stochastic, often const learning rate such as 0.1
+ALPHA = 0.1 # in fully deterministic environments 1 is optimal; when problem is stochastic, often const learning rate such as 0.1
 # determines the importance of future rewards
 GAMMA = 0.9
 
@@ -66,11 +66,9 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     :param events: The events that occurred when going from  `old_game_state` to `new_game_state`
     """
 
-    #self.logger.debug(f'Encountered game event(s) {", ".join(map(repr, events))} in step {new_game_state["step"]}')
-
     def update_buffer_states():
         if new_game_state is not None:
-            self.buffer_states.append(new_game_state['self'][3]) # save as array and nos as tuple ?
+            self.buffer_states.append(new_game_state['self'][3]) # agents coordinates on field
 
     def in_danger(area, bombs):
         for bomb in bombs:
@@ -86,64 +84,66 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     def bomb_avoided():
         def check_for_wall(x, y, field=old_game_state['field']):
             if (0 <= x < 17) and (0 <= y < 17):
-                return field[x, y] == -1 # wall
+                return field[y][x] == -1 # wall
             return False
 
         def get_left(pos, n=3):
             left = []
-            for x in range(pos[0]-n, pos[0]):
-                if (0 <= x < 17):
-                    if check_for_wall(x, pos[1]):
+            for y in range(pos[1]-n, pos[1]):
+                if (0 <= y < 17):
+                    if check_for_wall(pos[0], y):
                         left = []
                         continue
                     else:
-                        left.append([x, pos[1]])
+                        left.append([pos[0], y])
             return left
 
         def get_right(pos, n=3):
             right = []
-            for x in range(pos[0]+1, pos[0]+(n+1)):
-                if (0 <= x < 17):
-                    if check_for_wall(x, pos[1]):
-                        break
-                    else:
-                        right.append([x, pos[1]])
-            return right
-
-        def get_up(pos, n=3):
-            up = []
             for y in range(pos[1]+1, pos[1]+(n+1)):
                 if (0 <= y < 17):
                     if check_for_wall(pos[0], y):
                         break
                     else:
-                        up.append([pos[0], y])
+                        right.append([pos[0], y])
+            return right
+
+        def get_up(pos, n=3):
+            up = []
+            for x in range(pos[0]-n, pos[0]):
+                if (0 <= x < 17):
+                    if check_for_wall(x, pos[1]):
+                        break
+                    else:
+                        up.append([x, pos[1]])
             return up
 
         def get_down(pos, n=3):
             down = []
-            for y in range(pos[1]-n, pos[1]):
-                if (0 <= y < 17):
-                    if check_for_wall(pos[0], y):
+            for x in range(pos[0]+1, pos[0]+(n+1)):
+                if (0 <= x < 17):
+                    if check_for_wall(x, pos[1]):
                         down = []
                         continue
                     else:
-                        down.append([pos[0], y])
+                        down.append([x, pos[1]])
             return down
 
-        # get vertical and horizontal region from the position
+        # get vertical and horizontal region from the position, consider walls
         def get_vh_region(pos, n=3):
             left = get_left(pos, n)
             right = get_right(pos, n)
             up = get_up(pos, n)
             down = get_down(pos, n)
+            
             for r in right:
                 left.append(r)
             for u in up:
                 down.append(u)
             for d in down:
                 left.append(d)
-            return left       
+            return left
+
 
         if len(old_game_state['bombs']) > 0:
             bombs = old_game_state['bombs']
@@ -183,9 +183,9 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             
             old_dist = dist(old_position, coins)
             new_dist = dist(new_position, coins)
-            return flag, np.min(new_dist) < np.min(old_dist)
+            return flag, np.min(new_dist) < np.min(old_dist), np.min(new_dist) == np.min(old_dist)
         else: 
-            return flag, False
+            return flag, False, False
             
     def run_in_loop():
         update_buffer_states()
@@ -207,15 +207,17 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         #if bomb_dropped(): #covered in environment.py
         #    events.append(e.BOMB_DROPPED)
 
-        collectable_coins, reduced_dist = coin_distance_reduced()
+        collectable_coins, reduced_dist, same_distance = coin_distance_reduced()
         if collectable_coins: 
             if reduced_dist:
                 events.append(e.COIN_DISTANCE_REDUCED)
-            else: 
+            elif not same_distance: 
                 events.append(e.COIN_DISTANCE_INCREASED)
 
     if run_in_loop():
         events.append(e.RUN_IN_LOOP)
+
+    #print("\nevents", events)
      
     
     self.logger.debug(f'Encountered game event(s) {", ".join(map(repr, events))} in step {new_game_state["step"]}')
@@ -226,7 +228,6 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
     # Recalculate Q-values
     state, action, next_state, reward = self.transitions[-1]
-    #print("action", action)
 
     # check if state is None
     if next_state is not None:
@@ -240,6 +241,8 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         
         q_value = self.model[index, action]
 
+        #print("old q", self.model[index, action])
+
         next_index, next_rotation = get_state_index(next_state)
         next_value = np.max(self.model[next_index]) 
 
@@ -248,7 +251,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         # Update Q-table
         self.model[index, action] = new_q_value
 
-        #print("Q-Learning\n", q_value, new_q_value)
+        #print("new q", self.model[index, action])
         
         # Or SARSA (On-Policy algorithm for TD-Learning) ?
         """the maximum reward for the next state is not necessarily used for updating the Q-values.
@@ -315,21 +318,21 @@ def reward_from_events(self, events: List[str]) -> int:
     """
     game_rewards = {
         e.INVALID_ACTION: -100,
-        e.RUN_IN_LOOP:-20,
+        e.RUN_IN_LOOP:-50,
         e.MOVED_UP:-2,
         e.MOVED_DOWN: -2,
         e.MOVED_LEFT: -2,
         e.MOVED_RIGHT: -2,
-        e.WAITED: -10,
-        e.COIN_COLLECTED: 70,
+        e.WAITED: -20,
+        e.COIN_COLLECTED: 100,
         e.COIN_DISTANCE_REDUCED: 10,
         e.COIN_DISTANCE_INCREASED: -5,
-        e.BOMB_AVOIDED : 3,
+        e.BOMB_AVOIDED : 5,
         e.BOMB_DROPPED: -7,
         e.KILLED_OPPONENT: 500,
         e.GOT_KILLED: -100,
         e.KILLED_SELF: -150,
-        e.SURVIVED_ROUND: 1,
+        e.SURVIVED_ROUND: 2,
         e.CRATE_DESTROYED: 20,
         e.COIN_FOUND: 15
         #e.BOMB_EXPLODED: ?

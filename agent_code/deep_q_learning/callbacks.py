@@ -92,12 +92,14 @@ def act(self, game_state: dict) -> str:
         else:
             Q_values = self.model.predict(inputs[np.newaxis])[0]
             decision = np.argmax(Q_values)
+
+        end_time = time.time()
+
+        print("act_time : ", np.round(end_time - start_time, 6),"s")
         return ACTIONS[decision]
     else:
         Q_values = self.model.predict(inputs[np.newaxis])[0]#Q_values hat shape [1,2,3,4]
     time_2 = time.time()
-
-    end_time = time.time()
 
 
     def invalid_move(action,game_state):
@@ -159,13 +161,13 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
     :return: np.array
     """
 
-
+    t_0 = time.time()
 
     try:
         size = self.Hyperparameter["field_size"]
     except:
         size = 17
-    print("size = ",size)
+    #print("size = ",size)
 
 
     # This is the dict before the game begins and after it ends
@@ -224,6 +226,7 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
         bomb_field[x_bomb,y_bomb] = -2
         bomb_timer_field[x_bomb,y_bomb] = bomb_timer
 
+    t_1 = time.time()
 
 
     def check_for_wall(position,field):
@@ -293,6 +296,8 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
         advanced_explosion_field = get_advanced_explosion_field(self.exploded_bombs_normal)
     elif mode == "next_state":
         advanced_explosion_field = get_advanced_explosion_field(self.exploded_bombs_next)
+
+    t_2 = time.time()
 
     """
     advanced_explosion_field = np.zeros(np.shape(field))
@@ -477,10 +482,12 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
                          "one_field_map" : one_field_map,
                          "fake_coin_field" : fake_coin_field,
                          "fake_coin_field_bombs": fake_coin_field_bombs}
-
+    t_3 = time.time()
 
     inputs = feature_functions[self.Hyperparameter["feature_setup"]["feature_function"]](self.Hyperparameter["feature_setup"]["INPUTS"])
 
+    t_4 = time.time()
     #print(f"input at step {game_state['step']} : {inputs}")
-
+    times = np.array([t_4,t_3,t_2,t_1])-np.array([t_3,t_2,t_1,t_0])
+    print("state to feature time : ", np.round(times,9))
     return inputs

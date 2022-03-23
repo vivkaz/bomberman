@@ -7,6 +7,7 @@ import events as e
 from .callbacks import state_to_features
 import matplotlib.pyplot as plt
 from datetime import datetime
+import time
 
 ACTIONS = ['UP', 'RIGHT', 'DOWN', 'LEFT', 'WAIT', 'BOMB']
 
@@ -23,7 +24,7 @@ def transform_actions_to_number(action):
 # function "sample_experiences" samples a random set of experiences. A experience is the information about the state the action the reward and the next state of one step in the game.
 # the parameter batch_size defines the number of experiences that are use for one training iteration
 def sample_experiences(self, batch_size):
-    print("länger replay_memory : ", len(self.replay_memory))
+    #print("länger replay_memory : ", len(self.replay_memory))
     indices = np.random.randint(len(self.replay_memory), size=batch_size)
     batch = [self.replay_memory[index] for index in indices]
     states, actions, rewards, next_states, dones = [np.array([experience[field_index] for experience in batch])
@@ -41,7 +42,7 @@ def setup_training(self):
     """
 
     # variable to buffer the experiences of previous setps
-    self.replay_memory = deque(maxlen=2000)
+    self.replay_memory = deque(maxlen=1000)
 
     # variavle to save the rewards per step
     self.rewards = []
@@ -75,15 +76,9 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     :param new_game_state: The state the agent is in now.
     :param events: The events that occurred when going from  `old_game_state` to `new_game_state`
     """
+    start_time = time.time()
 
     # function "buffer_information" saves the experience of one step in the variable self.replay_memory starts a step 2 since in setp 1 the old_game_state is none
-
-
-    self.old_game_state = old_game_state
-    self.new_game_state = new_game_state
-
-
-
 
     ###
 
@@ -98,7 +93,6 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         pos = np.array([pos[0],pos[1]])
         for direction in [np.array([0,1]),np.array([0,-1]),np.array([1,0]),np.array([-1,0])]:
             current_position = np.copy(pos)
-
             for i in range(3):
                 current_position += direction
 
@@ -116,6 +110,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         for b in bombs:
             for a in area:
                 if (b == a).all():
+                #if (np.array(b[0]) == a).all():
                     danger = True
 
                     break
@@ -127,6 +122,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         for b in bombs:
             for a in area:
                 if (b == a).all():
+                #if (np.array(b[0]) == a).all():
                     danger = True
 
                     break
@@ -148,7 +144,80 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             old_danger = in_danger(old_risky_area, bombs)
             new_danger = in_danger(new_risky_area, bombs)
             return old_danger and not new_danger
+
+    """
+    def bomb_avoided():
+        def check_for_wall(x, y, field=old_game_state['field']):
+            if (0 <= x < 17) and (0 <= y < 17):
+                return field[x, y] == -1  # wall
+            return False
+
+        def get_left(pos, n=3):
+            left = []
+            for x in range(pos[0] - n, pos[0]):
+                if (0 <= x < 17):
+                    if check_for_wall(x, pos[1]):
+                        left = []
+                        continue
+                    else:
+                        left.append([x, pos[1]])
+            return left
+
+        def get_right(pos, n=3):
+            right = []
+            for x in range(pos[0] + 1, pos[0] + (n + 1)):
+                if (0 <= x < 17):
+                    if check_for_wall(x, pos[1]):
+                        break
+                    else:
+                        right.append([x, pos[1]])
+            return right
+
+        def get_up(pos, n=3):
+            up = []
+            for y in range(pos[1] + 1, pos[1] + (n + 1)):
+                if (0 <= y < 17):
+                    if check_for_wall(pos[0], y):
+                        break
+                    else:
+                        up.append([pos[0], y])
+            return up
+
+        def get_down(pos, n=3):
+            down = []
+            for y in range(pos[1] - n, pos[1]):
+                if (0 <= y < 17):
+                    if check_for_wall(pos[0], y):
+                        down = []
+                        continue
+                    else:
+                        down.append([pos[0], y])
+            return down
+
+        # get vertical and horizontal region from the position
+        def get_vh_region(pos, n=3):
+            left = get_left(pos, n)
+            right = get_right(pos, n)
+            up = get_up(pos, n)
+            down = get_down(pos, n)
+            for r in right:
+                left.append(r)
+            for u in up:
+                down.append(u)
+            for d in down:
+                left.append(d)
+            return left
+
+        if len(old_game_state['bombs']) > 0:
+            bombs = old_game_state['bombs']
+            old_risky_area = get_vh_region(old_game_state['self'][3])
+            new_risky_area = get_vh_region(new_game_state['self'][3])
+
+            old_danger = in_danger(old_risky_area, bombs)
+            new_danger = in_danger(new_risky_area, bombs)
+            return old_danger and not new_danger
     # if a bomb with a timer lower than 3 ist in potential lethal range to the agnet the agent will get a penalty
+    """
     def agent_is_in_danger():
         bombs = np.empty((2,len(old_game_state["bombs"])))
         timer = np.empty(len(old_game_state["bombs"]))
@@ -204,13 +273,16 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     if old_game_state is not None:
         if bomb_avoided():
             events.append(e.BOMB_AVOIDED)
+
         if agent_is_in_danger():
             events.append(e.IN_DANGER)
+
 
         #if bomb_dropped():
         #    events.append(e.BOMB_DROPPED)
 
         collectable_coins, reduced_dist = coin_distance_reduced()
+
         if collectable_coins:
             if reduced_dist:
                 events.append(e.COIN_DISTANCE_REDUCED)
@@ -219,6 +291,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
     if run_in_loop():
         events.append(e.RUN_IN_LOOP)
+
 
     #print(events)
     self.logger.debug(f'Encountered game event(s) {", ".join(map(repr, events))} in step {new_game_state["step"]}')
@@ -249,6 +322,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
                     self.visitable_crates = self.visitable_crates[index]
                     #print(len(self.visitable_crates))
                     break
+
     reach_create()
 
 
@@ -258,10 +332,24 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         #print(f"old_game_state : ", old_game_state)
         #print(f"game_state : ", new_game_state)
         #print("train - buffer")
-        done = False
-        self.replay_memory.append((state_to_features(self, old_game_state,mode = "normal"), self_action,
-                                       reward_from_events(self, events), state_to_features(self, new_game_state,mode = "next_state"),done))
 
+        done = False
+        buffer_time_start = time.time()
+
+        old_feature = state_to_features(self, old_game_state,mode = "normal")
+
+        t_1 = time.time()
+
+        new_feature = state_to_features(self, new_game_state,mode = "next_state")
+
+        t_2 = time.time()
+        self.replay_memory.append((old_feature, self_action,
+                                       reward_from_events(self, events), new_feature,done))
+        buffer_time_end = time.time()
+
+        times = np.array([buffer_time_end, buffer_time_end,t_2, t_1]) - np.array(
+            [buffer_time_start,t_2, t_1, buffer_time_start])
+        print("buffer time = ", np.round(times, 9))
         #print(f"events occured buffered :  {events} \n"
         #      f"in step {new_game_state['step']}")
         #print(f"action : {self_action} at step {new_game_state['step']}")
@@ -272,9 +360,13 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
     buffer_information()
     self.rewards.append(reward_from_events(self,events))
-    print(events)
-    print(reward_from_events(self,events))
 
+    #print(events)
+    #print(reward_from_events(self,events))
+
+    end_time = time.time()
+    #times = np.array([end_time,buffer_time_end, t_2, t_1])-np.array([start_time,buffer_time_start ,t_1,buffer_time_start])
+    #print("train : game_events_occured time = ", np.round(times,9))
 
 def end_of_round(self, last_game_state: dict, last_action: str, events: List[str]):
     """
@@ -289,6 +381,7 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
 
     :param self: The same object that is passed to all of your callbacks.
     """
+    start_time = time.time()
 
     #add last action to buffer
     done = True
@@ -391,6 +484,7 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
 
 
     # reset protokoll file in first round
+    """
     if last_game_state["round"] == 1:
         with open("training_protokoll.txt", 'r+') as f:
             f.truncate(0)
@@ -400,30 +494,32 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
         f.write(
             f"[{datetime.now().strftime('%H_%M_%S')}] finished epoche {last_game_state['round']} with total reward {sum} , {self.rewards}")
         f.write("\n")
-
+    """
         # save model and training_history
-        if last_game_state["round"] == 1:
-            now = datetime.now()
-            self.date_time = now.strftime("%m_%d_%Y_%H_%M_%S")
+    if last_game_state["round"] == 1:
+        now = datetime.now()
+        self.date_time = now.strftime("%m_%d_%Y_%H_%M_%S")
 
-        if self.Hyperparameter["episoden"] <= last_game_state["round"]+1:
-            print("save_model")
-            print(self.Hyperparameter["train_method"]["algo"] is "DQN")
-            print("DQN",self.Hyperparameter["train_method"]["algo"])
-            print(type("DQN"), type(self.Hyperparameter["train_method"]["algo"]))
-            if self.Hyperparameter["train_method"]["algo"] == "DQN":
-                self.model.save(self.Hyperparameter["save_name"])
-                print(self.Hyperparameter['save_name'])
-                print(f"[info] model saved under name {self.Hyperparameter['save_name']}")
-            elif self.Hyperparameter["train_method"]["algo"] == "double_DQN":
-                self.target.save(self.Hyperparameter["save_name"])
-                print(f"[info] model saved under name {self.Hyperparameter['save_name']}")
+    if self.Hyperparameter["episoden"] <= last_game_state["round"]+1:
+        print("save_model")
+        print(self.Hyperparameter["train_method"]["algo"] is "DQN")
+        print("DQN",self.Hyperparameter["train_method"]["algo"])
+        print(type("DQN"), type(self.Hyperparameter["train_method"]["algo"]))
+        if self.Hyperparameter["train_method"]["algo"] == "DQN":
+            self.model.save(self.Hyperparameter["save_name"])
+            print(self.Hyperparameter['save_name'])
+            print(f"[info] model saved under name {self.Hyperparameter['save_name']}")
+        elif self.Hyperparameter["train_method"]["algo"] == "double_DQN":
+            self.target.save(self.Hyperparameter["save_name"])
+            print(f"[info] model saved under name {self.Hyperparameter['save_name']}")
 
-            with open(f'{self.Hyperparameter["save_name"]}/Hyperparameter.pkl', 'wb') as f:
-                pickle.dump(self.Hyperparameter, f)
+        with open(f'{self.Hyperparameter["save_name"]}/Hyperparameter.pkl', 'wb') as f:
+            pickle.dump(self.Hyperparameter, f)
 
-            np.save(f"{self.Hyperparameter['save_name']}/rewards_{self.date_time}.npy", self.training_history)
+        np.save(f"{self.Hyperparameter['save_name']}/rewards_{self.date_time}.npy", self.training_history)
     self.rewards.clear()
+    end_time = time.time()
+    print("end of round : time = ",np.round(end_time-start_time,5))
 def reward_from_events(self, events: List[str]) -> int:
     def distance_to_nearest_coin(state):
         position = state["self"][3]

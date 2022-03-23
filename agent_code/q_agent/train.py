@@ -217,7 +217,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     if run_in_loop():
         events.append(e.RUN_IN_LOOP)
 
-    #print("events", events)
+    print("events", events)
      
     
     self.logger.debug(f'Encountered game event(s) {", ".join(map(repr, events))} in step {new_game_state["step"]}')
@@ -241,7 +241,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         
         q_value = self.model[index, action]
 
-        #print("old q", self.model[index, action])
+        print("old q", self.model[index, action])
 
         next_index, next_rotation = get_state_index(next_state)
         next_value = np.max(self.model[next_index]) 
@@ -251,7 +251,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         # Update Q-table
         self.model[index, action] = new_q_value
 
-        #print("new q", self.model[index, action])
+        print("new q", self.model[index, action])
         
         # Or SARSA (On-Policy algorithm for TD-Learning) ?
         """the maximum reward for the next state is not necessarily used for updating the Q-values.
@@ -317,16 +317,16 @@ def reward_from_events(self, events: List[str]) -> int:
     game_rewards = {
         e.INVALID_ACTION: -100,
         e.RUN_IN_LOOP:-50,
-        e.MOVED_UP:-2,
-        e.MOVED_DOWN: -2,
-        e.MOVED_LEFT: -2,
-        e.MOVED_RIGHT: -2,
+        e.MOVED_UP:-1,
+        e.MOVED_DOWN: -1,
+        e.MOVED_LEFT: -1,
+        e.MOVED_RIGHT: -1,
         e.WAITED: -20,
         e.COIN_COLLECTED: 100,
         e.COIN_DISTANCE_REDUCED: 10,
         e.COIN_DISTANCE_INCREASED: -5,
         e.BOMB_AVOIDED : 5,
-        e.BOMB_DROPPED: -70,
+        e.BOMB_DROPPED: -7,
         e.KILLED_OPPONENT: 500,
         e.GOT_KILLED: -100,
         e.KILLED_SELF: -150,

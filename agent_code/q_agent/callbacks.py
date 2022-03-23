@@ -1,5 +1,5 @@
 from collections import deque
-from curses import A_CHARTEXT
+#from curses import A_CHARTEXT
 import itertools
 from lib2to3.pytree import LeafPattern
 import os

@@ -40,8 +40,9 @@ def setup(self):
         load_model = "saved_model"
     #load_model = "agent/recent_best_coin_collector"
     #load_model = "saved_model_TASK_2-1"
-    #load_model = "saved_model"
+    load_model = "saved_model"
     #load_model = "saved_model_double_dqn_coin"
+
 
     try:
         self.model = tf.keras.models.load_model(load_model)
@@ -74,11 +75,12 @@ def act(self, game_state: dict) -> str:
     """
 
     #epsilon is a hyperparameter that introduces a random factor for the decisoin process for the first trained rounds. This supports the agent to discover the enviroment
-    epsilon = max(1 - game_state["round"] / self.Hyperparameter["epsilon_scale"], 0.01)
-    #epsilon = 0
+    epsilon = max(1 - game_state["round"] / self.Hyperparameter["epsilon_scale"], 0.05)
+    epsilon = 0.05
 
     #print("callbacks - act")
     inputs = state_to_features(self,game_state)
+    #print(f"inputs at step {game_state['step']} : {inputs}")
     #print(f"inputs at setp {game_state['step']} : \n {inputs}")
     #print("inputs",inputs)
     # todo Exploration vs exploitation
@@ -95,7 +97,7 @@ def act(self, game_state: dict) -> str:
 
         end_time = time.time()
 
-        print("act_time : ", np.round(end_time - start_time, 6),"s")
+        #print("act_time : ", np.round(end_time - start_time, 6),"s")
         return ACTIONS[decision]
     else:
         Q_values = self.model.predict(inputs[np.newaxis])[0]#Q_values hat shape [1,2,3,4]
@@ -138,7 +140,7 @@ def act(self, game_state: dict) -> str:
     self.logger.info(f"Action {ACTIONS[decision]} at step {game_state['step']}")
 
     print(
-        f" STEP : {game_state['step']}, ACTION : {ACTIONS[decision]} with time : {np.round(end_time - start_time, 3)},{np.round(time_1 - start_time, 3)},{np.round(time_2 - start_time, 3)}")
+        f" STEP : {game_state['step']}, ACTION : {ACTIONS[decision]} ,{np.round(time_1 - start_time, 3)},{np.round(time_2 - start_time, 3)}")
 
     print(f"Q_Values : {self.model.predict(inputs[np.newaxis])}")
 
@@ -258,26 +260,35 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
     # timer infromation auf die felder mit zukünftiger explosion erweitern
     #advanced_explosion_field = np.zeros(np.shape(field)) + explosion_field
     def get_advanced_explosion_field(bomb_buffer):
+
+        t_a_0 = time.time()
         advanced_explosion_field = np.zeros(np.shape(field))
+        t_a_1 = t_a_0
 
-
+        #print("bomb_buffer : ",len(bomb_buffer))
         for count,(coord,timer) in enumerate(bomb_buffer):
-            area = get_lethal_area(coord[0], coord[1])
-            if timer == 4:
-                value = 5
-                bomb_buffer[count][1] = 5
-            elif timer == 5:
-                bomb_buffer[count][1] = 6
-                value = 6
-            else:
-                continue
-            for tile in area:
-                advanced_explosion_field[tile[0],tile[1]] = value
+            if timer != 6:
+                area = get_lethal_area(coord[0], coord[1])
+                #print("area length : ", len(area))
+                t_a_1 = time.time()
+                if timer == 4:
+                    value = 5
+                    bomb_buffer[count][1] = 5
+                elif timer == 5:
+                    bomb_buffer[count][1] = 6
+                    value = 6
+
+                else:
+                    continue
+                for tile in area:
+                    advanced_explosion_field[tile[0],tile[1]] = value
+
+
 
         #print(f"bomb information : {game_state['bombs']} at step {game_state['step']}")
 
-
-
+        t_a_2 = time.time()
+        #
         for n in range(len(x_bomb)):
             x_b = x_bomb[n]
             y_b = y_bomb[n]
@@ -288,9 +299,14 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
 
             area = get_lethal_area(x_b,y_b)
             #print(area)
+            #t_a_2 = time.time()
             for coord in area:
-                if advanced_explosion_field[coord[0],coord[1]] == 0 or advanced_explosion_field[coord[0],coord[1]] >= timer:
+                if advanced_explosion_field[coord[0],coord[1]] == 0 or advanced_explosion_field[coord[0],coord[1]] <= timer:
                     advanced_explosion_field[coord[0],coord[1]] = timer
+        t_a_3 = time.time()
+        times = np.array([t_a_3,t_a_2,t_a_1])-np.array([t_a_2,t_a_1,t_a_0])
+        #times = np.array([t_a_3, t_a_1]) - np.array([t_a_1, t_a_0])
+        #print("advanced_time : ",np.round(times,9))
         return advanced_explosion_field
     if mode == "normal":
         advanced_explosion_field = get_advanced_explosion_field(self.exploded_bombs_normal)
@@ -489,5 +505,5 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
     t_4 = time.time()
     #print(f"input at step {game_state['step']} : {inputs}")
     times = np.array([t_4,t_3,t_2,t_1])-np.array([t_3,t_2,t_1,t_0])
-    print("state to feature time : ", np.round(times,9))
+    #print("state to feature time : ", np.round(times,9))
     return inputs

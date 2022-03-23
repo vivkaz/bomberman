@@ -23,12 +23,12 @@ model.summary()
 #Hyperparameter
 Hyperparameter = {
 "save_name" : "saved_model",#check, that the model name is not redefined in callbacks
-"epsilon_scale" : 500,#check if epsilon is not redefined in callbacks
+"epsilon_scale" : 1500,#check if epsilon is not redefined in callbacks
 "learning_rate" : 1e-3,
 "batch_size" : 50,
 "steps" : 50, #check steps in settings
-"episoden" : 600,
-"discount_factor" : 0.9,
+"episoden" : 2000,
+"discount_factor" : 0.98,
 "n_outputs" : n_outputs,
 "rewards" : {
         e.INVALID_ACTION: -20,
@@ -40,16 +40,18 @@ Hyperparameter = {
         e.COIN_COLLECTED: 30,
         e.COIN_DISTANCE_REDUCED: 5,
         e.COIN_DISTANCE_INCREASED: -5,
-        e.RUN_IN_LOOP:-10,
-        e.CRATE_DESTROYED: 20,
+        e.RUN_IN_LOOP:-20,
+        e.CRATE_DESTROYED: 35,
         e.BOMB_AVOIDED : 40,
         e.SURVIVED_ROUND : 5,
         e.KILLED_SELF: -50,
-        e.IN_DANGER: -20,
+        e.IN_DANGER: -5,
         e.COIN_FOUND : 20,
         e.GOT_KILLED : -50,
         e.BOMB_DROPPED : -2,
-        e.CRATE_REACHED: 5
+        e.CRATE_REACHED: 5,
+        e.BOMB_DISTANCE_INCREASED: 15,
+        e.GET_IN_DANGER: -20
 },
 "coin_density" : 0,#25
 "crate_density" : 0.2,#0.5

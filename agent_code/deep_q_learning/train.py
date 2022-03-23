@@ -89,7 +89,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     def risky_area(pos):
         #vertical = np.array([[x, pos[1]] for x in range(pos[0] - 3, pos[0] + 4)])
         #horizontal = np.array([[pos[0], y] for y in range(pos[1] - 3, pos[1] + 4)])
-        buffer = []
+        buffer = [pos]
         pos = np.array([pos[0],pos[1]])
         for direction in [np.array([0,1]),np.array([0,-1]),np.array([1,0]),np.array([-1,0])]:
             current_position = np.copy(pos)
@@ -107,13 +107,16 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
     def in_danger(area, bombs):
         danger = False
-        for b in bombs:
-            for a in area:
-                if (b == a).all():
-                #if (np.array(b[0]) == a).all():
-                    danger = True
-
-                    break
+        #print(area.size,bombs.size)
+        if area.size != 0 and bombs.size != 0:
+            for b in bombs:
+                for a in area:
+                    if (b == a).all():
+                    #if (np.array(b[0]) == a).all():
+                        danger = True
+                        break
+        else:
+            danger = False
         return danger
 
     def in_danger_with_timer(area, bombs, timer):
@@ -127,6 +130,32 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
                     break
         return danger
+
+    def get_bombs(game_state):
+        bombs = np.empty((2, len(game_state["bombs"])))
+        if bombs.size != 0:
+            for count, bomb in enumerate(game_state["bombs"]):
+                bombs[0, count] = bomb[0][0]
+                bombs[1, count] = bomb[0][1]
+            bombs = bombs.transpose()
+        return bombs
+    bombs_old = get_bombs(old_game_state)
+    bombs_new = get_bombs(new_game_state)
+
+
+    def get_in_Danger():
+        position_old = np.array(old_game_state["self"][3])
+        position_new = np.array(old_game_state["self"][3])
+        #print(position_new)
+        #print(bombs)
+        #if self_action != "BOMB":
+        if True:
+            area_old = risky_area(position_old)
+            area_new = risky_area(position_new)
+            if not in_danger(area_old,bombs_old) and in_danger(area_new,bombs_new):
+                events.append(e.GET_IN_DANGER)
+
+    get_in_Danger()
 
     def bomb_dropped():
         return old_game_state['self'][2] == True and new_game_state['self'][2] == False
@@ -145,79 +174,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             new_danger = in_danger(new_risky_area, bombs)
             return old_danger and not new_danger
 
-    """
-    def bomb_avoided():
-        def check_for_wall(x, y, field=old_game_state['field']):
-            if (0 <= x < 17) and (0 <= y < 17):
-                return field[x, y] == -1  # wall
-            return False
 
-        def get_left(pos, n=3):
-            left = []
-            for x in range(pos[0] - n, pos[0]):
-                if (0 <= x < 17):
-                    if check_for_wall(x, pos[1]):
-                        left = []
-                        continue
-                    else:
-                        left.append([x, pos[1]])
-            return left
-
-        def get_right(pos, n=3):
-            right = []
-            for x in range(pos[0] + 1, pos[0] + (n + 1)):
-                if (0 <= x < 17):
-                    if check_for_wall(x, pos[1]):
-                        break
-                    else:
-                        right.append([x, pos[1]])
-            return right
-
-        def get_up(pos, n=3):
-            up = []
-            for y in range(pos[1] + 1, pos[1] + (n + 1)):
-                if (0 <= y < 17):
-                    if check_for_wall(pos[0], y):
-                        break
-                    else:
-                        up.append([pos[0], y])
-            return up
-
-        def get_down(pos, n=3):
-            down = []
-            for y in range(pos[1] - n, pos[1]):
-                if (0 <= y < 17):
-                    if check_for_wall(pos[0], y):
-                        down = []
-                        continue
-                    else:
-                        down.append([pos[0], y])
-            return down
-
-        # get vertical and horizontal region from the position
-        def get_vh_region(pos, n=3):
-            left = get_left(pos, n)
-            right = get_right(pos, n)
-            up = get_up(pos, n)
-            down = get_down(pos, n)
-            for r in right:
-                left.append(r)
-            for u in up:
-                down.append(u)
-            for d in down:
-                left.append(d)
-            return left
-
-        if len(old_game_state['bombs']) > 0:
-            bombs = old_game_state['bombs']
-            old_risky_area = get_vh_region(old_game_state['self'][3])
-            new_risky_area = get_vh_region(new_game_state['self'][3])
-
-            old_danger = in_danger(old_risky_area, bombs)
-            new_danger = in_danger(new_risky_area, bombs)
-            return old_danger and not new_danger
-    # if a bomb with a timer lower than 3 ist in potential lethal range to the agnet the agent will get a penalty
-    """
     def agent_is_in_danger():
         bombs = np.empty((2,len(old_game_state["bombs"])))
         timer = np.empty(len(old_game_state["bombs"]))
@@ -325,6 +282,37 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
     reach_create()
 
+    def bomb_distance_increased():
+        def distance(point_1,point_2):
+            return np.sqrt(np.power(point_1[0]-point_2[1],2)+np.power(point_1[1]-point_2[1],2))
+        position_old = np.array(old_game_state["self"][3])
+        position_new = np.array(new_game_state["self"][3])
+        bombs = np.empty((2, len(old_game_state["bombs"])))
+        d_old = []
+        d_new = []
+        if bombs.size != 0:
+            for count, bomb in enumerate(old_game_state["bombs"]):
+                bombs[0, count] = bomb[0][0]
+                bombs[1, count] = bomb[0][1]
+
+                d_old.append(distance(position_old,np.array([bomb[0][0],bomb[0][1]])))
+                d_new.append(distance(position_new,np.array([bomb[0][0],bomb[0][1]])))
+            bombs = bombs.transpose()
+        bomb_sort = np.argsort(np.array(d_old))
+        area = risky_area(position_old)
+        for n,i in enumerate(bomb_sort):
+            bomb_position = bombs[i]
+            for j in area:
+                if (j == bombs[i]).all:
+                    flag = True
+                    break
+            if d_old[n] < d_new[n] and flag:
+                events.append(e.BOMB_DISTANCE_INCREASED)
+                break
+
+    bomb_distance_increased()
+
+
 
 
 
@@ -347,8 +335,8 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
                                        reward_from_events(self, events), new_feature,done))
         buffer_time_end = time.time()
 
-        times = np.array([buffer_time_end, buffer_time_end,t_2, t_1]) - np.array(
-            [buffer_time_start,t_2, t_1, buffer_time_start])
+        #times = np.array([buffer_time_end, buffer_time_end,t_2, t_1]) - np.array(
+        #    [buffer_time_start,t_2, t_1, buffer_time_start])
         #print("buffer time = ", np.round(times, 9))
         #print(f"events occured buffered :  {events} \n"
         #      f"in step {new_game_state['step']}")

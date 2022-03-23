@@ -40,9 +40,9 @@ def setup(self):
         load_model = "saved_model"
     #load_model = "agent/recent_best_coin_collector"
     #load_model = "saved_model_TASK_2-1"
-    load_model = "saved_model"
+    #load_model = "saved_model_best"
     #load_model = "saved_model_double_dqn_coin"
-
+    #load_model = "saved_model"
 
     try:
         self.model = tf.keras.models.load_model(load_model)
@@ -52,7 +52,7 @@ def setup(self):
         self.logger.debug("model cant be loaded from save place")
 
     self.n_outputs = self.model.get_config()['layers'][-1]["config"]["units"]
-    print(f"[info] loaded model to play/train : {load_model}")
+    #print(f"[info] loaded model to play/train : {load_model}")
 
     self.model_input_shape = self.model.get_config()["layers"][0]["config"]["batch_input_shape"]
     initial_predict = self.model.predict(np.zeros(self.model_input_shape[1:])[np.newaxis])
@@ -76,8 +76,8 @@ def act(self, game_state: dict) -> str:
 
     #epsilon is a hyperparameter that introduces a random factor for the decisoin process for the first trained rounds. This supports the agent to discover the enviroment
     epsilon = max(1 - game_state["round"] / self.Hyperparameter["epsilon_scale"], 0.05)
-    epsilon = 0.05
-
+    #epsilon = 0.05
+    #epsilon = 0
     #print("callbacks - act")
     inputs = state_to_features(self,game_state)
     #print(f"inputs at step {game_state['step']} : {inputs}")
@@ -130,8 +130,8 @@ def act(self, game_state: dict) -> str:
 
     if invalid_move(np.argmax(Q_values),game_state):
         decision = np.where(Q_values == np.sort(Q_values)[-2])[0][0]
-        print(f" invalid move occured at step : {game_state['step']} \n invalid move : {ACTIONS[np.argmax(Q_values)]} \n Q-values : {Q_values} \n"
-              f" move replaced with : {ACTIONS[decision]}")
+        #print(f" invalid move occured at step : {game_state['step']} \n invalid move : {ACTIONS[np.argmax(Q_values)]} \n Q-values : {Q_values} \n"
+        #      f" move replaced with : {ACTIONS[decision]}")
     else:
         decision = np.argmax(Q_values)
 
@@ -140,7 +140,7 @@ def act(self, game_state: dict) -> str:
     self.logger.info(f"Action {ACTIONS[decision]} at step {game_state['step']}")
 
     print(
-        f" STEP : {game_state['step']}, ACTION : {ACTIONS[decision]} ,{np.round(time_1 - start_time, 3)},{np.round(time_2 - start_time, 3)}")
+       f" STEP : {game_state['step']}, ACTION : {ACTIONS[decision]} ,{np.round(time_1 - start_time, 3)},{np.round(time_2 - start_time, 3)}")
 
     print(f"Q_Values : {self.model.predict(inputs[np.newaxis])}")
 
@@ -224,7 +224,7 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
     bomb_timer = np.array(bomb_timer)
     bomb_field = np.zeros(np.shape(field))
     bomb_timer_field = np.zeros(np.shape(field))
-    if x_bomb != 0:
+    if len(x_bomb) != 0:
         bomb_field[x_bomb,y_bomb] = -2
         bomb_timer_field[x_bomb,y_bomb] = bomb_timer
 

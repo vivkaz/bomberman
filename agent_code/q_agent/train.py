@@ -82,51 +82,51 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     #    return old_game_state['self'][2] == True and new_game_state['self'][2] == False
 
     def bomb_avoided():
-        def check_for_wall(x, y, field=old_game_state['field']):
+        def check_for_wall(y, x, field=old_game_state['field']):
             if (0 <= x < 17) and (0 <= y < 17):
                 return field[y][x] == -1 # wall
             return False
 
         def get_left(pos, n=3):
             left = []
-            for y in range(pos[1]-n, pos[1]):
+            for y in range(pos[0]-n, pos[0]):
                 if (0 <= y < 17):
-                    if check_for_wall(pos[0], y):
+                    if check_for_wall(y, pos[1]):
                         left = []
                         continue
                     else:
-                        left.append([pos[0], y])
+                        left.append([y, pos[1]])
             return left
 
         def get_right(pos, n=3):
             right = []
-            for y in range(pos[1]+1, pos[1]+(n+1)):
+            for y in range(pos[0]+1, pos[0]+(n+1)):
                 if (0 <= y < 17):
-                    if check_for_wall(pos[0], y):
+                    if check_for_wall(y, pos[1]):
                         break
                     else:
-                        right.append([pos[0], y])
+                        right.append([y, pos[1]])
             return right
 
         def get_up(pos, n=3):
             up = []
-            for x in range(pos[0]-n, pos[0]):
+            for x in range(pos[1]-n, pos[1]):
                 if (0 <= x < 17):
-                    if check_for_wall(x, pos[1]):
+                    if check_for_wall(pos[0], x):
                         break
                     else:
-                        up.append([x, pos[1]])
+                        up.append([pos[0], x])
             return up
 
         def get_down(pos, n=3):
             down = []
-            for x in range(pos[0]+1, pos[0]+(n+1)):
+            for x in range(pos[1]+1, pos[1]+(n+1)):
                 if (0 <= x < 17):
-                    if check_for_wall(x, pos[1]):
+                    if check_for_wall(pos[0], x):
                         down = []
                         continue
                     else:
-                        down.append([x, pos[1]])
+                        down.append([pos[0], x])
             return down
 
         # get vertical and horizontal region from the position, consider walls
@@ -217,7 +217,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     if run_in_loop():
         events.append(e.RUN_IN_LOOP)
 
-    #print("\nevents", events)
+    #print("events", events)
      
     
     self.logger.debug(f'Encountered game event(s) {", ".join(map(repr, events))} in step {new_game_state["step"]}')
@@ -261,8 +261,6 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             next_action = ACTIONS.index(np.random.choice(ACTIONS, p=[.2, .2, .2, .2, .1, .1]))
         else:
             next_action = np.argmax(self.model[index])
-            if next_action < 4 and next_rotation != 0:
-                next_action = (next_action + next_rotation) % 4
             
         next_value = self.model[next_index, next_action]
 
@@ -300,11 +298,11 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
     #print(f"Round {last_game_state['round']} : {self.rewards[-1]}")
 
     # Store training report
-    date = datetime.now().strftime("%d-%m-%Y")
-    file = "training_report_" + date
+    #date = datetime.now().strftime("%d-%m-%Y")
+    #file = "training_report_" + date
     
-    with open(file, 'a') as f:
-        f.write(f"[{datetime.now().strftime('%d/%m %H_%M_%S')}] finished round {last_game_state['round']} with total reward {self.rewards[-1]} \n")
+    #with open(file, 'a') as f:
+    #    f.write(f"[{datetime.now().strftime('%d/%m %H_%M_%S')}] finished round {last_game_state['round']} with total reward {self.rewards[-1]} \n")
 
     #np.save(f"q_agent/rewards_{datetime.now().strftime('%d/%m %H_%M')}.npy", self.rewards[-1])
 
@@ -328,7 +326,7 @@ def reward_from_events(self, events: List[str]) -> int:
         e.COIN_DISTANCE_REDUCED: 10,
         e.COIN_DISTANCE_INCREASED: -5,
         e.BOMB_AVOIDED : 5,
-        e.BOMB_DROPPED: -7,
+        e.BOMB_DROPPED: -70,
         e.KILLED_OPPONENT: 500,
         e.GOT_KILLED: -100,
         e.KILLED_SELF: -150,

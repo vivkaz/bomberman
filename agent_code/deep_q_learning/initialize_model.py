@@ -6,9 +6,9 @@ import events as e
 n_outputs = 6
 inputs_shape = (5, 5, 3)
 model = tf.keras.models.Sequential([
-    tf.keras.layers.Conv2D(20, 3, activation="elu", padding='same', input_shape=inputs_shape),
+    tf.keras.layers.Conv2D(20, 2, activation="elu", padding='same', input_shape=inputs_shape),
     tf.keras.layers.MaxPooling2D(2),
-    tf.keras.layers.Conv2D(20, 3, activation="elu", padding='same'),
+    tf.keras.layers.Conv2D(20, 2, activation="elu", padding='same'),
     tf.keras.layers.MaxPooling2D(2),
     tf.keras.layers.Flatten(),
     #tf.keras.layers.Dense(1, activation="relu"),
@@ -23,11 +23,11 @@ model.summary()
 #Hyperparameter
 Hyperparameter = {
 "save_name" : "saved_model",#check, that the model name is not redefined in callbacks
-"epsilon_scale" : 1500,#check if epsilon is not redefined in callbacks
+"epsilon_scale" : 4000,#check if epsilon is not redefined in callbacks
 "learning_rate" : 1e-3,
-"batch_size" : 50,
-"steps" : 50, #check steps in settings
-"episoden" : 2000,
+"batch_size" : 30,
+"steps" : 70, #check steps in settings
+"episoden" : 5000,
 "discount_factor" : 0.98,
 "n_outputs" : n_outputs,
 "rewards" : {
@@ -45,12 +45,12 @@ Hyperparameter = {
         e.BOMB_AVOIDED : 40,
         e.SURVIVED_ROUND : 5,
         e.KILLED_SELF: -50,
-        e.IN_DANGER: -5,
+        e.IN_DANGER: -2,
         e.COIN_FOUND : 20,
         e.GOT_KILLED : -50,
         e.BOMB_DROPPED : -2,
         e.CRATE_REACHED: 5,
-        e.BOMB_DISTANCE_INCREASED: 15,
+        e.BOMB_DISTANCE_INCREASED: 20,
         e.GET_IN_DANGER: -20
 },
 "coin_density" : 0,#25

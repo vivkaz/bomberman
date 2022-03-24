@@ -50,7 +50,7 @@ def setup_training(self):
 
     self.buffer_states = deque(maxlen=6)
 
-    self.training_history = deque(maxlen = 3000)
+    self.training_history = deque(maxlen = 6000)
 
     #setup target model:
     if self.Hyperparameter["train_method"]["algo"] == "double_DQN":
@@ -148,8 +148,8 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         position_new = np.array(old_game_state["self"][3])
         #print(position_new)
         #print(bombs)
-        #if self_action != "BOMB":
-        if True:
+        if self_action != "BOMB":
+        #if True:
             area_old = risky_area(position_old)
             area_new = risky_area(position_new)
             if not in_danger(area_old,bombs_old) and in_danger(area_new,bombs_new):

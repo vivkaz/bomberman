@@ -142,10 +142,16 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     bombs_old = get_bombs(old_game_state)
     bombs_new = get_bombs(new_game_state)
 
+    position_old = np.array(old_game_state["self"][3])
+    position_new = np.array(new_game_state["self"][3])
+
+    field_old = old_game_state["field"]
+    field_new = new_game_state["field"]
+
+    feature_old = state_to_features(self, old_game_state, mode="normal")
+    feature_new = state_to_features(self, new_game_state, mode="next_state")
 
     def get_in_Danger():
-        position_old = np.array(old_game_state["self"][3])
-        position_new = np.array(old_game_state["self"][3])
         #print(position_new)
         #print(bombs)
         if self_action != "BOMB":
@@ -284,9 +290,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
     def bomb_distance_increased():
         def distance(point_1,point_2):
-            return np.sqrt(np.power(point_1[0]-point_2[1],2)+np.power(point_1[1]-point_2[1],2))
-        position_old = np.array(old_game_state["self"][3])
-        position_new = np.array(new_game_state["self"][3])
+            return np.sqrt(np.power(point_1[0]-point_2[0],2)+np.power(point_1[1]-point_2[1],2))
         bombs = np.empty((2, len(old_game_state["bombs"])))
         d_old = []
         d_new = []
@@ -300,17 +304,61 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             bombs = bombs.transpose()
         bomb_sort = np.argsort(np.array(d_old))
         area = risky_area(position_old)
+        flag = False
         for n,i in enumerate(bomb_sort):
-            bomb_position = bombs[i]
             for j in area:
-                if (j == bombs[i]).all:
+                if (j == bombs[i]).all():
                     flag = True
                     break
+
+            print("d_old[n] : ",d_old[n], "d_new[n] : ",d_new[n], "flag : ", flag)
             if d_old[n] < d_new[n] and flag:
                 events.append(e.BOMB_DISTANCE_INCREASED)
                 break
 
     bomb_distance_increased()
+
+    def get_trapped():
+        view_range = self.Hyperparameter["feature_setup"]["INPTUS"][0]
+
+        def neighbors(feature):
+            position = np.array([view_range + 1, view_range + 1])
+            field = feature[:, :, 0]
+            A = []
+            for i in [np.array([0, 1]), np.array([0, -1]), np.array([1, 0]), np.array([-1, 0])]:
+                A.append(position + i)
+            A = np.array(A).transpose()
+            return field[A[0], A[1]]
+
+        neighbors_old = neighbors(feature_old)
+        neighbors_new = neighbors(feature_new)
+        block_values = [-1, -2, 1]  # values on field, that can can trap the agent
+        block_status_old = 0
+        block_status_new = 0
+        for n in range(len(neighbors_old)):
+            if (neighbors_old[n] in block_values):
+                block_status_old += 1
+            if (neighbors_new[n] in block_values):
+                block_status_new += 1
+        if block_status_new == 4 and block_status_old < 3:
+            return events.append(e.GET_TRAPPED)
+
+
+
+
+
+
+
+
+    #def certain_death():
+
+
+
+
+
+
+
+
 
 
 
@@ -349,7 +397,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     buffer_information()
     self.rewards.append(reward_from_events(self,events))
 
-    #print(events)
+    print(events)
     #print(reward_from_events(self,events))
 
     end_time = time.time()

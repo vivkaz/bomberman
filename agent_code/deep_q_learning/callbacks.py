@@ -38,20 +38,25 @@ def setup(self):
         load_model = "initialize_model"
     else:
         load_model = "saved_model"
+    load_model = "saved_model_1157_2"
+    #load_model = "initialize_model"
     #load_model = "agent/recent_best_coin_collector"
     #load_model = "saved_model_TASK_2-1"
     #load_model = "saved_model_best"
     #load_model = "saved_model_double_dqn_coin"
-    #load_model = "saved_model"
+
 
     try:
         self.model = tf.keras.models.load_model(load_model)
         with open(f'{load_model}/Hyperparameter.pkl', 'rb') as f:
             self.Hyperparameter = pickle.load(f)
+        print(f"loaded model : {load_model}")
     except:
         self.logger.debug("model cant be loaded from save place")
+        print(f"model : {load_model} cant be loaded")
 
     self.n_outputs = self.model.get_config()['layers'][-1]["config"]["units"]
+    #self.n_outputs = self.Hyperparameter["n_outputs"]
     #print(f"[info] loaded model to play/train : {load_model}")
 
     self.model_input_shape = self.model.get_config()["layers"][0]["config"]["batch_input_shape"]
@@ -77,7 +82,7 @@ def act(self, game_state: dict) -> str:
     #epsilon is a hyperparameter that introduces a random factor for the decisoin process for the first trained rounds. This supports the agent to discover the enviroment
     epsilon = max(1 - game_state["round"] / self.Hyperparameter["epsilon_scale"], 0.05)
     #epsilon = 0.05
-    #epsilon = 0
+    epsilon = 0
     #print("callbacks - act")
     inputs = state_to_features(self,game_state)
     #print(f"inputs at step {game_state['step']} : {inputs}")
@@ -102,8 +107,8 @@ def act(self, game_state: dict) -> str:
     else:
         Q_values = self.model.predict(inputs[np.newaxis])[0]#Q_values hat shape [1,2,3,4]
     time_2 = time.time()
-
-
+    #print("expplosion_map at step : ",game_state["step"])
+    #print(game_state["explosion_map"])
     def invalid_move(action,game_state):
         if action < 4:
 

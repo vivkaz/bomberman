@@ -1,302 +1,1216 @@
-2022-03-23 13:14:12,491 [q_agent_code] INFO: Building dictionary for mapping states to indices.
-2022-03-23 13:14:12,519 [q_agent_code] INFO: Loading model from saved state.
-2022-03-23 13:14:12,587 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:12,588 [q_agent_code] INFO: Action UP at step 1
-2022-03-23 13:14:12,689 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:12,691 [q_agent_code] INFO: Action DOWN at step 2
-2022-03-23 13:14:12,790 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:12,792 [q_agent_code] INFO: Action UP at step 3
-2022-03-23 13:14:12,890 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:12,891 [q_agent_code] INFO: Action DOWN at step 4
-2022-03-23 13:14:12,992 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:12,995 [q_agent_code] INFO: Action UP at step 5
-2022-03-23 13:14:13,094 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:13,096 [q_agent_code] INFO: Action DOWN at step 6
-2022-03-23 13:14:13,193 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:13,195 [q_agent_code] INFO: Action UP at step 7
-2022-03-23 13:14:13,294 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:13,295 [q_agent_code] INFO: Action DOWN at step 8
-2022-03-23 13:14:13,393 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:13,394 [q_agent_code] INFO: Action UP at step 9
-2022-03-23 13:14:13,503 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:13,505 [q_agent_code] INFO: Action DOWN at step 10
-2022-03-23 13:14:13,595 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:13,596 [q_agent_code] INFO: Action UP at step 11
-2022-03-23 13:14:13,695 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:13,697 [q_agent_code] INFO: Action DOWN at step 12
-2022-03-23 13:14:13,797 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:13,799 [q_agent_code] INFO: Action UP at step 13
-2022-03-23 13:14:13,896 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:13,897 [q_agent_code] INFO: Action DOWN at step 14
-2022-03-23 13:14:13,997 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:13,998 [q_agent_code] INFO: Action UP at step 15
-2022-03-23 13:14:14,096 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:14,097 [q_agent_code] INFO: Action DOWN at step 16
-2022-03-23 13:14:14,196 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:14,198 [q_agent_code] INFO: Action UP at step 17
-2022-03-23 13:14:14,296 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:14,297 [q_agent_code] INFO: Action DOWN at step 18
-2022-03-23 13:14:14,398 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:14,400 [q_agent_code] INFO: Action UP at step 19
-2022-03-23 13:14:14,499 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:14,501 [q_agent_code] INFO: Action DOWN at step 20
-2022-03-23 13:14:14,599 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:14,601 [q_agent_code] INFO: Action UP at step 21
-2022-03-23 13:14:14,700 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:14,701 [q_agent_code] INFO: Action DOWN at step 22
-2022-03-23 13:14:14,800 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:14,802 [q_agent_code] INFO: Action UP at step 23
-2022-03-23 13:14:14,901 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:14,903 [q_agent_code] INFO: Action DOWN at step 24
-2022-03-23 13:14:15,001 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:15,003 [q_agent_code] INFO: Action UP at step 25
-2022-03-23 13:14:15,102 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:15,104 [q_agent_code] INFO: Action DOWN at step 26
-2022-03-23 13:14:15,203 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:15,205 [q_agent_code] INFO: Action UP at step 27
-2022-03-23 13:14:15,305 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:15,307 [q_agent_code] INFO: Action DOWN at step 28
-2022-03-23 13:14:15,405 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:15,407 [q_agent_code] INFO: Action UP at step 29
-2022-03-23 13:14:15,505 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:15,507 [q_agent_code] INFO: Action DOWN at step 30
-2022-03-23 13:14:15,606 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:15,607 [q_agent_code] INFO: Action UP at step 31
-2022-03-23 13:14:15,706 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:15,709 [q_agent_code] INFO: Action DOWN at step 32
-2022-03-23 13:14:15,806 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:15,808 [q_agent_code] INFO: Action UP at step 33
-2022-03-23 13:14:15,907 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:15,909 [q_agent_code] INFO: Action DOWN at step 34
-2022-03-23 13:14:16,008 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:16,010 [q_agent_code] INFO: Action UP at step 35
-2022-03-23 13:14:16,109 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:16,112 [q_agent_code] INFO: Action DOWN at step 36
-2022-03-23 13:14:16,210 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:16,212 [q_agent_code] INFO: Action UP at step 37
-2022-03-23 13:14:16,311 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:16,312 [q_agent_code] INFO: Action DOWN at step 38
-2022-03-23 13:14:16,411 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:16,413 [q_agent_code] INFO: Action UP at step 39
-2022-03-23 13:14:16,512 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:16,514 [q_agent_code] INFO: Action DOWN at step 40
-2022-03-23 13:14:16,613 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:16,614 [q_agent_code] INFO: Action UP at step 41
-2022-03-23 13:14:16,714 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:16,715 [q_agent_code] INFO: Action DOWN at step 42
-2022-03-23 13:14:16,813 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:16,815 [q_agent_code] INFO: Action UP at step 43
-2022-03-23 13:14:16,914 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:16,915 [q_agent_code] INFO: Action DOWN at step 44
-2022-03-23 13:14:17,014 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:17,016 [q_agent_code] INFO: Action UP at step 45
-2022-03-23 13:14:17,116 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:17,117 [q_agent_code] INFO: Action DOWN at step 46
-2022-03-23 13:14:17,215 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:17,217 [q_agent_code] INFO: Action UP at step 47
-2022-03-23 13:14:17,316 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:17,317 [q_agent_code] INFO: Action DOWN at step 48
-2022-03-23 13:14:17,416 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:17,417 [q_agent_code] INFO: Action UP at step 49
-2022-03-23 13:14:17,517 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:17,519 [q_agent_code] INFO: Action DOWN at step 50
-2022-03-23 13:14:18,021 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:18,023 [q_agent_code] INFO: Action DOWN at step 1
-2022-03-23 13:14:18,120 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:18,122 [q_agent_code] INFO: Action DOWN at step 2
-2022-03-23 13:14:18,221 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:18,222 [q_agent_code] INFO: Action RIGHT at step 3
-2022-03-23 13:14:18,321 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:18,323 [q_agent_code] INFO: Action RIGHT at step 4
-2022-03-23 13:14:18,422 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:18,424 [q_agent_code] INFO: Action DOWN at step 5
-2022-03-23 13:14:18,522 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:18,524 [q_agent_code] INFO: Action DOWN at step 6
-2022-03-23 13:14:18,624 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:18,626 [q_agent_code] INFO: Action LEFT at step 7
-2022-03-23 13:14:18,724 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:18,726 [q_agent_code] INFO: Action RIGHT at step 8
-2022-03-23 13:14:18,825 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:18,827 [q_agent_code] INFO: Action LEFT at step 9
-2022-03-23 13:14:18,925 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:18,927 [q_agent_code] INFO: Action RIGHT at step 10
-2022-03-23 13:14:19,025 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:19,027 [q_agent_code] INFO: Action LEFT at step 11
-2022-03-23 13:14:19,126 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:19,128 [q_agent_code] INFO: Action RIGHT at step 12
-2022-03-23 13:14:19,226 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:19,228 [q_agent_code] INFO: Action LEFT at step 13
-2022-03-23 13:14:19,326 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:19,329 [q_agent_code] INFO: Action RIGHT at step 14
-2022-03-23 13:14:19,428 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:19,431 [q_agent_code] INFO: Action LEFT at step 15
-2022-03-23 13:14:19,530 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:19,532 [q_agent_code] INFO: Action RIGHT at step 16
-2022-03-23 13:14:19,631 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:19,633 [q_agent_code] INFO: Action LEFT at step 17
-2022-03-23 13:14:19,733 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:19,735 [q_agent_code] INFO: Action RIGHT at step 18
-2022-03-23 13:14:19,834 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:19,837 [q_agent_code] INFO: Action LEFT at step 19
-2022-03-23 13:14:19,935 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:19,937 [q_agent_code] INFO: Action RIGHT at step 20
-2022-03-23 13:14:20,037 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:20,040 [q_agent_code] INFO: Action LEFT at step 21
-2022-03-23 13:14:20,139 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:20,140 [q_agent_code] INFO: Action RIGHT at step 22
-2022-03-23 13:14:20,240 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:20,241 [q_agent_code] INFO: Action LEFT at step 23
-2022-03-23 13:14:20,342 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:20,344 [q_agent_code] INFO: Action RIGHT at step 24
-2022-03-23 13:14:20,441 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:20,443 [q_agent_code] INFO: Action LEFT at step 25
-2022-03-23 13:14:20,544 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:20,546 [q_agent_code] INFO: Action RIGHT at step 26
-2022-03-23 13:14:20,644 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:20,647 [q_agent_code] INFO: Action LEFT at step 27
-2022-03-23 13:14:20,745 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:20,748 [q_agent_code] INFO: Action RIGHT at step 28
-2022-03-23 13:14:20,846 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:20,848 [q_agent_code] INFO: Action LEFT at step 29
-2022-03-23 13:14:20,946 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:20,948 [q_agent_code] INFO: Action RIGHT at step 30
-2022-03-23 13:14:21,048 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:21,049 [q_agent_code] INFO: Action LEFT at step 31
-2022-03-23 13:14:21,147 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:21,149 [q_agent_code] INFO: Action RIGHT at step 32
-2022-03-23 13:14:21,248 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:21,251 [q_agent_code] INFO: Action LEFT at step 33
-2022-03-23 13:14:21,348 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:21,350 [q_agent_code] INFO: Action RIGHT at step 34
-2022-03-23 13:14:21,450 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:21,453 [q_agent_code] INFO: Action LEFT at step 35
-2022-03-23 13:14:21,550 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:21,552 [q_agent_code] INFO: Action RIGHT at step 36
-2022-03-23 13:14:21,651 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:21,654 [q_agent_code] INFO: Action LEFT at step 37
-2022-03-23 13:14:21,751 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:21,753 [q_agent_code] INFO: Action RIGHT at step 38
-2022-03-23 13:14:21,855 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:21,857 [q_agent_code] INFO: Action LEFT at step 39
-2022-03-23 13:14:21,954 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:21,956 [q_agent_code] INFO: Action RIGHT at step 40
-2022-03-23 13:14:22,055 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:22,057 [q_agent_code] INFO: Action LEFT at step 41
-2022-03-23 13:14:22,154 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:22,156 [q_agent_code] INFO: Action RIGHT at step 42
-2022-03-23 13:14:22,254 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:22,257 [q_agent_code] INFO: Action LEFT at step 43
-2022-03-23 13:14:22,355 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:22,357 [q_agent_code] INFO: Action RIGHT at step 44
-2022-03-23 13:14:22,456 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:22,458 [q_agent_code] INFO: Action LEFT at step 45
-2022-03-23 13:14:22,558 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:22,559 [q_agent_code] INFO: Action RIGHT at step 46
-2022-03-23 13:14:22,657 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:22,659 [q_agent_code] INFO: Action LEFT at step 47
-2022-03-23 13:14:22,759 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:22,760 [q_agent_code] INFO: Action RIGHT at step 48
-2022-03-23 13:14:22,860 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:22,863 [q_agent_code] INFO: Action LEFT at step 49
-2022-03-23 13:14:22,961 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:22,962 [q_agent_code] INFO: Action RIGHT at step 50
-2022-03-23 13:14:26,083 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:26,085 [q_agent_code] INFO: Action DOWN at step 1
-2022-03-23 13:14:26,185 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:26,187 [q_agent_code] INFO: Action DOWN at step 2
-2022-03-23 13:14:26,285 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:26,288 [q_agent_code] INFO: Action RIGHT at step 3
-2022-03-23 13:14:26,386 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:26,388 [q_agent_code] INFO: Action RIGHT at step 4
-2022-03-23 13:14:26,485 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:26,487 [q_agent_code] INFO: Action LEFT at step 5
-2022-03-23 13:14:26,587 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:26,589 [q_agent_code] INFO: Action RIGHT at step 6
-2022-03-23 13:14:26,689 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:26,691 [q_agent_code] INFO: Action LEFT at step 7
-2022-03-23 13:14:26,787 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:26,789 [q_agent_code] INFO: Action RIGHT at step 8
-2022-03-23 13:14:26,888 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:26,890 [q_agent_code] INFO: Action LEFT at step 9
-2022-03-23 13:14:26,989 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:26,992 [q_agent_code] INFO: Action RIGHT at step 10
-2022-03-23 13:14:27,090 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:27,091 [q_agent_code] INFO: Action LEFT at step 11
-2022-03-23 13:14:27,189 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:27,191 [q_agent_code] INFO: Action RIGHT at step 12
-2022-03-23 13:14:27,290 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:27,291 [q_agent_code] INFO: Action LEFT at step 13
-2022-03-23 13:14:27,389 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:27,391 [q_agent_code] INFO: Action RIGHT at step 14
-2022-03-23 13:14:27,492 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:27,494 [q_agent_code] INFO: Action LEFT at step 15
-2022-03-23 13:14:27,592 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:27,593 [q_agent_code] INFO: Action RIGHT at step 16
-2022-03-23 13:14:27,694 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:27,697 [q_agent_code] INFO: Action LEFT at step 17
-2022-03-23 13:14:27,795 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:27,796 [q_agent_code] INFO: Action RIGHT at step 18
-2022-03-23 13:14:27,896 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:27,898 [q_agent_code] INFO: Action LEFT at step 19
-2022-03-23 13:14:27,996 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:27,998 [q_agent_code] INFO: Action RIGHT at step 20
-2022-03-23 13:14:28,099 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:28,100 [q_agent_code] INFO: Action LEFT at step 21
-2022-03-23 13:14:28,198 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:28,200 [q_agent_code] INFO: Action RIGHT at step 22
-2022-03-23 13:14:28,299 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:28,301 [q_agent_code] INFO: Action LEFT at step 23
-2022-03-23 13:14:28,399 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:28,400 [q_agent_code] INFO: Action RIGHT at step 24
-2022-03-23 13:14:28,501 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:28,504 [q_agent_code] INFO: Action LEFT at step 25
-2022-03-23 13:14:28,601 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:28,603 [q_agent_code] INFO: Action RIGHT at step 26
-2022-03-23 13:14:28,702 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:28,704 [q_agent_code] INFO: Action LEFT at step 27
-2022-03-23 13:14:28,804 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:28,805 [q_agent_code] INFO: Action RIGHT at step 28
-2022-03-23 13:14:28,904 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:28,906 [q_agent_code] INFO: Action LEFT at step 29
-2022-03-23 13:14:29,006 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:29,007 [q_agent_code] INFO: Action RIGHT at step 30
-2022-03-23 13:14:29,105 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:29,107 [q_agent_code] INFO: Action LEFT at step 31
-2022-03-23 13:14:29,206 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:29,208 [q_agent_code] INFO: Action RIGHT at step 32
-2022-03-23 13:14:29,306 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:29,307 [q_agent_code] INFO: Action LEFT at step 33
-2022-03-23 13:14:29,406 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:29,407 [q_agent_code] INFO: Action RIGHT at step 34
-2022-03-23 13:14:29,508 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:29,510 [q_agent_code] INFO: Action LEFT at step 35
-2022-03-23 13:14:29,608 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:29,610 [q_agent_code] INFO: Action RIGHT at step 36
-2022-03-23 13:14:29,711 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:29,713 [q_agent_code] INFO: Action LEFT at step 37
-2022-03-23 13:14:29,809 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:29,812 [q_agent_code] INFO: Action RIGHT at step 38
-2022-03-23 13:14:29,910 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:29,911 [q_agent_code] INFO: Action LEFT at step 39
-2022-03-23 13:14:30,011 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:30,013 [q_agent_code] INFO: Action RIGHT at step 40
-2022-03-23 13:14:30,113 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:30,115 [q_agent_code] INFO: Action LEFT at step 41
-2022-03-23 13:14:30,211 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:30,213 [q_agent_code] INFO: Action RIGHT at step 42
-2022-03-23 13:14:30,313 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:30,315 [q_agent_code] INFO: Action LEFT at step 43
-2022-03-23 13:14:30,412 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:30,414 [q_agent_code] INFO: Action RIGHT at step 44
-2022-03-23 13:14:30,514 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:30,515 [q_agent_code] INFO: Action LEFT at step 45
-2022-03-23 13:14:30,613 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:30,615 [q_agent_code] INFO: Action RIGHT at step 46
-2022-03-23 13:14:30,716 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:30,718 [q_agent_code] INFO: Action LEFT at step 47
-2022-03-23 13:14:30,813 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:30,815 [q_agent_code] INFO: Action RIGHT at step 48
-2022-03-23 13:14:30,914 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:30,916 [q_agent_code] INFO: Action LEFT at step 49
-2022-03-23 13:14:31,015 [q_agent_code] DEBUG: Querying model for action.
-2022-03-23 13:14:31,017 [q_agent_code] INFO: Action RIGHT at step 50
+2022-03-24 14:26:09,427 [q_agent_code] INFO: Building dictionary for mapping states to indices.
+2022-03-24 14:26:09,439 [q_agent_code] INFO: Loading model from saved state.
+2022-03-24 14:26:12,466 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:12,471 [q_agent_code] INFO: Action LEFT at step 1
+2022-03-24 14:26:12,566 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:12,572 [q_agent_code] INFO: Action RIGHT at step 2
+2022-03-24 14:26:12,666 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:12,672 [q_agent_code] INFO: Action DOWN at step 3
+2022-03-24 14:26:12,765 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:12,771 [q_agent_code] INFO: Action DOWN at step 4
+2022-03-24 14:26:12,866 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:12,877 [q_agent_code] INFO: Action LEFT at step 5
+2022-03-24 14:26:12,971 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:12,977 [q_agent_code] INFO: Action LEFT at step 6
+2022-03-24 14:26:13,068 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:13,087 [q_agent_code] INFO: Action LEFT at step 7
+2022-03-24 14:26:13,168 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:13,176 [q_agent_code] INFO: Action LEFT at step 8
+2022-03-24 14:26:13,269 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:13,287 [q_agent_code] INFO: Action DOWN at step 9
+2022-03-24 14:26:13,369 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:13,374 [q_agent_code] INFO: Action DOWN at step 10
+2022-03-24 14:26:13,468 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:13,485 [q_agent_code] INFO: Action LEFT at step 11
+2022-03-24 14:26:13,569 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:13,574 [q_agent_code] INFO: Action LEFT at step 12
+2022-03-24 14:26:13,668 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:13,685 [q_agent_code] INFO: Action DOWN at step 13
+2022-03-24 14:26:13,768 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:13,773 [q_agent_code] INFO: Action DOWN at step 14
+2022-03-24 14:26:13,868 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:13,884 [q_agent_code] INFO: Action DOWN at step 15
+2022-03-24 14:26:13,969 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:13,973 [q_agent_code] INFO: Action DOWN at step 16
+2022-03-24 14:26:14,070 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:14,085 [q_agent_code] INFO: Action DOWN at step 17
+2022-03-24 14:26:14,171 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:14,174 [q_agent_code] INFO: Action DOWN at step 18
+2022-03-24 14:26:14,271 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:14,286 [q_agent_code] INFO: Action RIGHT at step 19
+2022-03-24 14:26:14,371 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:14,375 [q_agent_code] INFO: Action BOMB at step 20
+2022-03-24 14:26:14,471 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:14,472 [q_agent_code] INFO: Action LEFT at step 21
+2022-03-24 14:26:14,571 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:14,579 [q_agent_code] INFO: Action DOWN at step 22
+2022-03-24 14:26:14,671 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:14,674 [q_agent_code] INFO: Action UP at step 23
+2022-03-24 14:26:14,771 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:14,778 [q_agent_code] INFO: Action DOWN at step 24
+2022-03-24 14:26:14,872 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:14,872 [q_agent_code] INFO: Action DOWN at step 25
+2022-03-24 14:26:14,971 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:14,984 [q_agent_code] INFO: Action RIGHT at step 26
+2022-03-24 14:26:15,071 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:15,075 [q_agent_code] INFO: Action BOMB at step 27
+2022-03-24 14:26:15,171 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:15,172 [q_agent_code] INFO: Action LEFT at step 28
+2022-03-24 14:26:15,271 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:15,277 [q_agent_code] INFO: Action DOWN at step 29
+2022-03-24 14:26:15,371 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:15,373 [q_agent_code] INFO: Action UP at step 30
+2022-03-24 14:26:15,472 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:15,478 [q_agent_code] INFO: Action DOWN at step 31
+2022-03-24 14:26:15,572 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:15,573 [q_agent_code] INFO: Action DOWN at step 32
+2022-03-24 14:26:15,672 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:15,678 [q_agent_code] INFO: Action UP at step 33
+2022-03-24 14:26:15,772 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:15,775 [q_agent_code] INFO: Action BOMB at step 34
+2022-03-24 14:26:15,872 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:15,874 [q_agent_code] INFO: Action DOWN at step 35
+2022-03-24 14:26:15,972 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:15,976 [q_agent_code] INFO: Action LEFT at step 36
+2022-03-24 14:26:16,072 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:16,074 [q_agent_code] INFO: Action RIGHT at step 37
+2022-03-24 14:26:16,173 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:16,177 [q_agent_code] INFO: Action LEFT at step 38
+2022-03-24 14:26:16,274 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:16,274 [q_agent_code] INFO: Action RIGHT at step 39
+2022-03-24 14:26:21,605 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:21,611 [q_agent_code] INFO: Action DOWN at step 1
+2022-03-24 14:26:21,704 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:21,706 [q_agent_code] INFO: Action DOWN at step 2
+2022-03-24 14:26:21,804 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:21,817 [q_agent_code] INFO: Action DOWN at step 3
+2022-03-24 14:26:21,904 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:21,910 [q_agent_code] INFO: Action DOWN at step 4
+2022-03-24 14:26:22,005 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:22,017 [q_agent_code] INFO: Action DOWN at step 5
+2022-03-24 14:26:22,105 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:22,112 [q_agent_code] INFO: Action DOWN at step 6
+2022-03-24 14:26:22,205 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:22,217 [q_agent_code] INFO: Action RIGHT at step 7
+2022-03-24 14:26:22,306 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:22,312 [q_agent_code] INFO: Action RIGHT at step 8
+2022-03-24 14:26:22,406 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:22,425 [q_agent_code] INFO: Action UP at step 9
+2022-03-24 14:26:22,506 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:22,511 [q_agent_code] INFO: Action DOWN at step 10
+2022-03-24 14:26:22,606 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:22,624 [q_agent_code] INFO: Action RIGHT at step 11
+2022-03-24 14:26:22,706 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:22,711 [q_agent_code] INFO: Action RIGHT at step 12
+2022-03-24 14:26:22,806 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:22,823 [q_agent_code] INFO: Action DOWN at step 13
+2022-03-24 14:26:22,906 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:22,911 [q_agent_code] INFO: Action DOWN at step 14
+2022-03-24 14:26:23,006 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:23,022 [q_agent_code] INFO: Action RIGHT at step 15
+2022-03-24 14:26:23,107 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:23,111 [q_agent_code] INFO: Action RIGHT at step 16
+2022-03-24 14:26:23,207 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:23,222 [q_agent_code] INFO: Action DOWN at step 17
+2022-03-24 14:26:23,307 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:23,312 [q_agent_code] INFO: Action UP at step 18
+2022-03-24 14:26:23,407 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:23,422 [q_agent_code] INFO: Action RIGHT at step 19
+2022-03-24 14:26:23,508 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:23,512 [q_agent_code] INFO: Action RIGHT at step 20
+2022-03-24 14:26:23,607 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:23,621 [q_agent_code] INFO: Action DOWN at step 21
+2022-03-24 14:26:23,707 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:23,711 [q_agent_code] INFO: Action UP at step 22
+2022-03-24 14:26:23,807 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:23,820 [q_agent_code] INFO: Action UP at step 23
+2022-03-24 14:26:23,907 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:23,911 [q_agent_code] INFO: Action UP at step 24
+2022-03-24 14:26:24,007 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:24,020 [q_agent_code] INFO: Action LEFT at step 25
+2022-03-24 14:26:24,107 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:24,111 [q_agent_code] INFO: Action LEFT at step 26
+2022-03-24 14:26:24,207 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:24,220 [q_agent_code] INFO: Action LEFT at step 27
+2022-03-24 14:26:24,308 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:24,311 [q_agent_code] INFO: Action RIGHT at step 28
+2022-03-24 14:26:24,408 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:24,420 [q_agent_code] INFO: Action UP at step 29
+2022-03-24 14:26:24,508 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:24,511 [q_agent_code] INFO: Action UP at step 30
+2022-03-24 14:26:24,608 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:24,619 [q_agent_code] INFO: Action RIGHT at step 31
+2022-03-24 14:26:24,708 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:24,711 [q_agent_code] INFO: Action RIGHT at step 32
+2022-03-24 14:26:24,808 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:24,818 [q_agent_code] INFO: Action UP at step 33
+2022-03-24 14:26:24,908 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:24,911 [q_agent_code] INFO: Action UP at step 34
+2022-03-24 14:26:25,008 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:25,016 [q_agent_code] INFO: Action LEFT at step 35
+2022-03-24 14:26:25,108 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:25,111 [q_agent_code] INFO: Action LEFT at step 36
+2022-03-24 14:26:25,208 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:25,216 [q_agent_code] INFO: Action UP at step 37
+2022-03-24 14:26:25,308 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:25,311 [q_agent_code] INFO: Action UP at step 38
+2022-03-24 14:26:25,409 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:25,413 [q_agent_code] INFO: Action RIGHT at step 39
+2022-03-24 14:26:25,510 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:25,512 [q_agent_code] INFO: Action RIGHT at step 40
+2022-03-24 14:26:25,610 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:25,614 [q_agent_code] INFO: Action RIGHT at step 41
+2022-03-24 14:26:25,710 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:25,712 [q_agent_code] INFO: Action RIGHT at step 42
+2022-03-24 14:26:25,810 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:25,814 [q_agent_code] INFO: Action RIGHT at step 43
+2022-03-24 14:26:25,910 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:25,912 [q_agent_code] INFO: Action LEFT at step 44
+2022-03-24 14:26:26,010 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:26,013 [q_agent_code] INFO: Action DOWN at step 45
+2022-03-24 14:26:26,110 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:26,111 [q_agent_code] INFO: Action DOWN at step 46
+2022-03-24 14:26:26,211 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:26,217 [q_agent_code] INFO: Action DOWN at step 47
+2022-03-24 14:26:26,310 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:26,312 [q_agent_code] INFO: Action DOWN at step 48
+2022-03-24 14:26:26,411 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:26,415 [q_agent_code] INFO: Action DOWN at step 49
+2022-03-24 14:26:26,511 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:26,512 [q_agent_code] INFO: Action DOWN at step 50
+2022-03-24 14:26:26,611 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:26,615 [q_agent_code] INFO: Action DOWN at step 51
+2022-03-24 14:26:26,711 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:26,713 [q_agent_code] INFO: Action DOWN at step 52
+2022-03-24 14:26:26,811 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:26,815 [q_agent_code] INFO: Action DOWN at step 53
+2022-03-24 14:26:26,911 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:26,912 [q_agent_code] INFO: Action DOWN at step 54
+2022-03-24 14:26:27,011 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:27,015 [q_agent_code] INFO: Action RIGHT at step 55
+2022-03-24 14:26:27,111 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:27,112 [q_agent_code] INFO: Action RIGHT at step 56
+2022-03-24 14:26:27,211 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:27,215 [q_agent_code] INFO: Action RIGHT at step 57
+2022-03-24 14:26:27,311 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:27,312 [q_agent_code] INFO: Action RIGHT at step 58
+2022-03-24 14:26:27,411 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:27,414 [q_agent_code] INFO: Action DOWN at step 59
+2022-03-24 14:26:27,511 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:27,513 [q_agent_code] INFO: Action DOWN at step 60
+2022-03-24 14:26:27,612 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:27,614 [q_agent_code] INFO: Action DOWN at step 61
+2022-03-24 14:26:27,711 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:27,713 [q_agent_code] INFO: Action DOWN at step 62
+2022-03-24 14:26:27,814 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:27,815 [q_agent_code] INFO: Action LEFT at step 63
+2022-03-24 14:26:27,914 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:27,915 [q_agent_code] INFO: Action LEFT at step 64
+2022-03-24 14:26:28,014 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:28,016 [q_agent_code] INFO: Action LEFT at step 65
+2022-03-24 14:26:28,114 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:28,115 [q_agent_code] INFO: Action LEFT at step 66
+2022-03-24 14:26:28,215 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:28,217 [q_agent_code] INFO: Action LEFT at step 67
+2022-03-24 14:26:28,315 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:28,316 [q_agent_code] INFO: Action LEFT at step 68
+2022-03-24 14:26:28,415 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:28,418 [q_agent_code] INFO: Action LEFT at step 69
+2022-03-24 14:26:28,660 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:28,661 [q_agent_code] INFO: Action LEFT at step 70
+2022-03-24 14:26:32,174 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:32,180 [q_agent_code] INFO: Action DOWN at step 1
+2022-03-24 14:26:32,273 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:32,275 [q_agent_code] INFO: Action DOWN at step 2
+2022-03-24 14:26:32,373 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:32,386 [q_agent_code] INFO: Action RIGHT at step 3
+2022-03-24 14:26:32,474 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:32,479 [q_agent_code] INFO: Action RIGHT at step 4
+2022-03-24 14:26:32,573 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:32,593 [q_agent_code] INFO: Action UP at step 5
+2022-03-24 14:26:32,673 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:32,679 [q_agent_code] INFO: Action UP at step 6
+2022-03-24 14:26:32,774 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:32,786 [q_agent_code] INFO: Action RIGHT at step 7
+2022-03-24 14:26:32,874 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:32,879 [q_agent_code] INFO: Action BOMB at step 8
+2022-03-24 14:26:32,975 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:32,976 [q_agent_code] INFO: Action LEFT at step 9
+2022-03-24 14:26:33,076 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:33,080 [q_agent_code] INFO: Action LEFT at step 10
+2022-03-24 14:26:33,177 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:33,178 [q_agent_code] INFO: Action LEFT at step 11
+2022-03-24 14:26:33,277 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:33,280 [q_agent_code] INFO: Action DOWN at step 12
+2022-03-24 14:26:33,377 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:33,379 [q_agent_code] INFO: Action DOWN at step 13
+2022-03-24 14:26:33,477 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:33,488 [q_agent_code] INFO: Action DOWN at step 14
+2022-03-24 14:26:33,578 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:33,583 [q_agent_code] INFO: Action DOWN at step 15
+2022-03-24 14:26:33,679 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:33,689 [q_agent_code] INFO: Action DOWN at step 16
+2022-03-24 14:26:33,779 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:33,784 [q_agent_code] INFO: Action DOWN at step 17
+2022-03-24 14:26:33,880 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:33,889 [q_agent_code] INFO: Action RIGHT at step 18
+2022-03-24 14:26:33,980 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:33,984 [q_agent_code] INFO: Action RIGHT at step 19
+2022-03-24 14:26:34,080 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:34,096 [q_agent_code] INFO: Action UP at step 20
+2022-03-24 14:26:34,181 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:34,186 [q_agent_code] INFO: Action UP at step 21
+2022-03-24 14:26:34,281 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:34,296 [q_agent_code] INFO: Action RIGHT at step 22
+2022-03-24 14:26:34,381 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:34,385 [q_agent_code] INFO: Action RIGHT at step 23
+2022-03-24 14:26:34,481 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:34,495 [q_agent_code] INFO: Action RIGHT at step 24
+2022-03-24 14:26:34,581 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:34,585 [q_agent_code] INFO: Action RIGHT at step 25
+2022-03-24 14:26:34,681 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:34,695 [q_agent_code] INFO: Action DOWN at step 26
+2022-03-24 14:26:34,782 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:34,785 [q_agent_code] INFO: Action BOMB at step 27
+2022-03-24 14:26:34,881 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:34,882 [q_agent_code] INFO: Action DOWN at step 28
+2022-03-24 14:26:34,982 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:34,989 [q_agent_code] INFO: Action RIGHT at step 29
+2022-03-24 14:26:35,082 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:35,084 [q_agent_code] INFO: Action RIGHT at step 30
+2022-03-24 14:26:35,182 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:35,194 [q_agent_code] INFO: Action RIGHT at step 31
+2022-03-24 14:26:35,282 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:35,284 [q_agent_code] INFO: Action RIGHT at step 32
+2022-03-24 14:26:35,382 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:35,393 [q_agent_code] INFO: Action UP at step 33
+2022-03-24 14:26:35,482 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:35,485 [q_agent_code] INFO: Action UP at step 34
+2022-03-24 14:26:35,582 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:35,593 [q_agent_code] INFO: Action UP at step 35
+2022-03-24 14:26:35,683 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:35,686 [q_agent_code] INFO: Action UP at step 36
+2022-03-24 14:26:35,783 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:35,793 [q_agent_code] INFO: Action LEFT at step 37
+2022-03-24 14:26:35,884 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:35,886 [q_agent_code] INFO: Action LEFT at step 38
+2022-03-24 14:26:35,985 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:35,994 [q_agent_code] INFO: Action UP at step 39
+2022-03-24 14:26:36,085 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:36,088 [q_agent_code] INFO: Action UP at step 40
+2022-03-24 14:26:36,185 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:36,190 [q_agent_code] INFO: Action LEFT at step 41
+2022-03-24 14:26:36,285 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:36,287 [q_agent_code] INFO: Action RIGHT at step 42
+2022-03-24 14:26:36,385 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:36,390 [q_agent_code] INFO: Action RIGHT at step 43
+2022-03-24 14:26:36,485 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:36,488 [q_agent_code] INFO: Action RIGHT at step 44
+2022-03-24 14:26:36,585 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:36,589 [q_agent_code] INFO: Action RIGHT at step 45
+2022-03-24 14:26:36,685 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:36,687 [q_agent_code] INFO: Action RIGHT at step 46
+2022-03-24 14:26:36,785 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:36,788 [q_agent_code] INFO: Action DOWN at step 47
+2022-03-24 14:26:36,885 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:36,887 [q_agent_code] INFO: Action DOWN at step 48
+2022-03-24 14:26:36,985 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:36,990 [q_agent_code] INFO: Action LEFT at step 49
+2022-03-24 14:26:37,086 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:37,087 [q_agent_code] INFO: Action RIGHT at step 50
+2022-03-24 14:26:37,186 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:37,191 [q_agent_code] INFO: Action RIGHT at step 51
+2022-03-24 14:26:37,287 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:37,289 [q_agent_code] INFO: Action RIGHT at step 52
+2022-03-24 14:26:37,388 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:37,390 [q_agent_code] INFO: Action UP at step 53
+2022-03-24 14:26:37,488 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:37,489 [q_agent_code] INFO: Action UP at step 54
+2022-03-24 14:26:37,588 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:37,589 [q_agent_code] INFO: Action LEFT at step 55
+2022-03-24 14:26:37,688 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:37,689 [q_agent_code] INFO: Action BOMB at step 56
+2022-03-24 14:26:37,788 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:37,788 [q_agent_code] INFO: Action LEFT at step 57
+2022-03-24 14:26:37,888 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:37,889 [q_agent_code] INFO: Action LEFT at step 58
+2022-03-24 14:26:37,988 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:37,989 [q_agent_code] INFO: Action LEFT at step 59
+2022-03-24 14:26:38,089 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:38,091 [q_agent_code] INFO: Action DOWN at step 60
+2022-03-24 14:26:38,189 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:38,190 [q_agent_code] INFO: Action UP at step 61
+2022-03-24 14:26:40,495 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:40,501 [q_agent_code] INFO: Action DOWN at step 1
+2022-03-24 14:26:40,594 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:40,600 [q_agent_code] INFO: Action UP at step 2
+2022-03-24 14:26:40,694 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:40,700 [q_agent_code] INFO: Action LEFT at step 3
+2022-03-24 14:26:40,794 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:40,800 [q_agent_code] INFO: Action LEFT at step 4
+2022-03-24 14:26:40,895 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:40,907 [q_agent_code] INFO: Action LEFT at step 5
+2022-03-24 14:26:40,995 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:41,001 [q_agent_code] INFO: Action LEFT at step 6
+2022-03-24 14:26:41,094 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:41,106 [q_agent_code] INFO: Action LEFT at step 7
+2022-03-24 14:26:41,194 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:41,200 [q_agent_code] INFO: Action LEFT at step 8
+2022-03-24 14:26:41,294 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:41,306 [q_agent_code] INFO: Action LEFT at step 9
+2022-03-24 14:26:41,394 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:41,400 [q_agent_code] INFO: Action RIGHT at step 10
+2022-03-24 14:26:41,494 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:41,505 [q_agent_code] INFO: Action DOWN at step 11
+2022-03-24 14:26:41,595 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:41,601 [q_agent_code] INFO: Action DOWN at step 12
+2022-03-24 14:26:41,695 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:41,713 [q_agent_code] INFO: Action RIGHT at step 13
+2022-03-24 14:26:41,796 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:41,801 [q_agent_code] INFO: Action RIGHT at step 14
+2022-03-24 14:26:41,896 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:41,913 [q_agent_code] INFO: Action RIGHT at step 15
+2022-03-24 14:26:42,157 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:42,162 [q_agent_code] INFO: Action RIGHT at step 16
+2022-03-24 14:26:42,258 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:42,274 [q_agent_code] INFO: Action UP at step 17
+2022-03-24 14:26:42,358 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:42,363 [q_agent_code] INFO: Action DOWN at step 18
+2022-03-24 14:26:42,459 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:42,474 [q_agent_code] INFO: Action DOWN at step 19
+2022-03-24 14:26:42,558 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:42,563 [q_agent_code] INFO: Action DOWN at step 20
+2022-03-24 14:26:42,659 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:42,674 [q_agent_code] INFO: Action DOWN at step 21
+2022-03-24 14:26:42,759 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:42,763 [q_agent_code] INFO: Action DOWN at step 22
+2022-03-24 14:26:42,859 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:42,873 [q_agent_code] INFO: Action LEFT at step 23
+2022-03-24 14:26:42,959 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:42,963 [q_agent_code] INFO: Action RIGHT at step 24
+2022-03-24 14:26:43,060 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:43,073 [q_agent_code] INFO: Action DOWN at step 25
+2022-03-24 14:26:43,159 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:43,163 [q_agent_code] INFO: Action UP at step 26
+2022-03-24 14:26:43,260 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:43,273 [q_agent_code] INFO: Action RIGHT at step 27
+2022-03-24 14:26:43,360 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:43,364 [q_agent_code] INFO: Action RIGHT at step 28
+2022-03-24 14:26:43,460 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:43,467 [q_agent_code] INFO: Action UP at step 29
+2022-03-24 14:26:43,560 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:43,563 [q_agent_code] INFO: Action UP at step 30
+2022-03-24 14:26:43,661 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:43,668 [q_agent_code] INFO: Action LEFT at step 31
+2022-03-24 14:26:43,761 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:43,764 [q_agent_code] INFO: Action BOMB at step 32
+2022-03-24 14:26:43,861 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:43,862 [q_agent_code] INFO: Action LEFT at step 33
+2022-03-24 14:26:43,962 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:43,967 [q_agent_code] INFO: Action DOWN at step 34
+2022-03-24 14:26:44,062 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:44,064 [q_agent_code] INFO: Action UP at step 35
+2022-03-24 14:26:44,162 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:44,167 [q_agent_code] INFO: Action DOWN at step 36
+2022-03-24 14:26:44,262 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:44,262 [q_agent_code] INFO: Action DOWN at step 37
+2022-03-24 14:26:44,362 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:44,371 [q_agent_code] INFO: Action RIGHT at step 38
+2022-03-24 14:26:44,462 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:44,465 [q_agent_code] INFO: Action RIGHT at step 39
+2022-03-24 14:26:44,562 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:44,568 [q_agent_code] INFO: Action DOWN at step 40
+2022-03-24 14:26:44,662 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:44,665 [q_agent_code] INFO: Action DOWN at step 41
+2022-03-24 14:26:44,762 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:44,767 [q_agent_code] INFO: Action DOWN at step 42
+2022-03-24 14:26:44,863 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:44,865 [q_agent_code] INFO: Action BOMB at step 43
+2022-03-24 14:26:44,963 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:44,964 [q_agent_code] INFO: Action DOWN at step 44
+2022-03-24 14:26:45,063 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:45,065 [q_agent_code] INFO: Action LEFT at step 45
+2022-03-24 14:26:45,163 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:45,165 [q_agent_code] INFO: Action RIGHT at step 46
+2022-03-24 14:26:45,264 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:45,266 [q_agent_code] INFO: Action LEFT at step 47
+2022-03-24 14:26:45,364 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:45,365 [q_agent_code] INFO: Action RIGHT at step 48
+2022-03-24 14:26:49,173 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:49,180 [q_agent_code] INFO: Action LEFT at step 1
+2022-03-24 14:26:49,273 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:49,279 [q_agent_code] INFO: Action LEFT at step 2
+2022-03-24 14:26:49,373 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:49,386 [q_agent_code] INFO: Action LEFT at step 3
+2022-03-24 14:26:49,474 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:49,480 [q_agent_code] INFO: Action LEFT at step 4
+2022-03-24 14:26:49,574 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:49,587 [q_agent_code] INFO: Action LEFT at step 5
+2022-03-24 14:26:49,674 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:49,680 [q_agent_code] INFO: Action LEFT at step 6
+2022-03-24 14:26:49,775 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:49,788 [q_agent_code] INFO: Action LEFT at step 7
+2022-03-24 14:26:49,876 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:49,882 [q_agent_code] INFO: Action LEFT at step 8
+2022-03-24 14:26:49,976 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:49,988 [q_agent_code] INFO: Action DOWN at step 9
+2022-03-24 14:26:50,077 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:50,083 [q_agent_code] INFO: Action DOWN at step 10
+2022-03-24 14:26:50,177 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:50,196 [q_agent_code] INFO: Action DOWN at step 11
+2022-03-24 14:26:50,277 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:50,286 [q_agent_code] INFO: Action DOWN at step 12
+2022-03-24 14:26:50,377 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:50,395 [q_agent_code] INFO: Action LEFT at step 13
+2022-03-24 14:26:50,477 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:50,483 [q_agent_code] INFO: Action LEFT at step 14
+2022-03-24 14:26:50,578 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:50,595 [q_agent_code] INFO: Action UP at step 15
+2022-03-24 14:26:50,678 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:50,683 [q_agent_code] INFO: Action UP at step 16
+2022-03-24 14:26:50,778 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:50,794 [q_agent_code] INFO: Action LEFT at step 17
+2022-03-24 14:26:50,878 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:50,883 [q_agent_code] INFO: Action LEFT at step 18
+2022-03-24 14:26:50,978 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:50,994 [q_agent_code] INFO: Action UP at step 19
+2022-03-24 14:26:51,079 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:51,084 [q_agent_code] INFO: Action UP at step 20
+2022-03-24 14:26:51,179 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:51,188 [q_agent_code] INFO: Action LEFT at step 21
+2022-03-24 14:26:51,279 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:51,281 [q_agent_code] INFO: Action RIGHT at step 22
+2022-03-24 14:26:51,379 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:51,388 [q_agent_code] INFO: Action RIGHT at step 23
+2022-03-24 14:26:51,479 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:51,483 [q_agent_code] INFO: Action LEFT at step 24
+2022-03-24 14:26:51,579 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:51,587 [q_agent_code] INFO: Action LEFT at step 25
+2022-03-24 14:26:51,680 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:51,682 [q_agent_code] INFO: Action RIGHT at step 26
+2022-03-24 14:26:51,780 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:51,788 [q_agent_code] INFO: Action LEFT at step 27
+2022-03-24 14:26:51,880 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:51,881 [q_agent_code] INFO: Action RIGHT at step 28
+2022-03-24 14:26:51,980 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:51,988 [q_agent_code] INFO: Action LEFT at step 29
+2022-03-24 14:26:52,080 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:52,081 [q_agent_code] INFO: Action RIGHT at step 30
+2022-03-24 14:26:52,326 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:52,332 [q_agent_code] INFO: Action LEFT at step 31
+2022-03-24 14:26:52,426 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:52,427 [q_agent_code] INFO: Action RIGHT at step 32
+2022-03-24 14:26:52,526 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:52,533 [q_agent_code] INFO: Action LEFT at step 33
+2022-03-24 14:26:52,626 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:52,627 [q_agent_code] INFO: Action RIGHT at step 34
+2022-03-24 14:26:52,727 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:52,734 [q_agent_code] INFO: Action LEFT at step 35
+2022-03-24 14:26:52,826 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:52,830 [q_agent_code] INFO: Action RIGHT at step 36
+2022-03-24 14:26:52,926 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:52,933 [q_agent_code] INFO: Action LEFT at step 37
+2022-03-24 14:26:53,026 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:53,027 [q_agent_code] INFO: Action RIGHT at step 38
+2022-03-24 14:26:53,126 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:53,132 [q_agent_code] INFO: Action LEFT at step 39
+2022-03-24 14:26:53,227 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:53,228 [q_agent_code] INFO: Action RIGHT at step 40
+2022-03-24 14:26:53,327 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:53,333 [q_agent_code] INFO: Action LEFT at step 41
+2022-03-24 14:26:53,427 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:53,428 [q_agent_code] INFO: Action RIGHT at step 42
+2022-03-24 14:26:53,527 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:53,532 [q_agent_code] INFO: Action LEFT at step 43
+2022-03-24 14:26:53,627 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:53,628 [q_agent_code] INFO: Action RIGHT at step 44
+2022-03-24 14:26:53,727 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:53,733 [q_agent_code] INFO: Action LEFT at step 45
+2022-03-24 14:26:53,827 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:53,828 [q_agent_code] INFO: Action RIGHT at step 46
+2022-03-24 14:26:53,928 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:53,933 [q_agent_code] INFO: Action LEFT at step 47
+2022-03-24 14:26:54,028 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:54,029 [q_agent_code] INFO: Action RIGHT at step 48
+2022-03-24 14:26:54,128 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:54,132 [q_agent_code] INFO: Action LEFT at step 49
+2022-03-24 14:26:54,228 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:54,229 [q_agent_code] INFO: Action RIGHT at step 50
+2022-03-24 14:26:54,328 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:54,333 [q_agent_code] INFO: Action LEFT at step 51
+2022-03-24 14:26:54,428 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:54,429 [q_agent_code] INFO: Action RIGHT at step 52
+2022-03-24 14:26:54,528 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:54,533 [q_agent_code] INFO: Action LEFT at step 53
+2022-03-24 14:26:54,629 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:54,630 [q_agent_code] INFO: Action RIGHT at step 54
+2022-03-24 14:26:54,729 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:54,733 [q_agent_code] INFO: Action LEFT at step 55
+2022-03-24 14:26:54,829 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:54,830 [q_agent_code] INFO: Action RIGHT at step 56
+2022-03-24 14:26:54,929 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:54,933 [q_agent_code] INFO: Action LEFT at step 57
+2022-03-24 14:26:55,029 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:55,030 [q_agent_code] INFO: Action RIGHT at step 58
+2022-03-24 14:26:55,130 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:55,134 [q_agent_code] INFO: Action LEFT at step 59
+2022-03-24 14:26:55,230 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:55,231 [q_agent_code] INFO: Action RIGHT at step 60
+2022-03-24 14:26:55,330 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:55,333 [q_agent_code] INFO: Action LEFT at step 61
+2022-03-24 14:26:55,431 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:55,432 [q_agent_code] INFO: Action RIGHT at step 62
+2022-03-24 14:26:55,531 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:55,534 [q_agent_code] INFO: Action LEFT at step 63
+2022-03-24 14:26:55,632 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:55,633 [q_agent_code] INFO: Action RIGHT at step 64
+2022-03-24 14:26:55,732 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:55,735 [q_agent_code] INFO: Action LEFT at step 65
+2022-03-24 14:26:55,832 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:55,833 [q_agent_code] INFO: Action RIGHT at step 66
+2022-03-24 14:26:55,932 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:55,935 [q_agent_code] INFO: Action LEFT at step 67
+2022-03-24 14:26:56,031 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:56,032 [q_agent_code] INFO: Action RIGHT at step 68
+2022-03-24 14:26:56,132 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:56,135 [q_agent_code] INFO: Action LEFT at step 69
+2022-03-24 14:26:56,232 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:56,233 [q_agent_code] INFO: Action RIGHT at step 70
+2022-03-24 14:26:58,138 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:58,144 [q_agent_code] INFO: Action RIGHT at step 1
+2022-03-24 14:26:58,238 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:58,244 [q_agent_code] INFO: Action RIGHT at step 2
+2022-03-24 14:26:58,337 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:58,348 [q_agent_code] INFO: Action RIGHT at step 3
+2022-03-24 14:26:58,437 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:58,443 [q_agent_code] INFO: Action LEFT at step 4
+2022-03-24 14:26:58,537 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:58,549 [q_agent_code] INFO: Action UP at step 5
+2022-03-24 14:26:58,637 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:58,643 [q_agent_code] INFO: Action UP at step 6
+2022-03-24 14:26:58,738 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:58,759 [q_agent_code] INFO: Action LEFT at step 7
+2022-03-24 14:26:58,838 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:58,843 [q_agent_code] INFO: Action LEFT at step 8
+2022-03-24 14:26:58,938 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:58,949 [q_agent_code] INFO: Action DOWN at step 9
+2022-03-24 14:26:59,038 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:59,043 [q_agent_code] INFO: Action UP at step 10
+2022-03-24 14:26:59,138 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:59,149 [q_agent_code] INFO: Action UP at step 11
+2022-03-24 14:26:59,239 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:59,244 [q_agent_code] INFO: Action UP at step 12
+2022-03-24 14:26:59,339 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:59,349 [q_agent_code] INFO: Action UP at step 13
+2022-03-24 14:26:59,440 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:59,445 [q_agent_code] INFO: Action UP at step 14
+2022-03-24 14:26:59,541 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:59,550 [q_agent_code] INFO: Action UP at step 15
+2022-03-24 14:26:59,641 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:59,645 [q_agent_code] INFO: Action DOWN at step 16
+2022-03-24 14:26:59,741 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:59,751 [q_agent_code] INFO: Action RIGHT at step 17
+2022-03-24 14:26:59,842 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:59,846 [q_agent_code] INFO: Action RIGHT at step 18
+2022-03-24 14:26:59,942 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:26:59,956 [q_agent_code] INFO: Action RIGHT at step 19
+2022-03-24 14:27:00,042 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:00,045 [q_agent_code] INFO: Action LEFT at step 20
+2022-03-24 14:27:00,142 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:00,155 [q_agent_code] INFO: Action UP at step 21
+2022-03-24 14:27:00,242 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:00,246 [q_agent_code] INFO: Action UP at step 22
+2022-03-24 14:27:00,342 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:00,355 [q_agent_code] INFO: Action UP at step 23
+2022-03-24 14:27:00,442 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:00,446 [q_agent_code] INFO: Action UP at step 24
+2022-03-24 14:27:00,543 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:00,554 [q_agent_code] INFO: Action UP at step 25
+2022-03-24 14:27:00,643 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:00,646 [q_agent_code] INFO: Action UP at step 26
+2022-03-24 14:27:00,743 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:00,753 [q_agent_code] INFO: Action UP at step 27
+2022-03-24 14:27:00,843 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:00,846 [q_agent_code] INFO: Action UP at step 28
+2022-03-24 14:27:00,943 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:00,949 [q_agent_code] INFO: Action LEFT at step 29
+2022-03-24 14:27:01,043 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:01,045 [q_agent_code] INFO: Action RIGHT at step 30
+2022-03-24 14:27:01,143 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:01,149 [q_agent_code] INFO: Action LEFT at step 31
+2022-03-24 14:27:01,243 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:01,244 [q_agent_code] INFO: Action RIGHT at step 32
+2022-03-24 14:27:01,344 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:01,349 [q_agent_code] INFO: Action LEFT at step 33
+2022-03-24 14:27:01,444 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:01,445 [q_agent_code] INFO: Action RIGHT at step 34
+2022-03-24 14:27:01,544 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:01,549 [q_agent_code] INFO: Action LEFT at step 35
+2022-03-24 14:27:01,644 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:01,645 [q_agent_code] INFO: Action RIGHT at step 36
+2022-03-24 14:27:01,744 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:01,748 [q_agent_code] INFO: Action LEFT at step 37
+2022-03-24 14:27:01,844 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:01,845 [q_agent_code] INFO: Action RIGHT at step 38
+2022-03-24 14:27:01,944 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:01,949 [q_agent_code] INFO: Action LEFT at step 39
+2022-03-24 14:27:02,044 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:02,045 [q_agent_code] INFO: Action RIGHT at step 40
+2022-03-24 14:27:02,145 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:02,150 [q_agent_code] INFO: Action LEFT at step 41
+2022-03-24 14:27:02,245 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:02,246 [q_agent_code] INFO: Action RIGHT at step 42
+2022-03-24 14:27:02,345 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:02,350 [q_agent_code] INFO: Action LEFT at step 43
+2022-03-24 14:27:02,445 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:02,446 [q_agent_code] INFO: Action RIGHT at step 44
+2022-03-24 14:27:02,545 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:02,549 [q_agent_code] INFO: Action LEFT at step 45
+2022-03-24 14:27:02,645 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:02,646 [q_agent_code] INFO: Action RIGHT at step 46
+2022-03-24 14:27:02,745 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:02,750 [q_agent_code] INFO: Action LEFT at step 47
+2022-03-24 14:27:02,846 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:02,847 [q_agent_code] INFO: Action RIGHT at step 48
+2022-03-24 14:27:02,947 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:02,951 [q_agent_code] INFO: Action LEFT at step 49
+2022-03-24 14:27:03,195 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:03,195 [q_agent_code] INFO: Action RIGHT at step 50
+2022-03-24 14:27:03,295 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:03,299 [q_agent_code] INFO: Action LEFT at step 51
+2022-03-24 14:27:03,396 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:03,397 [q_agent_code] INFO: Action RIGHT at step 52
+2022-03-24 14:27:03,496 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:03,500 [q_agent_code] INFO: Action LEFT at step 53
+2022-03-24 14:27:03,596 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:03,597 [q_agent_code] INFO: Action RIGHT at step 54
+2022-03-24 14:27:03,696 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:03,702 [q_agent_code] INFO: Action LEFT at step 55
+2022-03-24 14:27:03,797 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:03,798 [q_agent_code] INFO: Action RIGHT at step 56
+2022-03-24 14:27:03,897 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:03,901 [q_agent_code] INFO: Action LEFT at step 57
+2022-03-24 14:27:03,997 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:03,998 [q_agent_code] INFO: Action RIGHT at step 58
+2022-03-24 14:27:04,097 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:04,101 [q_agent_code] INFO: Action LEFT at step 59
+2022-03-24 14:27:04,199 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:04,200 [q_agent_code] INFO: Action RIGHT at step 60
+2022-03-24 14:27:04,299 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:04,303 [q_agent_code] INFO: Action LEFT at step 61
+2022-03-24 14:27:04,399 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:04,400 [q_agent_code] INFO: Action RIGHT at step 62
+2022-03-24 14:27:04,499 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:04,503 [q_agent_code] INFO: Action LEFT at step 63
+2022-03-24 14:27:04,599 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:04,600 [q_agent_code] INFO: Action RIGHT at step 64
+2022-03-24 14:27:04,700 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:04,704 [q_agent_code] INFO: Action LEFT at step 65
+2022-03-24 14:27:04,800 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:04,801 [q_agent_code] INFO: Action RIGHT at step 66
+2022-03-24 14:27:04,900 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:04,904 [q_agent_code] INFO: Action LEFT at step 67
+2022-03-24 14:27:05,000 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:05,001 [q_agent_code] INFO: Action RIGHT at step 68
+2022-03-24 14:27:05,100 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:05,104 [q_agent_code] INFO: Action LEFT at step 69
+2022-03-24 14:27:05,200 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:05,201 [q_agent_code] INFO: Action RIGHT at step 70
+2022-03-24 14:27:07,407 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:07,413 [q_agent_code] INFO: Action UP at step 1
+2022-03-24 14:27:07,507 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:07,513 [q_agent_code] INFO: Action DOWN at step 2
+2022-03-24 14:27:07,607 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:07,613 [q_agent_code] INFO: Action RIGHT at step 3
+2022-03-24 14:27:07,707 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:07,713 [q_agent_code] INFO: Action RIGHT at step 4
+2022-03-24 14:27:07,807 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:07,819 [q_agent_code] INFO: Action RIGHT at step 5
+2022-03-24 14:27:07,908 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:07,914 [q_agent_code] INFO: Action RIGHT at step 6
+2022-03-24 14:27:08,009 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:08,020 [q_agent_code] INFO: Action UP at step 7
+2022-03-24 14:27:08,110 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:08,116 [q_agent_code] INFO: Action UP at step 8
+2022-03-24 14:27:08,210 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:08,228 [q_agent_code] INFO: Action RIGHT at step 9
+2022-03-24 14:27:08,310 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:08,315 [q_agent_code] INFO: Action LEFT at step 10
+2022-03-24 14:27:08,410 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:08,427 [q_agent_code] INFO: Action LEFT at step 11
+2022-03-24 14:27:08,510 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:08,515 [q_agent_code] INFO: Action LEFT at step 12
+2022-03-24 14:27:08,610 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:08,626 [q_agent_code] INFO: Action UP at step 13
+2022-03-24 14:27:08,710 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:08,715 [q_agent_code] INFO: Action UP at step 14
+2022-03-24 14:27:08,810 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:08,825 [q_agent_code] INFO: Action LEFT at step 15
+2022-03-24 14:27:08,910 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:08,915 [q_agent_code] INFO: Action LEFT at step 16
+2022-03-24 14:27:09,011 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:09,020 [q_agent_code] INFO: Action RIGHT at step 17
+2022-03-24 14:27:09,112 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:09,116 [q_agent_code] INFO: Action BOMB at step 18
+2022-03-24 14:27:09,212 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:09,212 [q_agent_code] INFO: Action LEFT at step 19
+2022-03-24 14:27:09,312 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:09,318 [q_agent_code] INFO: Action UP at step 20
+2022-03-24 14:27:09,412 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:09,415 [q_agent_code] INFO: Action UP at step 21
+2022-03-24 14:27:09,512 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:09,521 [q_agent_code] INFO: Action UP at step 22
+2022-03-24 14:27:09,613 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:09,615 [q_agent_code] INFO: Action UP at step 23
+2022-03-24 14:27:09,713 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:09,720 [q_agent_code] INFO: Action RIGHT at step 24
+2022-03-24 14:27:09,813 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:09,817 [q_agent_code] INFO: Action RIGHT at step 25
+2022-03-24 14:27:09,914 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:09,926 [q_agent_code] INFO: Action RIGHT at step 26
+2022-03-24 14:27:10,014 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:10,018 [q_agent_code] INFO: Action LEFT at step 27
+2022-03-24 14:27:10,114 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:10,125 [q_agent_code] INFO: Action UP at step 28
+2022-03-24 14:27:10,214 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:10,217 [q_agent_code] INFO: Action UP at step 29
+2022-03-24 14:27:10,314 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:10,324 [q_agent_code] INFO: Action LEFT at step 30
+2022-03-24 14:27:10,414 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:10,417 [q_agent_code] INFO: Action LEFT at step 31
+2022-03-24 14:27:10,514 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:10,520 [q_agent_code] INFO: Action RIGHT at step 32
+2022-03-24 14:27:10,614 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:10,617 [q_agent_code] INFO: Action RIGHT at step 33
+2022-03-24 14:27:10,714 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:10,723 [q_agent_code] INFO: Action UP at step 34
+2022-03-24 14:27:10,815 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:10,818 [q_agent_code] INFO: Action UP at step 35
+2022-03-24 14:27:10,916 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:10,925 [q_agent_code] INFO: Action UP at step 36
+2022-03-24 14:27:11,016 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:11,019 [q_agent_code] INFO: Action UP at step 37
+2022-03-24 14:27:11,116 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:11,120 [q_agent_code] INFO: Action RIGHT at step 38
+2022-03-24 14:27:11,217 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:11,219 [q_agent_code] INFO: Action RIGHT at step 39
+2022-03-24 14:27:11,317 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:11,321 [q_agent_code] INFO: Action RIGHT at step 40
+2022-03-24 14:27:11,418 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:11,420 [q_agent_code] INFO: Action RIGHT at step 41
+2022-03-24 14:27:11,518 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:11,522 [q_agent_code] INFO: Action DOWN at step 42
+2022-03-24 14:27:11,618 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:11,620 [q_agent_code] INFO: Action BOMB at step 43
+2022-03-24 14:27:11,718 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:11,719 [q_agent_code] INFO: Action UP at step 44
+2022-03-24 14:27:11,818 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:11,820 [q_agent_code] INFO: Action RIGHT at step 45
+2022-03-24 14:27:11,918 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:11,920 [q_agent_code] INFO: Action LEFT at step 46
+2022-03-24 14:27:12,019 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:12,021 [q_agent_code] INFO: Action RIGHT at step 47
+2022-03-24 14:27:12,119 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:12,120 [q_agent_code] INFO: Action RIGHT at step 48
+2022-03-24 14:27:12,220 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:12,223 [q_agent_code] INFO: Action DOWN at step 49
+2022-03-24 14:27:12,320 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:12,322 [q_agent_code] INFO: Action BOMB at step 50
+2022-03-24 14:27:12,420 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:12,422 [q_agent_code] INFO: Action UP at step 51
+2022-03-24 14:27:12,520 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:12,523 [q_agent_code] INFO: Action RIGHT at step 52
+2022-03-24 14:27:12,620 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:12,622 [q_agent_code] INFO: Action LEFT at step 53
+2022-03-24 14:27:12,720 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:12,722 [q_agent_code] INFO: Action RIGHT at step 54
+2022-03-24 14:27:12,820 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:12,821 [q_agent_code] INFO: Action RIGHT at step 55
+2022-03-24 14:27:12,921 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:12,924 [q_agent_code] INFO: Action DOWN at step 56
+2022-03-24 14:27:13,021 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:13,023 [q_agent_code] INFO: Action BOMB at step 57
+2022-03-24 14:27:13,121 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:13,122 [q_agent_code] INFO: Action UP at step 58
+2022-03-24 14:27:13,221 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:13,222 [q_agent_code] INFO: Action RIGHT at step 59
+2022-03-24 14:27:13,321 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:13,322 [q_agent_code] INFO: Action LEFT at step 60
+2022-03-24 14:27:13,421 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:13,423 [q_agent_code] INFO: Action RIGHT at step 61
+2022-03-24 14:27:13,521 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:13,521 [q_agent_code] INFO: Action RIGHT at step 62
+2022-03-24 14:27:13,621 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:13,624 [q_agent_code] INFO: Action DOWN at step 63
+2022-03-24 14:27:13,721 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:13,723 [q_agent_code] INFO: Action BOMB at step 64
+2022-03-24 14:27:13,822 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:13,823 [q_agent_code] INFO: Action UP at step 65
+2022-03-24 14:27:14,071 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:14,072 [q_agent_code] INFO: Action RIGHT at step 66
+2022-03-24 14:27:14,172 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:14,173 [q_agent_code] INFO: Action LEFT at step 67
+2022-03-24 14:27:14,272 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:14,273 [q_agent_code] INFO: Action RIGHT at step 68
+2022-03-24 14:27:14,373 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:14,373 [q_agent_code] INFO: Action RIGHT at step 69
+2022-03-24 14:27:14,473 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:14,474 [q_agent_code] INFO: Action LEFT at step 70
+2022-03-24 14:27:19,487 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:19,493 [q_agent_code] INFO: Action DOWN at step 1
+2022-03-24 14:27:19,586 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:19,592 [q_agent_code] INFO: Action DOWN at step 2
+2022-03-24 14:27:19,686 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:19,699 [q_agent_code] INFO: Action LEFT at step 3
+2022-03-24 14:27:19,786 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:19,792 [q_agent_code] INFO: Action LEFT at step 4
+2022-03-24 14:27:19,887 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:19,907 [q_agent_code] INFO: Action LEFT at step 5
+2022-03-24 14:27:19,988 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:19,993 [q_agent_code] INFO: Action LEFT at step 6
+2022-03-24 14:27:20,087 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:20,107 [q_agent_code] INFO: Action DOWN at step 7
+2022-03-24 14:27:20,187 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:20,193 [q_agent_code] INFO: Action DOWN at step 8
+2022-03-24 14:27:20,288 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:20,307 [q_agent_code] INFO: Action RIGHT at step 9
+2022-03-24 14:27:20,388 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:20,394 [q_agent_code] INFO: Action RIGHT at step 10
+2022-03-24 14:27:20,489 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:20,506 [q_agent_code] INFO: Action RIGHT at step 11
+2022-03-24 14:27:20,589 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:20,594 [q_agent_code] INFO: Action RIGHT at step 12
+2022-03-24 14:27:20,690 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:20,701 [q_agent_code] INFO: Action UP at step 13
+2022-03-24 14:27:20,790 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:20,795 [q_agent_code] INFO: Action DOWN at step 14
+2022-03-24 14:27:20,891 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:20,901 [q_agent_code] INFO: Action DOWN at step 15
+2022-03-24 14:27:20,991 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:20,996 [q_agent_code] INFO: Action DOWN at step 16
+2022-03-24 14:27:21,091 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:21,101 [q_agent_code] INFO: Action DOWN at step 17
+2022-03-24 14:27:21,191 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:21,195 [q_agent_code] INFO: Action DOWN at step 18
+2022-03-24 14:27:21,291 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:21,300 [q_agent_code] INFO: Action LEFT at step 19
+2022-03-24 14:27:21,392 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:21,396 [q_agent_code] INFO: Action LEFT at step 20
+2022-03-24 14:27:21,492 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:21,507 [q_agent_code] INFO: Action LEFT at step 21
+2022-03-24 14:27:21,594 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:21,598 [q_agent_code] INFO: Action RIGHT at step 22
+2022-03-24 14:27:21,694 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:21,709 [q_agent_code] INFO: Action DOWN at step 23
+2022-03-24 14:27:21,794 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:21,798 [q_agent_code] INFO: Action DOWN at step 24
+2022-03-24 14:27:21,894 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:21,908 [q_agent_code] INFO: Action DOWN at step 25
+2022-03-24 14:27:21,994 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:21,998 [q_agent_code] INFO: Action DOWN at step 26
+2022-03-24 14:27:22,094 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:22,108 [q_agent_code] INFO: Action DOWN at step 27
+2022-03-24 14:27:22,194 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:22,198 [q_agent_code] INFO: Action DOWN at step 28
+2022-03-24 14:27:22,294 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:22,302 [q_agent_code] INFO: Action LEFT at step 29
+2022-03-24 14:27:22,394 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:22,398 [q_agent_code] INFO: Action LEFT at step 30
+2022-03-24 14:27:22,494 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:22,502 [q_agent_code] INFO: Action LEFT at step 31
+2022-03-24 14:27:22,594 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:22,598 [q_agent_code] INFO: Action LEFT at step 32
+2022-03-24 14:27:22,695 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:22,702 [q_agent_code] INFO: Action UP at step 33
+2022-03-24 14:27:22,795 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:22,799 [q_agent_code] INFO: Action UP at step 34
+2022-03-24 14:27:22,896 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:22,908 [q_agent_code] INFO: Action UP at step 35
+2022-03-24 14:27:22,996 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:23,000 [q_agent_code] INFO: Action UP at step 36
+2022-03-24 14:27:23,096 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:23,107 [q_agent_code] INFO: Action RIGHT at step 37
+2022-03-24 14:27:23,196 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:23,199 [q_agent_code] INFO: Action LEFT at step 38
+2022-03-24 14:27:23,297 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:23,308 [q_agent_code] INFO: Action UP at step 39
+2022-03-24 14:27:23,397 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:23,400 [q_agent_code] INFO: Action UP at step 40
+2022-03-24 14:27:23,497 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:23,508 [q_agent_code] INFO: Action LEFT at step 41
+2022-03-24 14:27:23,597 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:23,600 [q_agent_code] INFO: Action LEFT at step 42
+2022-03-24 14:27:23,697 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:23,707 [q_agent_code] INFO: Action LEFT at step 43
+2022-03-24 14:27:23,798 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:23,801 [q_agent_code] INFO: Action LEFT at step 44
+2022-03-24 14:27:23,898 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:23,908 [q_agent_code] INFO: Action DOWN at step 45
+2022-03-24 14:27:23,998 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:24,001 [q_agent_code] INFO: Action DOWN at step 46
+2022-03-24 14:27:24,099 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:24,108 [q_agent_code] INFO: Action DOWN at step 47
+2022-03-24 14:27:24,199 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:24,202 [q_agent_code] INFO: Action DOWN at step 48
+2022-03-24 14:27:24,299 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:24,307 [q_agent_code] INFO: Action LEFT at step 49
+2022-03-24 14:27:24,400 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:24,402 [q_agent_code] INFO: Action LEFT at step 50
+2022-03-24 14:27:24,501 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:24,509 [q_agent_code] INFO: Action DOWN at step 51
+2022-03-24 14:27:24,602 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:24,605 [q_agent_code] INFO: Action DOWN at step 52
+2022-03-24 14:27:24,702 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:24,706 [q_agent_code] INFO: Action LEFT at step 53
+2022-03-24 14:27:24,802 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:24,804 [q_agent_code] INFO: Action RIGHT at step 54
+2022-03-24 14:27:24,902 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:24,906 [q_agent_code] INFO: Action UP at step 55
+2022-03-24 14:27:25,002 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:25,004 [q_agent_code] INFO: Action UP at step 56
+2022-03-24 14:27:25,102 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:25,109 [q_agent_code] INFO: Action LEFT at step 57
+2022-03-24 14:27:25,202 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:25,204 [q_agent_code] INFO: Action LEFT at step 58
+2022-03-24 14:27:25,302 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:25,307 [q_agent_code] INFO: Action UP at step 59
+2022-03-24 14:27:25,403 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:25,405 [q_agent_code] INFO: Action UP at step 60
+2022-03-24 14:27:25,503 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:25,508 [q_agent_code] INFO: Action UP at step 61
+2022-03-24 14:27:25,603 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:25,605 [q_agent_code] INFO: Action UP at step 62
+2022-03-24 14:27:25,703 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:25,707 [q_agent_code] INFO: Action RIGHT at step 63
+2022-03-24 14:27:25,803 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:25,805 [q_agent_code] INFO: Action RIGHT at step 64
+2022-03-24 14:27:25,903 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:25,909 [q_agent_code] INFO: Action DOWN at step 65
+2022-03-24 14:27:26,003 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:26,005 [q_agent_code] INFO: Action UP at step 66
+2022-03-24 14:27:26,103 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:26,108 [q_agent_code] INFO: Action RIGHT at step 67
+2022-03-24 14:27:26,204 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:26,206 [q_agent_code] INFO: Action RIGHT at step 68
+2022-03-24 14:27:26,304 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:26,310 [q_agent_code] INFO: Action UP at step 69
+2022-03-24 14:27:26,404 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:26,406 [q_agent_code] INFO: Action UP at step 70
+2022-03-24 14:27:28,207 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:28,214 [q_agent_code] INFO: Action DOWN at step 1
+2022-03-24 14:27:28,307 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:28,309 [q_agent_code] INFO: Action DOWN at step 2
+2022-03-24 14:27:28,407 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:28,420 [q_agent_code] INFO: Action DOWN at step 3
+2022-03-24 14:27:28,508 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:28,514 [q_agent_code] INFO: Action DOWN at step 4
+2022-03-24 14:27:28,608 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:28,621 [q_agent_code] INFO: Action RIGHT at step 5
+2022-03-24 14:27:28,708 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:28,713 [q_agent_code] INFO: Action RIGHT at step 6
+2022-03-24 14:27:28,810 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:28,829 [q_agent_code] INFO: Action DOWN at step 7
+2022-03-24 14:27:29,073 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:29,078 [q_agent_code] INFO: Action DOWN at step 8
+2022-03-24 14:27:29,174 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:29,193 [q_agent_code] INFO: Action RIGHT at step 9
+2022-03-24 14:27:29,274 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:29,279 [q_agent_code] INFO: Action RIGHT at step 10
+2022-03-24 14:27:29,373 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:29,391 [q_agent_code] INFO: Action RIGHT at step 11
+2022-03-24 14:27:29,473 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:29,479 [q_agent_code] INFO: Action RIGHT at step 12
+2022-03-24 14:27:29,573 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:29,591 [q_agent_code] INFO: Action UP at step 13
+2022-03-24 14:27:29,673 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:29,678 [q_agent_code] INFO: Action DOWN at step 14
+2022-03-24 14:27:29,774 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:29,791 [q_agent_code] INFO: Action DOWN at step 15
+2022-03-24 14:27:29,874 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:29,879 [q_agent_code] INFO: Action DOWN at step 16
+2022-03-24 14:27:29,974 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:29,990 [q_agent_code] INFO: Action DOWN at step 17
+2022-03-24 14:27:30,074 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:30,079 [q_agent_code] INFO: Action DOWN at step 18
+2022-03-24 14:27:30,174 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:30,189 [q_agent_code] INFO: Action DOWN at step 19
+2022-03-24 14:27:30,274 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:30,278 [q_agent_code] INFO: Action DOWN at step 20
+2022-03-24 14:27:30,374 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:30,389 [q_agent_code] INFO: Action LEFT at step 21
+2022-03-24 14:27:30,474 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:30,478 [q_agent_code] INFO: Action LEFT at step 22
+2022-03-24 14:27:30,574 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:30,588 [q_agent_code] INFO: Action LEFT at step 23
+2022-03-24 14:27:30,675 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:30,679 [q_agent_code] INFO: Action LEFT at step 24
+2022-03-24 14:27:30,775 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:30,788 [q_agent_code] INFO: Action LEFT at step 25
+2022-03-24 14:27:30,875 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:30,878 [q_agent_code] INFO: Action RIGHT at step 26
+2022-03-24 14:27:30,975 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:30,988 [q_agent_code] INFO: Action DOWN at step 27
+2022-03-24 14:27:31,076 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:31,079 [q_agent_code] INFO: Action DOWN at step 28
+2022-03-24 14:27:31,176 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:31,183 [q_agent_code] INFO: Action LEFT at step 29
+2022-03-24 14:27:31,277 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:31,281 [q_agent_code] INFO: Action RIGHT at step 30
+2022-03-24 14:27:31,377 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:31,383 [q_agent_code] INFO: Action RIGHT at step 31
+2022-03-24 14:27:31,478 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:31,481 [q_agent_code] INFO: Action RIGHT at step 32
+2022-03-24 14:27:31,578 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:31,583 [q_agent_code] INFO: Action UP at step 33
+2022-03-24 14:27:31,678 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:31,681 [q_agent_code] INFO: Action BOMB at step 34
+2022-03-24 14:27:31,778 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:31,780 [q_agent_code] INFO: Action DOWN at step 35
+2022-03-24 14:27:31,878 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:31,881 [q_agent_code] INFO: Action LEFT at step 36
+2022-03-24 14:27:31,978 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:31,980 [q_agent_code] INFO: Action RIGHT at step 37
+2022-03-24 14:27:32,078 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:32,081 [q_agent_code] INFO: Action LEFT at step 38
+2022-03-24 14:27:32,178 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:32,178 [q_agent_code] INFO: Action RIGHT at step 39
+2022-03-24 14:27:36,594 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:36,601 [q_agent_code] INFO: Action DOWN at step 1
+2022-03-24 14:27:36,694 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:36,696 [q_agent_code] INFO: Action DOWN at step 2
+2022-03-24 14:27:36,794 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:36,807 [q_agent_code] INFO: Action DOWN at step 3
+2022-03-24 14:27:36,895 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:36,901 [q_agent_code] INFO: Action DOWN at step 4
+2022-03-24 14:27:36,997 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:37,009 [q_agent_code] INFO: Action DOWN at step 5
+2022-03-24 14:27:37,097 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:37,103 [q_agent_code] INFO: Action UP at step 6
+2022-03-24 14:27:37,197 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:37,209 [q_agent_code] INFO: Action RIGHT at step 7
+2022-03-24 14:27:37,298 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:37,303 [q_agent_code] INFO: Action RIGHT at step 8
+2022-03-24 14:27:37,398 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:37,416 [q_agent_code] INFO: Action DOWN at step 9
+2022-03-24 14:27:37,498 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:37,503 [q_agent_code] INFO: Action UP at step 10
+2022-03-24 14:27:37,598 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:37,616 [q_agent_code] INFO: Action RIGHT at step 11
+2022-03-24 14:27:37,698 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:37,703 [q_agent_code] INFO: Action RIGHT at step 12
+2022-03-24 14:27:37,799 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:37,816 [q_agent_code] INFO: Action RIGHT at step 13
+2022-03-24 14:27:37,900 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:37,904 [q_agent_code] INFO: Action LEFT at step 14
+2022-03-24 14:27:38,001 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:38,017 [q_agent_code] INFO: Action UP at step 15
+2022-03-24 14:27:38,101 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:38,106 [q_agent_code] INFO: Action UP at step 16
+2022-03-24 14:27:38,201 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:38,216 [q_agent_code] INFO: Action RIGHT at step 17
+2022-03-24 14:27:38,302 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:38,306 [q_agent_code] INFO: Action RIGHT at step 18
+2022-03-24 14:27:38,402 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:38,415 [q_agent_code] INFO: Action DOWN at step 19
+2022-03-24 14:27:38,503 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:38,507 [q_agent_code] INFO: Action DOWN at step 20
+2022-03-24 14:27:38,603 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:38,616 [q_agent_code] INFO: Action RIGHT at step 21
+2022-03-24 14:27:38,861 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:38,864 [q_agent_code] INFO: Action RIGHT at step 22
+2022-03-24 14:27:38,961 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:38,973 [q_agent_code] INFO: Action RIGHT at step 23
+2022-03-24 14:27:39,062 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:39,065 [q_agent_code] INFO: Action RIGHT at step 24
+2022-03-24 14:27:39,162 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:39,173 [q_agent_code] INFO: Action DOWN at step 25
+2022-03-24 14:27:39,263 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:39,266 [q_agent_code] INFO: Action DOWN at step 26
+2022-03-24 14:27:39,363 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:39,373 [q_agent_code] INFO: Action RIGHT at step 27
+2022-03-24 14:27:39,463 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:39,466 [q_agent_code] INFO: Action LEFT at step 28
+2022-03-24 14:27:39,564 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:39,574 [q_agent_code] INFO: Action LEFT at step 29
+2022-03-24 14:27:39,665 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:39,667 [q_agent_code] INFO: Action LEFT at step 30
+2022-03-24 14:27:39,765 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:39,774 [q_agent_code] INFO: Action DOWN at step 31
+2022-03-24 14:27:39,865 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:39,868 [q_agent_code] INFO: Action DOWN at step 32
+2022-03-24 14:27:39,965 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:39,973 [q_agent_code] INFO: Action RIGHT at step 33
+2022-03-24 14:27:40,065 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:40,068 [q_agent_code] INFO: Action RIGHT at step 34
+2022-03-24 14:27:40,166 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:40,173 [q_agent_code] INFO: Action DOWN at step 35
+2022-03-24 14:27:40,266 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:40,269 [q_agent_code] INFO: Action DOWN at step 36
+2022-03-24 14:27:40,366 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:40,373 [q_agent_code] INFO: Action RIGHT at step 37
+2022-03-24 14:27:40,466 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:40,468 [q_agent_code] INFO: Action RIGHT at step 38
+2022-03-24 14:27:40,566 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:40,574 [q_agent_code] INFO: Action UP at step 39
+2022-03-24 14:27:40,667 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:40,669 [q_agent_code] INFO: Action UP at step 40
+2022-03-24 14:27:40,767 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:40,774 [q_agent_code] INFO: Action RIGHT at step 41
+2022-03-24 14:27:40,867 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:40,869 [q_agent_code] INFO: Action RIGHT at step 42
+2022-03-24 14:27:40,967 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:40,970 [q_agent_code] INFO: Action UP at step 43
+2022-03-24 14:27:41,068 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:41,069 [q_agent_code] INFO: Action UP at step 44
+2022-03-24 14:27:41,169 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:41,172 [q_agent_code] INFO: Action UP at step 45
+2022-03-24 14:27:41,269 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:41,271 [q_agent_code] INFO: Action UP at step 46
+2022-03-24 14:27:41,369 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:41,373 [q_agent_code] INFO: Action LEFT at step 47
+2022-03-24 14:27:41,470 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:41,471 [q_agent_code] INFO: Action LEFT at step 48
+2022-03-24 14:27:41,569 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:41,574 [q_agent_code] INFO: Action LEFT at step 49
+2022-03-24 14:27:41,670 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:41,671 [q_agent_code] INFO: Action RIGHT at step 50
+2022-03-24 14:27:41,770 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:41,774 [q_agent_code] INFO: Action UP at step 51
+2022-03-24 14:27:41,870 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:41,872 [q_agent_code] INFO: Action UP at step 52
+2022-03-24 14:27:41,971 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:41,976 [q_agent_code] INFO: Action LEFT at step 53
+2022-03-24 14:27:42,071 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:42,072 [q_agent_code] INFO: Action RIGHT at step 54
+2022-03-24 14:27:42,171 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:42,174 [q_agent_code] INFO: Action RIGHT at step 55
+2022-03-24 14:27:42,271 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:42,272 [q_agent_code] INFO: Action LEFT at step 56
+2022-03-24 14:27:42,371 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:42,374 [q_agent_code] INFO: Action UP at step 57
+2022-03-24 14:27:42,471 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:42,472 [q_agent_code] INFO: Action UP at step 58
+2022-03-24 14:27:42,571 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:42,573 [q_agent_code] INFO: Action LEFT at step 59
+2022-03-24 14:27:42,672 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:42,673 [q_agent_code] INFO: Action LEFT at step 60
+2022-03-24 14:27:42,772 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:42,774 [q_agent_code] INFO: Action LEFT at step 61
+2022-03-24 14:27:42,873 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:42,874 [q_agent_code] INFO: Action LEFT at step 62
+2022-03-24 14:27:42,973 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:42,974 [q_agent_code] INFO: Action RIGHT at step 63
+2022-03-24 14:27:43,073 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:43,073 [q_agent_code] INFO: Action RIGHT at step 64
+2022-03-24 14:27:43,173 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:43,173 [q_agent_code] INFO: Action RIGHT at step 65
+2022-03-24 14:27:43,273 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:43,274 [q_agent_code] INFO: Action RIGHT at step 66
+2022-03-24 14:27:43,373 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:43,374 [q_agent_code] INFO: Action RIGHT at step 67
+2022-03-24 14:27:43,474 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:43,474 [q_agent_code] INFO: Action RIGHT at step 68
+2022-03-24 14:27:43,575 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:43,575 [q_agent_code] INFO: Action DOWN at step 69
+2022-03-24 14:27:43,675 [q_agent_code] DEBUG: Querying model for action.
+2022-03-24 14:27:43,675 [q_agent_code] INFO: Action UP at step 70

@@ -44,8 +44,11 @@ def setup_training(self):
     # save rewards
     self.rewards = []
 
-    # buffer with last 4 positions for checking if agent runs in loop
-    self.buffer_states = deque(maxlen=BUFFER_HISTORY_SIZE)
+    # buffer with last 6 positions for checking if agent runs in loop
+    self.states_buffer = deque(maxlen=BUFFER_HISTORY_SIZE)
+
+    # buffer with last 6 bombs
+    self.bomb_buffer = deque(maxlen=BUFFER_HISTORY_SIZE)
 
 
 def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_state: dict, events: List[str]):
@@ -66,9 +69,15 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     :param events: The events that occurred when going from  `old_game_state` to `new_game_state`
     """
 
-    def update_buffer_states():
+    print(new_game_state['explosion_map'])
+
+    def update_states_buffer():
         if new_game_state is not None:
-            self.buffer_states.append(new_game_state['self'][3]) # agents coordinates on field
+            self.states_buffer.append(new_game_state['self'][3]) # agents coordinates on field
+
+    def update_bomb_buffer():
+        if new_game_state is not None:
+            self.bomb_buffer.append(new_game_state['self'][3]) # agents coordinates on field
 
     def in_danger(area, bombs):
         for bomb in bombs:
@@ -188,15 +197,60 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             return flag, False, False
             
     def run_in_loop():
-        update_buffer_states()
-        if len(self.buffer_states) == BUFFER_HISTORY_SIZE:
-            #return (self.buffer_states[0] == self.buffer_states[2]).all() and (self.buffer_states[1] == self.buffer_states[3]).all() and (self.buffer_states[0] != self.buffer_states[1]).any()
-            buffer = np.array(self.buffer_states)
+        update_states_buffer()
+        if len(self.states_buffer) == BUFFER_HISTORY_SIZE:
+            #return (self.states_buffer[0] == self.states_buffer[2]).all() and (self.states_buffer[1] == self.states_buffer[3]).all() and (self.states_buffer[0] != self.states_buffer[1]).any()
+            buffer = np.array(self.states_buffer)
             return len(np.unique(buffer[[0, 2, 4]], axis=0)) == 1 and len(
                         np.unique(buffer[[1, 3, 5]], axis=0)) == 1 and (
                             np.unique(buffer[[0, 2, 4]], axis=0) != np.unique(buffer[[1, 3, 5]], axis = 0)).any()        
         else:
             return False
+
+    def risky_area(pos):
+        #vertical = np.array([[x, pos[1]] for x in range(pos[0] - 3, pos[0] + 4)])
+        #horizontal = np.array([[pos[0], y] for y in range(pos[1] - 3, pos[1] + 4)])
+        buffer = [pos]
+        pos = np.array([pos[0],pos[1]])
+        for direction in [np.array([0,1]),np.array([0,-1]),np.array([1,0]),np.array([-1,0])]:
+            current_position = np.copy(pos)
+            for i in range(3):
+                current_position += direction
+
+                if old_game_state["field"][current_position[0],current_position[1]] == -1:
+                    break
+                else:
+                    buffer.append(np.copy(current_position))
+        buffer = np.array(buffer)
+        return buffer
+
+    def bomb_distance_increased():
+        def distance(point_1,point_2):
+            return np.sqrt(np.power(point_1[0]-point_2[1],2)+np.power(point_1[1]-point_2[1],2))
+        position_old = np.array(old_game_state["self"][3])
+        position_new = np.array(new_game_state["self"][3])
+        bombs = np.empty((2, len(old_game_state["bombs"])))
+        d_old = []
+        d_new = []
+        if bombs.size != 0:
+            for count, bomb in enumerate(old_game_state["bombs"]):
+                bombs[0, count] = bomb[0][0]
+                bombs[1, count] = bomb[0][1]
+
+                d_old.append(distance(position_old,np.array([bomb[0][0],bomb[0][1]])))
+                d_new.append(distance(position_new,np.array([bomb[0][0],bomb[0][1]])))
+            bombs = bombs.transpose()
+        bomb_sort = np.argsort(np.array(d_old))
+        area = risky_area(position_old)
+        for n,i in enumerate(bomb_sort):
+            bomb_position = bombs[i]
+            for j in area:
+                if (j == bombs[i]).all:
+                    flag = True
+                    break
+            if d_old[n] < d_new[n] and flag:
+                events.append(e.BOMB_DISTANCE_INCREASED)
+                break
 
 
     """Add your own events to hand out rewards"""
@@ -217,6 +271,8 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     if run_in_loop():
         events.append(e.RUN_IN_LOOP)
 
+    bomb_distance_increased()
+
     print("events", events)
      
     
@@ -224,14 +280,16 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     #print((f"Step {new_game_state['step']} : {events}"))
 
     # state_to_features is defined in callbacks.py
+    #print("###")
     self.transitions.append(Transition(state_to_features(old_game_state), self_action, state_to_features(new_game_state), reward_from_events(self, events)))
+    #print("###")
 
     # Recalculate Q-values
     state, action, next_state, reward = self.transitions[-1]
 
     # check if state is None
     if next_state is not None:
-   
+        #print("###")
         index, rotation = get_state_index(state)
 
         action = ACTIONS.index(action)
@@ -241,7 +299,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         
         q_value = self.model[index, action]
 
-        print("old q", self.model[index, action])
+        #print("old q", self.model[index, action])
 
         next_index, next_rotation = get_state_index(next_state)
         next_value = np.max(self.model[next_index]) 
@@ -251,8 +309,9 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         # Update Q-table
         self.model[index, action] = new_q_value
 
-        print("new q", self.model[index, action])
-        
+        #print("new q", self.model[index, action])
+
+        #print("###")
         # Or SARSA (On-Policy algorithm for TD-Learning) ?
         """the maximum reward for the next state is not necessarily used for updating the Q-values.
         Instead, a new action, and therefore reward, is selected using the same policy (eg e-greedy) that determined the original action.
@@ -325,8 +384,9 @@ def reward_from_events(self, events: List[str]) -> int:
         e.COIN_COLLECTED: 100,
         e.COIN_DISTANCE_REDUCED: 10,
         e.COIN_DISTANCE_INCREASED: -5,
+        e.BOMB_DISTANCE_INCREASED: -5,
         e.BOMB_AVOIDED : 5,
-        e.BOMB_DROPPED: -7,
+        e.BOMB_DROPPED: -50,
         e.KILLED_OPPONENT: 500,
         e.GOT_KILLED: -100,
         e.KILLED_SELF: -150,

@@ -92,13 +92,8 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     #    return old_game_state['self'][2] == True and new_game_state['self'][2] == False
     
     
-    def check_for_wall(y, x, new):
-        if new:
-            field = new_game_state['field']
-        else:
-            field = old_game_state['field']
+    def check_for_wall(y, x, field = old_game_state['field']):
         if (0 <= x < 17) and (0 <= y < 17):
-            #print("check wall",y,x, field[y][x])
             return field[y][x] == -1 # wall
         return False
 
@@ -143,11 +138,11 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         return down
 
     # get vertical and horizontal region from the position, consider walls
-    def get_vh_region(pos, new=False, n=3):
-        left = get_left(pos, new, n)
-        right = get_right(pos, new, n)
-        up = get_up(pos, new, n)
-        down = get_down(pos, new, n)
+    def get_vh_region(pos, n=3):
+        left = get_left(pos, n)
+        right = get_right(pos, n)
+        up = get_up(pos, n)
+        down = get_down(pos, n)
         
         for r in right:
             left.append(r)
@@ -161,7 +156,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         if len(old_game_state['bombs']) > 0:
             bombs = old_game_state['bombs']
             old_risky_area = get_vh_region(old_game_state['self'][3])
-            new_risky_area = get_vh_region(new_game_state['self'][3], True)
+            new_risky_area = get_vh_region(new_game_state['self'][3])
 
             old_danger = in_danger(old_risky_area, bombs)
             new_danger = in_danger(new_risky_area, bombs)
@@ -232,8 +227,8 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         bombs = np.empty((2, len(old_game_state["bombs"])))
         d_old = []
         d_new = []
+        position_old = np.array(old_game_state["self"][3])
         if bombs.size != 0:
-            position_old = np.array(old_game_state["self"][3])
             position_new = np.array(new_game_state["self"][3])
             for count, bomb in enumerate(old_game_state["bombs"]):
                 bombs[0, count] = bomb[0][0]
@@ -304,23 +299,23 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     if reach_crate():
         events.append(e.CRATE_REACHED)
 
-    #print("events", events)
+    print("events", events)
      
     
     self.logger.debug(f'Encountered game event(s) {", ".join(map(repr, events))} in step {new_game_state["step"]}')
     #print((f"Step {new_game_state['step']} : {events}"))
 
     # state_to_features is defined in callbacks.py
-    #print("###")
+    print("###")
     self.transitions.append(Transition(state_to_features(old_game_state), self_action, state_to_features(new_game_state), reward_from_events(self, events)))
-    #print("###")
+    print("###")
 
     # Recalculate Q-values
     state, action, next_state, reward = self.transitions[-1]
 
     # check if state is None
     if next_state is not None:
-        #print("###")
+        print("###")
         index, rotation = get_state_index(state)
 
         action = ACTIONS.index(action)
@@ -330,7 +325,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         
         q_value = self.model[index, action]
 
-        #print("old q", self.model[index, action])
+        print("old q", self.model[index, action])
 
         next_index, next_rotation = get_state_index(next_state)
         next_value = np.max(self.model[next_index]) 
@@ -340,9 +335,10 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         # Update Q-table
         self.model[index, action] = new_q_value
 
-        #print("new q", self.model[index, action])
+        print("new q", self.model[index, action])
 
-        #print("###")
+        print("###")
+        
         # Or SARSA (On-Policy algorithm for TD-Learning) ?
         """the maximum reward for the next state is not necessarily used for updating the Q-values.
         Instead, a new action, and therefore reward, is selected using the same policy (eg e-greedy) that determined the original action.
@@ -426,7 +422,7 @@ def reward_from_events(self, events: List[str]) -> int:
         e.COIN_COLLECTED: 100,
         e.COIN_DISTANCE_REDUCED: 10,
         e.COIN_DISTANCE_INCREASED: -5,
-        e.BOMB_DISTANCE_INCREASED: -5,
+        e.BOMB_DISTANCE_INCREASED: 5,
         e.BOMB_AVOIDED : 5,
         e.BOMB_DROPPED: -50,
         e.KILLED_OPPONENT: 500,

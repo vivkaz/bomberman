@@ -19,7 +19,7 @@ N_STATES = 70*len(GAME_MODE)*len(CURRENT_FIELD) # 4^4*3*4 = 3072 states, reduced
 M_ACTIONS = len(ACTIONS)
 #STEPS = 100
 MAX_DIST_NEIGHBOUR = 3 # max distance from neighbour
-MAX_DIST_FROM_ME = np.sqrt(10) # max distance from agent
+MAX_DIST_FROM_ME = 3 #np.sqrt(10) # max distance from agent
 epsilon = 0.1 # exploration vs exproitation?
 dic = {} # for mapping states to indices
 
@@ -42,7 +42,7 @@ def setup(self):
     self.logger.info("Building dictionary for mapping states to indices.")
 
     build_state_to_index() 
-    print(f"size of dictionary: {len(dic)}") # should be 55, but it is 70 (we exploit rotation but not mirrot invariance)
+    #print(f"size of dictionary: {len(dic)}") # should be 55, but it is 70 (we exploit rotation but not mirrot invariance)
 
     if self.train or not os.path.isfile("my-saved-model.npy"): # how could we train the model again ? 
         self.logger.info("Setting up model from scratch.")
@@ -129,13 +129,13 @@ def act(self, game_state: dict) -> str:
     action = np.argmax(self.model[index]) # Exploit learned values
     
     #print("\nmodel", self.model[index])
-    print("\nstate, i, r, a",state, index, rotation, action)
+    #print("\nstate, i, r, a",state, index, rotation, action)
 
     if action < 4 and rotation != 0: # move and rotated state
         action = (action + (4-rotation)) % 4 # compute rotated move
         #print("new action",action)
 
-    print(ACTIONS[action]) 
+    #print(ACTIONS[action]) 
 
     # log and print actions while playing 
     if not self.train:
@@ -367,7 +367,7 @@ def state_to_features(game_state: dict) -> np.array:
     def direction_to_escape_bomb(my_pos, bombs, neighbours, values, j):
         mask = np.where(np.array(values) == 0)
         temp = np.array(neighbours)[mask]
-        print("mask neighb", mask, temp)
+        #print("mask neighb", mask, temp)
         """distance = 100
         index = 0
         for i, bomb in enumerate(bombs):
@@ -377,12 +377,12 @@ def state_to_features(game_state: dict) -> np.array:
                 #print("d, i",distance, index)"""
         index = np.argmin( [ dist(my_pos, bomb[0]) for bomb in bombs ])
         bomb_area = np.array(get_vh_region(bombs[index][0]))
-        print("bomb_area", bomb_area)
+        #print("bomb_area", bomb_area)
         escape_index = np.where([neighbour not in bomb_area for neighbour in neighbours])[0]
-        print("escape i",escape_index)
-        if len(escape_index) > 0: 
-            return escape_index[0] == j
-        print("max dist from bomb", (temp[np.argmax(dist(bombs[index][0], temp))] == neighbours[j]).all())
+        #print("escape i j",escape_index, j)
+        if len(escape_index) > 0 and  escape_index[0] == j: 
+            return True
+        #print("max dist from bomb", (temp[np.argmax(dist(bombs[index][0], temp))] == neighbours[j]).all())
         return (temp[np.argmax(dist(bombs[index][0], temp))] == neighbours[j]).all()
     
     """
@@ -433,11 +433,11 @@ def state_to_features(game_state: dict) -> np.array:
     def count_crates(pos):
         count = 0
         area = get_vh_region(pos)
-        print("area", area)
+        #print("area", area)
         for a in area:
             if game_state['field'][a[0]][a[1]] == 1: # crate
                 count += 1
-        print("count", count)
+        #print("count", count)
         return count
 
     # count opponents in bomb region
@@ -480,9 +480,9 @@ def state_to_features(game_state: dict) -> np.array:
     neighbours = get_neighbours(my_position)
     neighbours_values = get_neighbours_values(neighbours)
 
-    print("\nmy_pos ", my_position)
-    print("neigh ", neighbours)
-    print("n_values 1 ", neighbours_values)
+    #print("\nmy_pos ", my_position)
+    #print("neigh ", neighbours)
+    #print("n_values 1 ", neighbours_values)
 
     """calculate value of game mode"""
     mode = 0 # destroy crates
@@ -522,6 +522,9 @@ def state_to_features(game_state: dict) -> np.array:
     elif all(True == danger(neighbour, 0) and game_state['field'][neighbour[0]][neighbour[1]] == 0 for neighbour in neighbours): #or game_state['self'][2]==False or count_crates(my_position) == 0: ? 0 or 1 ?
         my_position_value = 3 # wait
 
+    elif all([ neighbours_values[j] != 0 or True == danger(neighbours[j], 1) for j in range(4)]):
+        my_position_value = 3 # wait
+
     # tricky: if in vh_region there are crate and coin in line, drop bomb
     elif True == 1: 
         area = get_vh_region(my_position, 2)
@@ -548,7 +551,7 @@ def state_to_features(game_state: dict) -> np.array:
             channels.append(1) # crate or opponent
 
         elif i == 0:
-            if danger(neighbours[j]):
+            if danger(my_position):
                 if direction_to_escape_bomb(my_position, game_state['bombs'], neighbours, neighbours_values, j):
                     channels.append(1) # direction to escape
                 else:
@@ -566,7 +569,7 @@ def state_to_features(game_state: dict) -> np.array:
     
     assert len(channels) == 6, "Not all features in channels"
 
-    print("features",channels)
+    #print("features",channels)
 
     # concatenate them as a feature tensor (they must have the same shape)
     stacked_channels = np.stack(channels)

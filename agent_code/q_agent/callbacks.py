@@ -12,7 +12,7 @@ from sklearn import neighbors
 
 NEIGHBOURING_FIELDS = [-1,0,1,2] # the possible values for neighbouring fields
 GAME_MODE = [0,1,2,3] # the possible values for game mode
-CURRENT_FIELD = [0,1,2,3,4] # the possible values for current filed
+CURRENT_FIELD = [0,1,2,3] # the possible values for current filed
 
 ACTIONS = ['UP', 'RIGHT', 'DOWN', 'LEFT', 'WAIT', 'BOMB']
 N_STATES = 70*len(GAME_MODE)*len(CURRENT_FIELD) # 4^4*3*4 = 3072 states, reduced to 1120 by exploiting rotation
@@ -102,11 +102,8 @@ def get_state_index(state):
         if tuple(a) in dic.keys():
             return dic[tuple(a)][value_index], j
         else:
+            assert True == 0, a
             continue
-        assert True == 0, a
-    """i = len(dic)
-    dic.update({tuple(arrangements[0]) : i})
-    return i, 0"""
 
 
 def act(self, game_state: dict) -> str:
@@ -119,8 +116,8 @@ def act(self, game_state: dict) -> str:
     :return: The action to take as a string.
     """
     # todo Exploration vs exploitation
-    #epsilon = np.random.choice( [max(1 - game_state["round"] / 400, 0.01), 0.05], p=[.7, .3]) 
-    epsilon = max(1 - game_state["round"] / 400, 0.01)
+    #epsilon = np.random.choice( [max(1 - game_state["round"] / 500, 0.05), 0.05], p=[.7, .3]) 
+    epsilon = max(1 - game_state["round"] / 500, 0.05)
 
     if (self.train and random.random() < epsilon): # random.uniform() or random.rand() ?
         self.logger.debug("Choosing action purely at random.")
@@ -173,20 +170,22 @@ def state_to_features(game_state: dict) -> np.array:
         neighbours = []
         for i in sub:
             neighbour = np.subtract(pos, i)
-            if (0 <= neighbour[0] < 17) and (0 <= neighbour[1] < 17): # check if in game borders
+            if (0 <= neighbour[0] < 17) and (0 <= neighbour[1] < 17): # game borders
                 neighbours.append(neighbour)
         return neighbours
 
     def get_neighbours_values(neighbours):
-        neighbours_values = [ game_state['field'][neighbour[0]][neighbour[1]] for neighbour in neighbours ] # 1=crates, −1=walls,  0=free tiles
+        neighbours_values = [ game_state['field'][neighbour[0]][neighbour[1]] for neighbour in neighbours ] # −1=walls,  0=free tiles, 1=crates
         for j, value in enumerate(neighbours_values):
             if value == 0 and len(game_state['bombs']) > 0: 
-                if (neighbours[j] == game_state['bombs'][0]).all():
-                    neighbours_values[j] = -1 # bomb ?
+                if any([ (neighbours[j] == np.array(bomb[0])).all() for bomb in game_state['bombs']]):
+                    neighbours_values[j] = 2 # bomb
             elif value == 0 and len(game_state['others']) > 0 :
-                if (neighbours[j] == [other[3] and other[3] != game_state['self'][3] for other in game_state['others']]).all():
-                    neighbours_values[j] = -1 # opponent ?
-
+                if any([(neighbours[j] == np.array(other[3])).all() and (other[3] != game_state['self'][3]) for other in game_state['others'] ]):
+                    #print("neigh value opponent", neighbours[j], game_state['self'][3])
+                    neighbours_values[j] = 1 # opponent
+            elif value == 0 and game_state['explosion_map'][neighbours[j][0]][neighbours[j][1]] == 1:
+                neighbours_values[j] = 2  # explosion
         return neighbours_values
 
     # distance from position to objects
@@ -195,17 +194,16 @@ def state_to_features(game_state: dict) -> np.array:
     
     def check_for_wall(y, x, field=game_state['field']):
         if (0 <= x < 17) and (0 <= y < 17):
-            #print(y,x, field[y][x])
+            #print("check wall",y,x, field[y][x])
             return field[y][x] == -1 # wall
         return False
 
     def get_left(pos, n=3):
         left = []
-        for y in range(pos[0]-n, pos[0]):
+        for y in range(pos[0]-1, pos[0]-(n+1), -1):
             if (0 <= y < 17):
                 if check_for_wall(y, pos[1]):
-                    left = []
-                    continue
+                    break
                 else:
                     left.append([y, pos[1]])
         return left
@@ -222,7 +220,7 @@ def state_to_features(game_state: dict) -> np.array:
 
     def get_up(pos, n=3):
         up = []
-        for x in range(pos[1]-n, pos[1]):
+        for x in range(pos[1]-1, pos[1]-(n+1), -1):
             if (0 <= x < 17):
                 if check_for_wall(pos[0], x):
                     break
@@ -235,15 +233,13 @@ def state_to_features(game_state: dict) -> np.array:
         for x in range(pos[1]+1, pos[1]+(n+1)):
             if (0 <= x < 17):
                 if check_for_wall(pos[0], x):
-                    down = []
-                    continue
+                    break
                 else:
                     down.append([pos[0], x])
         return down
 
     # get vertical and horizontal region from the position, consider walls
     def get_vh_region(pos, n=3):
-        #print(pos)
         left = get_left(pos, n)
         right = get_right(pos, n)
         up = get_up(pos, n)
@@ -284,28 +280,36 @@ def state_to_features(game_state: dict) -> np.array:
             r12 = np.concatenate((r1, r2), axis = 0)
             return np.append(r12,r3).reshape(-1,2)
 
+    """def get_square(pos):
+        r1 = np.array([ [x, pos[1]-2] for x in range(pos[0]-1, pos[0]+1) ])
+        r2 = np.array([ [x, pos[1]-1] for x in range(pos[0]-2, pos[0]+2) ])
+        r3 = np.array([ [x, pos[1]] for x in range(pos[0]-2, pos[0]+2) ])
+        r23 = np.concatenate((r2, r3), axis = 0)
+        r4 = np.array([ [x, pos[1]+1] for x in range(pos[0]-2, pos[0]+2) ])
+        r5 = np.array([ [x, pos[1]+2] for x in range(pos[0]-1, pos[0]+1) ])
+        r15 = np.concatenate((r1, r5), axis = 0)
+        r234 = np.append(r23,r4).reshape(-1,2)
+        return np.append(r234,r15).reshape(-1,2)"""
 
     # check if there are collectable coins near position
     def collectable_coin(pos, neighbours=[], my_pos=(0,0), me=True):
         if len(game_state['coins']) > 0:
-            
-            if me == True: # check if coin in radius
-                my_pos = pos
-                return np.min(dist(my_pos, game_state['coins'])) <= MAX_DIST_FROM_ME
-            
             coins = game_state['coins']
+            if me == True: # check if coin in agent's radius
+                return np.min(dist(pos, coins)) <= MAX_DIST_FROM_ME, -1
+        
             neighbours_values = get_neighbours_values(neighbours)
             n_coins = 0  # number coins in region
             j = -1 # neighbour with most coins in region
-            k = -1
-            distance = 100
+            k = -1 # neighbour with min distance to a coin
+            distance = np.sqrt(5) # ?
             for i, neighbour in enumerate(neighbours):
-                if neighbours_values[i] == 0:
-                    d = np.min(dist(neighbour, game_state['coins']))
-                    if d <= np.sqrt(5) and d < distance:
+                if neighbours_values[i] == 0: # free tile
+                    d = np.min(dist(neighbour, coins))
+                    if d < distance:
                         distance, k = d, i
                     #print("dist, k", distance, k)
-                    region = get_region(my_pos, neighbour)
+                    region = get_region(my_pos, neighbour,3)
                     temp = 0
                     for coin in coins:
                         temp += len(list(filter (lambda x : (x == np.array(coin)).all(), region)))
@@ -321,21 +325,20 @@ def state_to_features(game_state: dict) -> np.array:
             #coin = game_state['coins'][np.argmin(dist(pos, game_state['coins']))]
             #region = get_region(my_pos, pos)
             #return (len(list(filter (lambda x : (x == np.array(coin)).all(), region))) > 0) # check if in region
-        return False, 0
+        return False, -1
 
     # check if there are attackable opponents in radius of position
     def attackable_opponent(pos, my_pos=(0,0), me=True):
         if len(game_state['others']) > 0:
-            coord_opponents = [ other[3] for other in game_state['others'] ]
+            opponents = [ other[3] for other in game_state['others'] ]
+            if me == True: # check if opponent in agent's radius
+                return np.min(dist(pos, opponents)) <= MAX_DIST_FROM_ME
             
-            if me == True: # check if in radius
-                my_pos = pos
-                return np.min(dist(my_pos, coord_opponents)) <= MAX_DIST_FROM_ME
-            
-            opponent = game_state['others'][np.argmin(dist(pos, coord_opponents))][3]
-            region = get_region(my_pos, pos, 1)
-            return (len(list(filter (lambda x : (x == np.array(opponent)).all(), region))) > 0) # check if in region
+            opponent = game_state['others'][np.argmin(dist(pos, opponents))][3] # nearest opponent
+            region = get_region(my_pos, pos)
+            return (len(list(filter (lambda x : (x == np.array(opponent)).all(), region))) > 0) # check if in neighbour's region
 
+            # ?
             """opponents = [ other[3] for other in game_state['others'] ]
             neighbours = get_neighbours(my_pos)
             n_oponents = 0  # number oponents in region
@@ -349,37 +352,63 @@ def state_to_features(game_state: dict) -> np.array:
                     n_opponents, j = temp, i"""
         return False
 
-    def dir_to_escape_bomb(my_pos, bombs, neighbours):
-        d = 100
+    # nearest crate
+    def destroyable_crate(neighbours):
+        crate_coord = np.where(game_state["field"] == 1)
+        crates = np.array([crate_coord[0], crate_coord[1]]).transpose()
+        return np.argmin(dist(neighbour, crates) for neighbour in neighbours)
+
+    """def count_free_tiles(my_pos, pos):
+        count = 0
+        area = get_region(my_pos, pos)
+        for a in area:
+            if game_state['field'][a[0]][a[1]] == 0: # free
+                count += 1
+        return count"""
+
+    def direction_to_escape_bomb(my_pos, bombs, neighbours, values, j):
+        mask = np.where(np.array(values) == 0)
+        temp = np.array(neighbours)[mask]
+        #print("my_pos, temp", my_pos, temp)
+        distance = 100
         index = 0
         for i, bomb in enumerate(bombs):
-            temp = np.min(dist(my_pos, bomb[0]))
-            if temp < d:
-                d, index = temp, i
-                #print("d, i",d, index)
-        #print("argmax",np.argmax(dist(bombs[index][0], neighbours)))
-        return np.argmax(dist(bombs[index][0], neighbours))
-
+            d = np.min(dist(my_pos, bomb[0]))
+            if d < distance:
+                distance, index = d, i # nearest bomb
+                #print("d, i",distance, index)
+        bomb_area = np.array(get_vh_region(bombs[index][0]))
+        escape_index = np.where([neighbour not in bomb_area for neighbour in neighbours])[0]
+        if len(escape_index) == 1: 
+            return escape_index == j
+        #print(np.argmax(dist(bombs[index][0], temp)))
+        #print("argmax dist bombs neigh",(temp[np.argmax(dist(bombs[index][0], temp))] == neighbours[j]).all())
+        return (temp[np.argmax(dist(bombs[index][0], temp))] == neighbours[j]).all()
+    
+    """
+    def direction_to_escape_bomb(neighbours):
+        n_free = 0
+        j = -1
+        neighbours_values = get_neighbours_values(neighbours)
+        for i, neighbour in enumerate(neighbours):
+            if neighbours_values[i] == 0: # free tile
+                temp = count_free_tiles(neighbour) 
+                if temp > n_free:
+                    n_free, j = temp, i
+        return j """
 
     # check if dangerous position
-    def danger(pos, safe_danger_in = 3, n=3): # timer = 3 means, bomb was dropped in previous step
-        #print("check danger", pos)
+    def danger(pos, safe_danger_in=3, n=3): # timer = 3 means that bomb was dropped in previous step
         area = get_vh_region(pos, n)
         area.append([pos[0], pos[1]])
         #print("area",area)
-        #print("bombs", len(game_state['bombs']))
-        #print("field pos", game_state['field'][pos[0]][pos[1]])
-        if len(game_state['bombs']) > 0 and game_state['field'][pos[0]][pos[1]] != -1:
+        if len(game_state['bombs']) > 0 and game_state['field'][pos[0]][pos[1]] != -1: # (for neighbours check if not a wall)
             bombs = game_state['bombs']
             #print("bombs", bombs)
-            for bomb in bombs:
-                for a in area:
-                    if (np.array(bomb[0]) == a).all() and bomb[1] <= safe_danger_in:
-                        #print("bomb true", bomb)
-                        return True
-        for a in area:
-            if game_state['explosion_map'][a[0]][a[1]] != 0:
-                return True
+            for a in area:
+                if any([(np.array(bomb[0]) == a).all() and bomb[1] <= safe_danger_in for bomb in bombs]):
+                    #print("bomb true")
+                    return True
         return False
 
     def safe_death(pos):
@@ -396,10 +425,11 @@ def state_to_features(game_state: dict) -> np.array:
         return False
 
     def blocked_opponent(opponent_pos, my_neighbours):
-        if any([(opponent_pos[0] == neighbour[0] and opponent_pos[1] == neighbour[1]) for neighbour in my_neighbours]): # opponent is neighbour of agent
+        if any([ (np.array(opponent_pos) == neighbour).all() for neighbour in my_neighbours ]): # opponent is neighbour of agent
             return safe_death(opponent_pos)
         return False
 
+    # count crates in bomb region
     def count_crates(pos):
         count = 0
         area = get_vh_region(pos)
@@ -408,25 +438,15 @@ def state_to_features(game_state: dict) -> np.array:
                 count += 1
         return count
 
+    # count opponents in bomb region
     def count_opponents(pos):
         count = 0
         area = get_vh_region(pos)
         if len(game_state['others']) > 0:
             others = game_state['others'][0][3]
             for opponent in others:
-                for a in area:
-                    if (a == opponent).all():
-                        count += 1
+                count += (len(list(filter (lambda x : (x == np.array(opponent)).all(), area)))) 
         return count
-
-    def count_free_tiles(pos):
-        count = 0
-        area = get_region(pos)
-        for a in area:
-            if game_state['field'][a[0]][a[1]] == 0: # free
-                count += 1
-        return count
-
 
     def coin_behind_crate(my_pos, crate_pos):
         if len(game_state['coins']) > 0:
@@ -462,18 +482,19 @@ def state_to_features(game_state: dict) -> np.array:
     #print("neigh ", neighbours)
     #print("n_values 1 ", neighbours_values)
 
-    # calculate value of game mode
+    """calculate value of game mode"""
     mode = 0 # destroy crates
     if danger(my_position):
-        mode = 1 # escape, especially when droped bomb
+        mode = 2 # escape, especially when droped bomb
     elif attackable_opponent(my_position): # opponent near the agent
-        mode = 2 # kill opponents
-    elif collectable_coin(my_position): # collectable coin near the agent
+        mode = 1 # kill opponents
+    elif collectable_coin(my_position)[0] == True: # collectable coin near the agent
         mode = 3 # collect coins
 
     channels.append(mode)
     #print("mode ", channels[-1] )
 
+    """calculate value of current position"""
     my_position_value = 0 # move
 
     # wait or bomb would lead to safe death
@@ -482,21 +503,10 @@ def state_to_features(game_state: dict) -> np.array:
             my_position_value = 1 # bomb
         else: # safe death
             my_position_value = 0 # move
-        
-    # if there are many crates/opponents in agent's region, drop bomb
-    elif (count_crates(my_position) + count_opponents(my_position)) > 4 and game_state['self'][2]==True and mode != 2: # ?
-        my_position_value = 2 # drop bomb, destroy crates/ kill opponents
-
-    elif (count_crates(my_position) + count_opponents(my_position)) > 2 and game_state['self'][2]==True and mode != 2: # ?
-        my_position_value = 1 # drop bomb, destroy crates/ kill opponents
-
-    # should wait
-    elif all(True == danger(neighbour, 1) and game_state['field'][neighbour[0]][neighbour[1]] != -1 for neighbour in neighbours): #or game_state['self'][2]==False or count_crates(my_position) == 0: ? 0 or 1 ?
-        my_position_value = 3 # wait
-
-    # tricky: if neighbour is blocked opponent in danger, wait until agent is not in safe death       
-    elif any(True == blocked_opponent(opponent, neighbours) for opponent in game_state['others']):
-        my_position_value = 4 # kill blocked opponent
+     
+    # tricky: if neighbour is blocked opponent in danger, wait until agent is not in safe death  
+    elif any(True == blocked_opponent(opponent[3], neighbours) for opponent in game_state['others']):
+        my_position_value = 3 # kill blocked opponent
 
     # tricky: if in vh_region there are crate and coin in line, drop bomb
     elif True == 1: 
@@ -504,7 +514,18 @@ def state_to_features(game_state: dict) -> np.array:
         for a in area:
             if game_state['field'][a[0]][a[1]] == 1:
                 if coin_behind_crate(my_position, a):
-                    my_position_value = 4 # set a trap
+                    my_position_value = 2 # set a trap
+        
+    # if there are many crates/opponents in agent's region, drop bomb
+    elif (count_crates(my_position) + count_opponents(my_position)) >= 4 and game_state['self'][2]==True and mode != 3: # ?
+        my_position_value = 2 # drop bomb, destroy crates/ kill opponents
+
+    elif (count_crates(my_position) + count_opponents(my_position)) >= 1 and game_state['self'][2]==True and mode != 3: # ?
+        my_position_value = 1 # drop bomb, destroy crates/ kill opponents
+
+    # should wait
+    elif all(True == danger(neighbour, 0) and game_state['field'][neighbour[0]][neighbour[1]] == 0 for neighbour in neighbours): #or game_state['self'][2]==False or count_crates(my_position) == 0: ? 0 or 1 ?
+        my_position_value = 3 # wait
 
     #elif ...:
     #    my_position_value = ...
@@ -512,36 +533,33 @@ def state_to_features(game_state: dict) -> np.array:
     channels.append(my_position_value)
     #print("my_pos value", channels[-1] )
 
-    # calculate values for neighbours
+    """calculate values of neighbours"""
+
+    #print("neighbours_values",neighbours_values)
+    
     for j, i in enumerate(neighbours_values):
-        if  i != -1 and danger(neighbours[j]): # 2 ?
-            if len(game_state['bombs']) > 0:
-                if i == 0 and dir_to_escape_bomb(my_position, game_state['bombs'], neighbours) == j:
-                    channels.append(2) # direction to escape
-                    #print("n ",j, channels[-1] )
-                else:
-                    channels.append(1) # danger
-                    #print("n ",j, channels[-1] )
-            else:
-                channels.append(1) # danger
-                #print("n ",j, channels[-1] )
+        if i == 2:
+            channels.append(2) # bomb or explosion
+            
+        elif i == 1:
+            channels.append(1) # crate or opponent
+
         elif i == 0:
-            flag, index = collectable_coin(neighbours[j], neighbours, my_position, False)
-            #print(j, i, flag, index)
-            if (flag == True and index == j) or attackable_opponent(neighbours[j], my_position, False): # coin or opponent in region
-                channels.append(2) # depending on game mode go in this direction or drop bomb
-                #print("n ",j, channels[-1] )
-            else: 
-                channels.append(0) # free tile
-                #print("n ",j, channels[-1] )
+            if danger(neighbours[j]):
+                if direction_to_escape_bomb(my_position, game_state['bombs'], neighbours, neighbours_values, j):
+                    channels.append(1) # direction to escape
+                else:
+                    channels.append(2) # danger
+            
+            elif collectable_coin(neighbours[j], neighbours, my_position, False) == j or attackable_opponent(neighbours[j], my_position, False): # coin or opponent in region
+                channels.append(1) # depending on game mode go in this direction or drop bomb
+            elif destroyable_crate(neighbours) == j:
+                channels.append(1) 
 
-        elif i == 1: # crate
-            channels.append(2) # depending on game mode drop bomb
-            #print("n ",j, channels[-1] )
-
+            else:
+                channels.append(0) # free
         else:
             channels.append(-1) # wall
-            #print("n ",j, channels[-1] )
     
     assert len(channels) == 6, "Not all features in channels"
 

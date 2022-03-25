@@ -9,6 +9,8 @@ import numpy as np
 import pickle
 from typing import List
 
+from pyrsistent import b
+
 import events as e
 from .callbacks import get_state_index, state_to_features, get_arrangements, ACTIONS, dic, epsilon, GAME_MODE, CURRENT_FIELD
 
@@ -50,6 +52,8 @@ def setup_training(self):
     # buffer with last 6 bombs
     self.bomb_buffer = deque(maxlen=BUFFER_HISTORY_SIZE)
 
+    self.visited_crates = []
+
 
 def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_state: dict, events: List[str]):
     """
@@ -69,95 +73,95 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     :param events: The events that occurred when going from  `old_game_state` to `new_game_state`
     """
 
-    print(new_game_state['explosion_map'])
+    #print(new_game_state['explosion_map'])
 
     def update_states_buffer():
         if new_game_state is not None:
             self.states_buffer.append(new_game_state['self'][3]) # agents coordinates on field
 
     def update_bomb_buffer():
-        if new_game_state is not None:
-            self.bomb_buffer.append(new_game_state['self'][3]) # agents coordinates on field
+        if new_game_state is not None and new_game_state['bombs'] > 0:
+            for bomb in new_game_state['bombs'][0]:
+                self.bomb_buffer.append([ bomb[0], bomb[1]+2 ])
 
     def in_danger(area, bombs):
-        for bomb in bombs:
-            for a in area:
-                #if (bomb == a).all():
-                if (np.array(bomb[0]) == a).all():
-                    return True
-        return False
+        for a in area:
+            return any([(np.array(bomb[0]) == a).all() for bomb in bombs])
 
     #def bomb_dropped(): # covered in environment.py
     #    return old_game_state['self'][2] == True and new_game_state['self'][2] == False
+    
+    
+    def check_for_wall(y, x, new):
+        if new:
+            field = new_game_state['field']
+        else:
+            field = old_game_state['field']
+        if (0 <= x < 17) and (0 <= y < 17):
+            #print("check wall",y,x, field[y][x])
+            return field[y][x] == -1 # wall
+        return False
+
+    def get_left(pos, n=3):
+        left = []
+        for y in range(pos[0]-1, pos[0]-(n+1), -1):
+            if (0 <= y < 17):
+                if check_for_wall(y, pos[1]):
+                    break
+                else:
+                    left.append([y, pos[1]])
+        return left
+
+    def get_right(pos, n=3):
+        right = []
+        for y in range(pos[0]+1, pos[0]+(n+1)):
+            if (0 <= y < 17):
+                if check_for_wall(y, pos[1]):
+                    break
+                else:
+                    right.append([y, pos[1]])
+        return right
+
+    def get_up(pos, n=3):
+        up = []
+        for x in range(pos[1]-1, pos[1]-(n+1), -1):
+            if (0 <= x < 17):
+                if check_for_wall(pos[0], x):
+                    break
+                else:
+                    up.append([pos[0], x])
+        return up
+
+    def get_down(pos, n=3):
+        down = []
+        for x in range(pos[1]+1, pos[1]+(n+1)):
+            if (0 <= x < 17):
+                if check_for_wall(pos[0], x):
+                    break
+                else:
+                    down.append([pos[0], x])
+        return down
+
+    # get vertical and horizontal region from the position, consider walls
+    def get_vh_region(pos, new=False, n=3):
+        left = get_left(pos, new, n)
+        right = get_right(pos, new, n)
+        up = get_up(pos, new, n)
+        down = get_down(pos, new, n)
+        
+        for r in right:
+            left.append(r)
+        for u in up:
+            left.append(u)
+        for d in down:
+            left.append(d)
+        return left
 
     def bomb_avoided():
-        def check_for_wall(y, x, field=old_game_state['field']):
-            if (0 <= x < 17) and (0 <= y < 17):
-                return field[y][x] == -1 # wall
-            return False
-
-        def get_left(pos, n=3):
-            left = []
-            for y in range(pos[0]-n, pos[0]):
-                if (0 <= y < 17):
-                    if check_for_wall(y, pos[1]):
-                        left = []
-                        continue
-                    else:
-                        left.append([y, pos[1]])
-            return left
-
-        def get_right(pos, n=3):
-            right = []
-            for y in range(pos[0]+1, pos[0]+(n+1)):
-                if (0 <= y < 17):
-                    if check_for_wall(y, pos[1]):
-                        break
-                    else:
-                        right.append([y, pos[1]])
-            return right
-
-        def get_up(pos, n=3):
-            up = []
-            for x in range(pos[1]-n, pos[1]):
-                if (0 <= x < 17):
-                    if check_for_wall(pos[0], x):
-                        break
-                    else:
-                        up.append([pos[0], x])
-            return up
-
-        def get_down(pos, n=3):
-            down = []
-            for x in range(pos[1]+1, pos[1]+(n+1)):
-                if (0 <= x < 17):
-                    if check_for_wall(pos[0], x):
-                        down = []
-                        continue
-                    else:
-                        down.append([pos[0], x])
-            return down
-
-        # get vertical and horizontal region from the position, consider walls
-        def get_vh_region(pos, n=3):
-            left = get_left(pos, n)
-            right = get_right(pos, n)
-            up = get_up(pos, n)
-            down = get_down(pos, n)
-            
-            for r in right:
-                left.append(r)
-            for u in up:
-                down.append(u)
-            for d in down:
-                left.append(d)
-            return left
-
-
         if len(old_game_state['bombs']) > 0:
             bombs = old_game_state['bombs']
             old_risky_area = get_vh_region(old_game_state['self'][3])
-            new_risky_area = get_vh_region(new_game_state['self'][3])
+            new_risky_area = get_vh_region(new_game_state['self'][3], True)
 
             old_danger = in_danger(old_risky_area, bombs)
             new_danger = in_danger(new_risky_area, bombs)
@@ -207,50 +211,73 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         else:
             return False
 
-    def risky_area(pos):
-        #vertical = np.array([[x, pos[1]] for x in range(pos[0] - 3, pos[0] + 4)])
-        #horizontal = np.array([[pos[0], y] for y in range(pos[1] - 3, pos[1] + 4)])
+    """def risky_area(pos):
         buffer = [pos]
-        pos = np.array([pos[0],pos[1]])
-        for direction in [np.array([0,1]),np.array([0,-1]),np.array([1,0]),np.array([-1,0])]:
+        pos = np.array(pos)
+        for direction in [ np.array([0,1]), np.array([0,-1]), np.array([1,0]), np.array([-1,0]) ]:
             current_position = np.copy(pos)
             for i in range(3):
                 current_position += direction
-
                 if old_game_state["field"][current_position[0],current_position[1]] == -1:
                     break
                 else:
                     buffer.append(np.copy(current_position))
         buffer = np.array(buffer)
-        return buffer
+        return buffer"""
 
     def bomb_distance_increased():
-        def distance(point_1,point_2):
-            return np.sqrt(np.power(point_1[0]-point_2[1],2)+np.power(point_1[1]-point_2[1],2))
-        position_old = np.array(old_game_state["self"][3])
-        position_new = np.array(new_game_state["self"][3])
+        def distance(point_1, point_2):
+            return np.sqrt(np.power(point_1[0] - point_2[0], 2) + np.power(point_1[1] - point_2[1], 2))
+
         bombs = np.empty((2, len(old_game_state["bombs"])))
         d_old = []
         d_new = []
         if bombs.size != 0:
+            position_old = np.array(old_game_state["self"][3])
+            position_new = np.array(new_game_state["self"][3])
             for count, bomb in enumerate(old_game_state["bombs"]):
                 bombs[0, count] = bomb[0][0]
                 bombs[1, count] = bomb[0][1]
 
-                d_old.append(distance(position_old,np.array([bomb[0][0],bomb[0][1]])))
-                d_new.append(distance(position_new,np.array([bomb[0][0],bomb[0][1]])))
+                d_old.append(distance(position_old, np.array([bomb[0][0],bomb[0][1]])))
+                d_new.append(distance(position_new, np.array([bomb[0][0],bomb[0][1]])))
             bombs = bombs.transpose()
         bomb_sort = np.argsort(np.array(d_old))
-        area = risky_area(position_old)
+        area = get_vh_region(position_old)
+        flag = False
         for n,i in enumerate(bomb_sort):
-            bomb_position = bombs[i]
             for j in area:
-                if (j == bombs[i]).all:
+                if (j == bombs[i]).all():
                     flag = True
                     break
             if d_old[n] < d_new[n] and flag:
-                events.append(e.BOMB_DISTANCE_INCREASED)
-                break
+                return True
+
+
+    def reach_crate():
+        #if old_game_state["step"] == 1:#no reward for second visit, prevent infinity loops or stand still at crate
+        crate_coord = np.where(old_game_state["field"] == 1)
+        visitable_crates = np.array([crate_coord[0],crate_coord[1]]).transpose()
+
+        agents_neigh = np.array([np.array(new_game_state["self"][3]) - a for a in [np.array([1,0]),np.array([0,-1]),np.array([-1,0]),np.array([0,1])]])
+        #print("agents_neigh", agents_neigh)
+        #print("visitable_crates", visitable_crates)
+        #print("reached crate", [j in visitable_crates for j in agents_neigh])
+
+        index = list(range(0, len(visitable_crates), 1))
+        for j in agents_neigh:
+            for n, i in enumerate(visitable_crates):
+                if (i == j).all():
+                    if len(self.visited_crates) != 0:
+                        if np.sum(np.sum(i == np.array(self.visited_crates),axis = 1) == 2) == 0:
+                            self.visited_crates.append(i)
+                            return True
+                        else:
+                            break
+                    else:
+                        self.visited_crates.append(i)
+                        return True
+        return False
 
 
     """Add your own events to hand out rewards"""
@@ -271,9 +298,13 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     if run_in_loop():
         events.append(e.RUN_IN_LOOP)
 
-    bomb_distance_increased()
+    if bomb_distance_increased():
+        events.append(e.BOMB_DISTANCE_INCREASED)
 
-    print("events", events)
+    if reach_crate():
+        events.append(e.CRATE_REACHED)
+
+    #print("events", events)
      
     
     self.logger.debug(f'Encountered game event(s) {", ".join(map(repr, events))} in step {new_game_state["step"]}')
@@ -346,6 +377,16 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
     #print(f"End : {events}")
     self.transitions.append(Transition(state_to_features(last_game_state), last_action, None, reward_from_events(self, events)))
 
+    # Q-values of terminal state is 0
+    state, action, _, _ = self.transitions[-1]
+    index, rotation = get_state_index(state)
+    action = ACTIONS.index(action)
+
+    if action < 4 and rotation != 0:
+        action = (action + rotation) % 4
+    
+    self.model[index, action] = 0
+
     # Store the model
     np.save("my-saved-model", self.model)
     
@@ -354,6 +395,7 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
     #    pickle.dump(self.model, file)
 
     self.logger.info(f'End of round {last_game_state["round"]} with total reward : {self.rewards[-1]}')
+    
     #print(f"Round {last_game_state['round']} : {self.rewards[-1]}")
 
     # Store training report
@@ -392,7 +434,8 @@ def reward_from_events(self, events: List[str]) -> int:
         e.KILLED_SELF: -150,
         e.SURVIVED_ROUND: 2,
         e.CRATE_DESTROYED: 20,
-        e.COIN_FOUND: 15
+        e.COIN_FOUND: 15, 
+        e.CRATE_REACHED: 2
         #e.BOMB_EXPLODED: ?
     }
 

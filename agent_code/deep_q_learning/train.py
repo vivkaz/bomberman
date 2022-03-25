@@ -369,29 +369,52 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
 
 
+
     def certain_death():
         aef_old = self.advanced_explosion_field_old
         aef_next = self.advanced_explosion_field_next
+        field_size = self.Hyperparameter["field_size"]
+
+        def get_1d(array):
+            x = array.transpose()[0]
+            y = array.transpose()[1]
+            return x * field_size + y
+
+        def get_2d(array):
+            x = np.trunc(array/field_size)
+            y = array-x*field_size
+            return np.stack((x,y)).transpose()
+        def in_field(array):
+            lower_border = 0
+            upper_border = field_size-1
+            x = array.transpose()[0]
+            y = array.transpose()[1]
+            index = (x >= lower_border) & (y >= lower_border) & (x <= upper_border) & (y <= upper_border)
+            return array[index]
+
         def get_explosion_neighbors(explosion_field,position):
+
             (coord_x, coord_y) = np.where((explosion_field) >=0 & (explosion_field <=4))[0]
             coord = np.array([coord_x,coord_y]).transpose()#all coordniates where a bomb is ticking
             #discard all coordinates, which are not relevant for angents position
             d = np.sqrt(np.sum(np.power(coord - position,2),axis = 1))
-            relevant_coord = coord[d < 5]#thresold of relevant coordinates is set to 6 fields distance to our agent, reduce computational time
+            relevant_bombs = coord[d < 5]#thresold of relevant coordinates is set to 6 fields distance to our agent, reduce computational time
             L = len(relevant_coord)
             a1 = np.array([1,0])
             a2 = np.array([0,1])
             A1 = np.broadcast_to(a1, (1,L , 2))
             A2 = np.broadcast_to(a2, (1, L, 2))
             F = np.concatenate((A1, A2, -A1, -A2),axis = 0)
-            coord_n = np.broadcast_to(relevant_coord,(4,L,2))-F
-            coord_n = np.reshape(coord_n,(coord_n.shape[0]*coord_n.shape[1],coord_n.shape))
-            coord_n = np.unique(coord_n,axis = 0)
-            l_ar = len(coord_n)*len(relevant_coord)
-            coord_n_re = np.reshape(np.broadcast_to(coord_n,(len(relevant_coord),len(coord_n),2)),(len(relevant_coord)*len(coord_n),2))
-            explosion_tiles = np.repeat(relevant_coord,len(coord_n),axis = 0)
-            duplicates = coord_n_re[np.sum(coord_n_re == explosion_tiles,axis = 1) == 2]
-            real_neigbors = coord_n[np.where()]
+            coord_neigh = np.broadcast_to(relevant_bombs,(4,L,2))-F
+            coord_neigh = np.reshape(coord_n,(coord_n.shape[0]*coord_n.shape[1],coord_n.shape))
+            coord_neigh = in_field(np.unique(coord_n,axis = 0))
+            coord_neigh_1d = get_1d(coord_neigh)
+            relevant_bombs_1d = get_1d(relevant_bombs)
+            coord_real_neigh = get_2d(np.setdiff1d(coord_neigh_1d, relevant_bombs_1d))
+            return coord_real_neigh
+
+
+
 
 
 

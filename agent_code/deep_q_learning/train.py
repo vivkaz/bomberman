@@ -57,6 +57,7 @@ def setup_training(self):
         self.target = tf.keras.models.clone_model(self.model)
         self.target.set_weights(self.model.get_weights())
 
+    self.visited_crates = []
 
 
 def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_state: dict, events: List[str]):
@@ -148,8 +149,13 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     field_old = old_game_state["field"]
     field_new = new_game_state["field"]
 
+
     feature_old = state_to_features(self, old_game_state, mode="normal")
+    #print(feature_old)
+
+
     feature_new = state_to_features(self, new_game_state, mode="next_state")
+    #print(feature_new)
 
     def get_in_Danger():
         #print(position_new)
@@ -261,36 +267,44 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
     #print(events)
 
-    def reach_create():
-        if old_game_state["step"] == 1:
-            crate_coord = np.where(old_game_state["field"] == 1)
-            self.visitable_crates = np.array([crate_coord[0],crate_coord[1]]).transpose()
+    def reach_crate():#checked and corrected
+        #if old_game_state["step"] == 1:#no reward for second visit, prevent infinity loops or stand still at crate
+        crate_coord = np.where(old_game_state["field"] == 1)
+        visitable_crates = np.array([crate_coord[0],crate_coord[1]]).transpose()
+
         agents_neigh = np.array([np.array(new_game_state["self"][3]) + a for a in [np.array([0,1]),np.array([1,0]),np.array([0,-1]),np.array([-1,0])]])
+        #print(agents_neigh)
+        index = list(range(0,len(visitable_crates),1))
         for j in agents_neigh:
-            for i in self.visitable_crates:
+            for n,i in enumerate(visitable_crates):
                 if (i == j).all():
-
+                    if len(self.visited_crates) != 0:
+                        if np.sum(np.sum(i == np.array(self.visited_crates),axis = 1) == 2) == 0:
                     #print(i,j)
-                    events.append(e.CRATE_REACHED)
-                    index = list(range(0,len(self.visitable_crates),1))
+                            events.append(e.CRATE_REACHED)#event occured
+                            self.visited_crates.append(i)
+                        else:
+                            break
+                    else:
+                        events.append(e.CRATE_REACHED)  # event occured
+                        self.visited_crates.append(i)
 
-                    for n,crates in enumerate(self.visitable_crates):
-                        if (crates == i).all():
-                            #print(i,crates)
-                            n_index = n
-                    #print(n_index)
-                    #print(self.visitable_crates[n_index])
-                    #print(len(self.visitable_crates))
-                    index.remove(n_index)
-                    self.visitable_crates = self.visitable_crates[index]
-                    #print(len(self.visitable_crates))
-                    break
+                    #index.remove(n)
 
-    reach_create()
+        #self.visitable_crates = self.visitable_crates[index]
+        #print(self.visitable_crates)
 
-    def bomb_distance_increased():
-        def distance(point_1,point_2):
-            return np.sqrt(np.power(point_1[0]-point_2[0],2)+np.power(point_1[1]-point_2[1],2))
+
+
+
+    reach_crate()
+
+
+
+    def bomb_distance_increased():#checked and corrected
+        def distance(point_1, point_2):
+            return np.sqrt(np.power(point_1[0] - point_2[0], 2) + np.power(point_1[1] - point_2[1], 2))
+
         bombs = np.empty((2, len(old_game_state["bombs"])))
         d_old = []
         d_new = []
@@ -311,7 +325,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
                     flag = True
                     break
 
-            print("d_old[n] : ",d_old[n], "d_new[n] : ",d_new[n], "flag : ", flag)
+            #print("d_old[n] : ",d_old[n], "d_new[n] : ",d_new[n], "flag : ", flag)
             if d_old[n] < d_new[n] and flag:
                 events.append(e.BOMB_DISTANCE_INCREASED)
                 break
@@ -319,29 +333,34 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     bomb_distance_increased()
 
     def get_trapped():
-        view_range = self.Hyperparameter["feature_setup"]["INPTUS"][0]
+        view_range = self.Hyperparameter["feature_setup"]["INPUTS"][0]
 
         def neighbors(feature):
-            position = np.array([view_range + 1, view_range + 1])
-            field = feature[:, :, 0]
+            position = np.array([view_range, view_range])
+            field = feature[:, :, 0]#field with crates, opponents(not implemented), walls and bombs
+            #print(feature[:, :, 2])
+            explosion_field = np.where(feature[:,:,2] >= 5, 2,0)#field with active explosions
+
             A = []
             for i in [np.array([0, 1]), np.array([0, -1]), np.array([1, 0]), np.array([-1, 0])]:
                 A.append(position + i)
             A = np.array(A).transpose()
-            return field[A[0], A[1]]
+            return field[A[0], A[1]]+explosion_field[A[0],A[1]]
 
         neighbors_old = neighbors(feature_old)
         neighbors_new = neighbors(feature_new)
-        block_values = [-1, -2, 1]  # values on field, that can can trap the agent
+        block_values = [-1, -2, 1,2]  # values on field, that can can trap the agent -1 = wall, -2 = bomb, 1 = crate, 2 = active explosion
         block_status_old = 0
         block_status_new = 0
-        for n in range(len(neighbors_old)):
+        for n in range(len(neighbors_new)):
             if (neighbors_old[n] in block_values):
                 block_status_old += 1
             if (neighbors_new[n] in block_values):
                 block_status_new += 1
-        if block_status_new == 4 and block_status_old < 3:
+        print(block_status_old,block_status_new)
+        if block_status_new == 4 and block_status_old <= 3:
             return events.append(e.GET_TRAPPED)
+    get_trapped()
 
 
 
@@ -350,7 +369,42 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
 
 
-    #def certain_death():
+    def certain_death():
+        aef_old = self.advanced_explosion_field_old
+        aef_next = self.advanced_explosion_field_next
+        def get_explosion_neighbors(explosion_field,position):
+            (coord_x, coord_y) = np.where((explosion_field) >=0 & (explosion_field <=4))[0]
+            coord = np.array([coord_x,coord_y]).transpose()#all coordniates where a bomb is ticking
+            #discard all coordinates, which are not relevant for angents position
+            d = np.sqrt(np.sum(np.power(coord - position,2),axis = 1))
+            relevant_coord = coord[d < 5]#thresold of relevant coordinates is set to 6 fields distance to our agent, reduce computational time
+            L = len(relevant_coord)
+            a1 = np.array([1,0])
+            a2 = np.array([0,1])
+            A1 = np.broadcast_to(a1, (1,L , 2))
+            A2 = np.broadcast_to(a2, (1, L, 2))
+            F = np.concatenate((A1, A2, -A1, -A2),axis = 0)
+            coord_n = np.broadcast_to(relevant_coord,(4,L,2))-F
+            coord_n = np.reshape(coord_n,(coord_n.shape[0]*coord_n.shape[1],coord_n.shape))
+            coord_n = np.unique(coord_n,axis = 0)
+            l_ar = len(coord_n)*len(relevant_coord)
+            coord_n_re = np.reshape(np.broadcast_to(coord_n,(len(relevant_coord),len(coord_n),2)),(len(relevant_coord)*len(coord_n),2))
+            explosion_tiles = np.repeat(relevant_coord,len(coord_n),axis = 0)
+            duplicates = coord_n_re[np.sum(coord_n_re == explosion_tiles,axis = 1) == 2]
+            real_neigbors = coord_n[np.where()]
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

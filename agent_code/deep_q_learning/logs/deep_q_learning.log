@@ -1,20 +1,89 @@
-2022-03-24 16:11:01,656 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-24 16:11:01,684 [deep_q_learning_code] DEBUG: Encountered game event(s) 'MOVED_DOWN' in step 1
-2022-03-24 16:11:01,685 [deep_q_learning_code] INFO: Awarded 2 for events MOVED_DOWN
-2022-03-24 16:11:01,685 [deep_q_learning_code] INFO: Awarded 2 for events MOVED_DOWN
-2022-03-24 16:11:02,060 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-24 16:11:02,086 [deep_q_learning_code] DEBUG: Encountered game event(s) 'BOMB_DROPPED' in step 2
-2022-03-24 16:11:02,087 [deep_q_learning_code] INFO: Awarded -2 for events BOMB_DROPPED
-2022-03-24 16:11:02,087 [deep_q_learning_code] INFO: Awarded -2 for events BOMB_DROPPED
-2022-03-24 16:11:03,167 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-24 16:11:03,195 [deep_q_learning_code] DEBUG: Encountered game event(s) 'MOVED_UP' in step 3
-2022-03-24 16:11:03,196 [deep_q_learning_code] INFO: Awarded 22 for events MOVED_UP, BOMB_DISTANCE_INCREASED
-2022-03-24 16:11:03,196 [deep_q_learning_code] INFO: Awarded 22 for events MOVED_UP, BOMB_DISTANCE_INCREASED
-2022-03-24 16:11:06,801 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-24 16:11:06,829 [deep_q_learning_code] DEBUG: Encountered game event(s) 'MOVED_LEFT', 'BOMB_AVOIDED' in step 4
-2022-03-24 16:11:06,831 [deep_q_learning_code] INFO: Awarded 62 for events MOVED_LEFT, BOMB_AVOIDED, BOMB_DISTANCE_INCREASED
-2022-03-24 16:11:06,831 [deep_q_learning_code] INFO: Awarded 62 for events MOVED_LEFT, BOMB_AVOIDED, BOMB_DISTANCE_INCREASED
-2022-03-24 16:11:09,619 [deep_q_learning_code] DEBUG: Querying model for action.
-2022-03-24 16:11:09,646 [deep_q_learning_code] DEBUG: Encountered game event(s) 'MOVED_RIGHT', 'GET_IN_DANGER', 'IN_DANGER' in step 5
-2022-03-24 16:11:09,647 [deep_q_learning_code] INFO: Awarded -23 for events MOVED_RIGHT, GET_IN_DANGER, IN_DANGER
-2022-03-24 16:11:09,647 [deep_q_learning_code] INFO: Awarded -23 for events MOVED_RIGHT, GET_IN_DANGER, IN_DANGER
+2022-03-25 02:27:25,819 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-25 02:27:25,845 [deep_q_learning_code] DEBUG: Encountered game event(s) 'MOVED_RIGHT' in step 1
+2022-03-25 02:27:25,847 [deep_q_learning_code] INFO: Awarded 7 for events MOVED_RIGHT, CRATE_REACHED
+2022-03-25 02:27:25,847 [deep_q_learning_code] INFO: Awarded 7 for events MOVED_RIGHT, CRATE_REACHED
+2022-03-25 02:27:29,374 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-25 02:27:29,400 [deep_q_learning_code] DEBUG: Encountered game event(s) 'BOMB_DROPPED' in step 2
+2022-03-25 02:27:29,402 [deep_q_learning_code] INFO: Awarded -2 for events BOMB_DROPPED
+2022-03-25 02:27:29,402 [deep_q_learning_code] INFO: Awarded -2 for events BOMB_DROPPED
+2022-03-25 02:27:30,788 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-25 02:27:30,816 [deep_q_learning_code] DEBUG: Encountered game event(s) 'MOVED_LEFT' in step 3
+2022-03-25 02:27:30,818 [deep_q_learning_code] INFO: Awarded 22 for events MOVED_LEFT, BOMB_DISTANCE_INCREASED
+2022-03-25 02:27:30,818 [deep_q_learning_code] INFO: Awarded 22 for events MOVED_LEFT, BOMB_DISTANCE_INCREASED
+2022-03-25 02:27:31,198 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-25 02:27:31,234 [deep_q_learning_code] DEBUG: Encountered game event(s) 'MOVED_UP', 'BOMB_AVOIDED' in step 4
+2022-03-25 02:27:31,235 [deep_q_learning_code] INFO: Awarded 62 for events MOVED_UP, BOMB_AVOIDED, BOMB_DISTANCE_INCREASED
+2022-03-25 02:27:31,235 [deep_q_learning_code] INFO: Awarded 62 for events MOVED_UP, BOMB_AVOIDED, BOMB_DISTANCE_INCREASED
+2022-03-25 02:27:33,213 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-25 02:27:33,242 [deep_q_learning_code] DEBUG: Encountered game event(s) 'MOVED_UP' in step 5
+2022-03-25 02:27:33,244 [deep_q_learning_code] INFO: Awarded 7 for events MOVED_UP, CRATE_REACHED
+2022-03-25 02:27:33,244 [deep_q_learning_code] INFO: Awarded 7 for events MOVED_UP, CRATE_REACHED
+2022-03-25 02:27:34,428 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-25 02:27:34,456 [deep_q_learning_code] DEBUG: Encountered game event(s) 'MOVED_RIGHT', 'BOMB_EXPLODED', 'CRATE_DESTROYED', 'CRATE_DESTROYED' in step 6
+2022-03-25 02:27:34,457 [deep_q_learning_code] INFO: Awarded 72 for events MOVED_RIGHT, BOMB_EXPLODED, CRATE_DESTROYED, CRATE_DESTROYED
+2022-03-25 02:27:34,457 [deep_q_learning_code] INFO: Awarded 72 for events MOVED_RIGHT, BOMB_EXPLODED, CRATE_DESTROYED, CRATE_DESTROYED
+2022-03-25 02:27:36,045 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-25 02:27:36,072 [deep_q_learning_code] DEBUG: Encountered game event(s) 'MOVED_RIGHT' in step 7
+2022-03-25 02:27:36,074 [deep_q_learning_code] INFO: Awarded 7 for events MOVED_RIGHT, CRATE_REACHED
+2022-03-25 02:27:36,074 [deep_q_learning_code] INFO: Awarded 7 for events MOVED_RIGHT, CRATE_REACHED
+2022-03-25 02:27:38,067 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-25 02:27:38,097 [deep_q_learning_code] DEBUG: Encountered game event(s) 'MOVED_RIGHT' in step 8
+2022-03-25 02:27:38,099 [deep_q_learning_code] INFO: Awarded 2 for events MOVED_RIGHT
+2022-03-25 02:27:38,099 [deep_q_learning_code] INFO: Awarded 2 for events MOVED_RIGHT
+2022-03-25 02:27:40,103 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-25 02:27:40,131 [deep_q_learning_code] DEBUG: Encountered game event(s) 'MOVED_RIGHT' in step 9
+2022-03-25 02:27:40,133 [deep_q_learning_code] INFO: Awarded 7 for events MOVED_RIGHT, CRATE_REACHED
+2022-03-25 02:27:40,133 [deep_q_learning_code] INFO: Awarded 7 for events MOVED_RIGHT, CRATE_REACHED
+2022-03-25 02:27:42,212 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-25 02:27:42,243 [deep_q_learning_code] DEBUG: Encountered game event(s) 'MOVED_RIGHT' in step 10
+2022-03-25 02:27:42,244 [deep_q_learning_code] INFO: Awarded 7 for events MOVED_RIGHT, CRATE_REACHED
+2022-03-25 02:27:42,244 [deep_q_learning_code] INFO: Awarded 7 for events MOVED_RIGHT, CRATE_REACHED
+2022-03-25 02:27:43,430 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-25 02:27:43,460 [deep_q_learning_code] DEBUG: Encountered game event(s) 'BOMB_DROPPED' in step 11
+2022-03-25 02:27:43,462 [deep_q_learning_code] INFO: Awarded -2 for events BOMB_DROPPED
+2022-03-25 02:27:43,462 [deep_q_learning_code] INFO: Awarded -2 for events BOMB_DROPPED
+2022-03-25 02:27:43,937 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-25 02:27:43,967 [deep_q_learning_code] DEBUG: Encountered game event(s) 'MOVED_LEFT' in step 12
+2022-03-25 02:27:43,968 [deep_q_learning_code] INFO: Awarded 22 for events MOVED_LEFT, BOMB_DISTANCE_INCREASED
+2022-03-25 02:27:43,968 [deep_q_learning_code] INFO: Awarded 22 for events MOVED_LEFT, BOMB_DISTANCE_INCREASED
+2022-03-25 02:27:46,379 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-25 02:27:46,412 [deep_q_learning_code] DEBUG: Encountered game event(s) 'MOVED_LEFT', 'IN_DANGER' in step 13
+2022-03-25 02:27:46,414 [deep_q_learning_code] INFO: Awarded 17 for events MOVED_LEFT, IN_DANGER, BOMB_DISTANCE_INCREASED
+2022-03-25 02:27:46,414 [deep_q_learning_code] INFO: Awarded 17 for events MOVED_LEFT, IN_DANGER, BOMB_DISTANCE_INCREASED
+2022-03-25 02:27:48,294 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-25 02:27:48,324 [deep_q_learning_code] DEBUG: Encountered game event(s) 'MOVED_LEFT', 'IN_DANGER' in step 14
+2022-03-25 02:27:48,325 [deep_q_learning_code] INFO: Awarded 17 for events MOVED_LEFT, IN_DANGER, BOMB_DISTANCE_INCREASED
+2022-03-25 02:27:48,325 [deep_q_learning_code] INFO: Awarded 17 for events MOVED_LEFT, IN_DANGER, BOMB_DISTANCE_INCREASED
+2022-03-25 02:27:50,422 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-25 02:27:50,450 [deep_q_learning_code] DEBUG: Encountered game event(s) 'MOVED_LEFT', 'BOMB_EXPLODED', 'CRATE_DESTROYED', 'BOMB_AVOIDED' in step 15
+2022-03-25 02:27:50,451 [deep_q_learning_code] INFO: Awarded 97 for events MOVED_LEFT, BOMB_EXPLODED, CRATE_DESTROYED, BOMB_AVOIDED, BOMB_DISTANCE_INCREASED
+2022-03-25 02:27:50,451 [deep_q_learning_code] INFO: Awarded 97 for events MOVED_LEFT, BOMB_EXPLODED, CRATE_DESTROYED, BOMB_AVOIDED, BOMB_DISTANCE_INCREASED
+2022-03-25 02:27:54,573 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-25 02:27:54,605 [deep_q_learning_code] DEBUG: Encountered game event(s) 'MOVED_LEFT' in step 16
+2022-03-25 02:27:54,606 [deep_q_learning_code] INFO: Awarded 2 for events MOVED_LEFT
+2022-03-25 02:27:54,606 [deep_q_learning_code] INFO: Awarded 2 for events MOVED_LEFT
+2022-03-25 02:27:57,306 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-25 02:27:57,335 [deep_q_learning_code] DEBUG: Encountered game event(s) 'INVALID_ACTION' in step 17
+2022-03-25 02:27:57,336 [deep_q_learning_code] INFO: Awarded -20 for events INVALID_ACTION
+2022-03-25 02:27:57,336 [deep_q_learning_code] INFO: Awarded -20 for events INVALID_ACTION
+2022-03-25 02:27:57,912 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-25 02:27:57,941 [deep_q_learning_code] DEBUG: Encountered game event(s) 'BOMB_DROPPED' in step 18
+2022-03-25 02:27:57,943 [deep_q_learning_code] INFO: Awarded -2 for events BOMB_DROPPED
+2022-03-25 02:27:57,943 [deep_q_learning_code] INFO: Awarded -2 for events BOMB_DROPPED
+2022-03-25 02:27:59,433 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-25 02:27:59,460 [deep_q_learning_code] DEBUG: Encountered game event(s) 'MOVED_DOWN' in step 19
+2022-03-25 02:27:59,461 [deep_q_learning_code] INFO: Awarded 22 for events MOVED_DOWN, BOMB_DISTANCE_INCREASED
+2022-03-25 02:27:59,461 [deep_q_learning_code] INFO: Awarded 22 for events MOVED_DOWN, BOMB_DISTANCE_INCREASED
+2022-03-25 02:28:01,554 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-25 02:28:01,583 [deep_q_learning_code] DEBUG: Encountered game event(s) 'MOVED_DOWN', 'IN_DANGER' in step 20
+2022-03-25 02:28:01,584 [deep_q_learning_code] INFO: Awarded 17 for events MOVED_DOWN, IN_DANGER, BOMB_DISTANCE_INCREASED
+2022-03-25 02:28:01,584 [deep_q_learning_code] INFO: Awarded 17 for events MOVED_DOWN, IN_DANGER, BOMB_DISTANCE_INCREASED
+2022-03-25 02:28:02,056 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-25 02:28:02,084 [deep_q_learning_code] DEBUG: Encountered game event(s) 'INVALID_ACTION', 'IN_DANGER' in step 21
+2022-03-25 02:28:02,085 [deep_q_learning_code] INFO: Awarded -25 for events INVALID_ACTION, IN_DANGER
+2022-03-25 02:28:02,085 [deep_q_learning_code] INFO: Awarded -25 for events INVALID_ACTION, IN_DANGER
+2022-03-25 02:28:02,666 [deep_q_learning_code] DEBUG: Querying model for action.
+2022-03-25 02:28:02,696 [deep_q_learning_code] INFO: Awarded -50 for events INVALID_ACTION, BOMB_EXPLODED, CRATE_DESTROYED, CRATE_DESTROYED, KILLED_SELF, GOT_KILLED
+2022-03-25 02:28:02,697 [deep_q_learning_code] INFO: Awarded -50 for events INVALID_ACTION, BOMB_EXPLODED, CRATE_DESTROYED, CRATE_DESTROYED, KILLED_SELF, GOT_KILLED
+2022-03-25 02:28:02,697 [deep_q_learning_code] DEBUG: Encountered event(s) 'INVALID_ACTION', 'BOMB_EXPLODED', 'CRATE_DESTROYED', 'CRATE_DESTROYED', 'KILLED_SELF', 'GOT_KILLED' in final step
+2022-03-25 02:28:02,697 [deep_q_learning_code] INFO: end of round 1 with total reward : 286

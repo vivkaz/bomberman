@@ -38,7 +38,7 @@ def setup(self):
         load_model = "initialize_model"
     else:
         load_model = "saved_model"
-    load_model = "saved_model_1157_2"
+    load_model = "saved_model_1157"
     #load_model = "initialize_model"
     #load_model = "agent/recent_best_coin_collector"
     #load_model = "saved_model_TASK_2-1"
@@ -65,8 +65,9 @@ def setup(self):
 
 
     #initialize an array for the current bombs, which are exploded
-    self.exploded_bombs_normal = []#special case in train.py for old_state
-    self.exploded_bombs_next = []#special case in train.py for new_state
+    self.exploded_bombs_normal = []#special case in train.py for old_state, position of bomb with their timer
+    self.exploded_bombs_next = []#special case in train.py for new_state, position of bombs with their timer
+
 
 def act(self, game_state: dict) -> str:
     start_time = time.time()
@@ -154,6 +155,8 @@ def act(self, game_state: dict) -> str:
 
 
 def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
+    #print(f"--------{mode}----------", game_state["step"])
+    #print("bombs : ",game_state["bombs"])
     """
     *This is not a required function, but an idea to structure your code.*
 
@@ -264,6 +267,7 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
     #print("explosion_field : ",explosion_field)
     # timer infromation auf die felder mit zukünftiger explosion erweitern
     #advanced_explosion_field = np.zeros(np.shape(field)) + explosion_field
+    """
     def get_advanced_explosion_field(bomb_buffer):
 
         t_a_0 = time.time()
@@ -271,7 +275,7 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
         t_a_1 = t_a_0
 
         #print("bomb_buffer : ",len(bomb_buffer))
-        for count,(coord,timer) in enumerate(bomb_buffer):
+        for count,(coord,timer) in enumerate(bomb_buffer):#loop over all bombs on the field(bomb_buffer)
             if timer != 6:
                 area = get_lethal_area(coord[0], coord[1])
                 #print("area length : ", len(area))
@@ -288,8 +292,6 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
                 for tile in area:
                     advanced_explosion_field[tile[0],tile[1]] = value
 
-
-
         #print(f"bomb information : {game_state['bombs']} at step {game_state['step']}")
 
         t_a_2 = time.time()
@@ -301,6 +303,7 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
             #print("timer : ", timer)
             if timer == 4:
                 bomb_buffer.append([np.array([x_b,y_b]),timer])
+                print(f"append to buffer : " ,[np.array([x_b,y_b]),timer])
 
             area = get_lethal_area(x_b,y_b)
             #print(area)
@@ -313,10 +316,67 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
         #times = np.array([t_a_3, t_a_1]) - np.array([t_a_1, t_a_0])
         #print("advanced_time : ",np.round(times,9))
         return advanced_explosion_field
-    if mode == "normal":
-        advanced_explosion_field = get_advanced_explosion_field(self.exploded_bombs_normal)
-    elif mode == "next_state":
-        advanced_explosion_field = get_advanced_explosion_field(self.exploded_bombs_next)
+    """
+
+    #function to get the information about the timer of all current bombs and the current explosions in one map
+    #the step at which a bombs was set is used as an absolute basis to get the timer and explosion state, because the function callbacks is called multiple times
+    def get_advanced_explosion_field(mode):#checked and corrected
+        if mode == "normal":
+            bomb_buffer = self.exploded_bombs_normal
+            #print("normal : ", self.exploded_bombs_normal)
+        elif mode == "next_state":
+            bomb_buffer = self.exploded_bombs_next
+            #print("next : ", self.exploded_bombs_next)
+
+        def calculate_aef():
+            advanced_explosion_field = np.zeros(np.shape(field))
+            #print("bomb_buffer : ",bomb_buffer)
+            for n,(coord,step_s) in enumerate(bomb_buffer):
+                diff =  game_state["step"] - step_s
+                #print("diff : ",diff)
+                if diff <= 5:
+                    value = diff +1
+                    area = get_lethal_area(coord[0], coord[1])
+                    for tile in area:
+                        advanced_explosion_field[tile[0], tile[1]] = value
+                if diff == 6:
+                    bomb_buffer[n] = 0
+            while True:
+                try:
+                    bomb_buffer.remove(0)
+                except:
+                    break
+            return advanced_explosion_field
+
+        def update_buffer():
+            step = game_state["step"]
+            for n in range(len(x_bomb)):
+                x_b = x_bomb[n]
+                y_b = y_bomb[n]
+                entry = [np.array([x_b,y_b]),step]
+                condition = True
+                for (a,b) in bomb_buffer:
+                    if (entry[0] == a).all():
+                        condition = False
+                        break
+                if condition:
+                    bomb_buffer.append([np.array([x_b, y_b]), step])
+
+
+        update_buffer()
+
+        return calculate_aef()
+
+
+    advanced_explosion_field = get_advanced_explosion_field(mode)
+    if self.train:
+        if mode == "normal":
+            self.advanced_explosion_field_old = advanced_explosion_field
+        if mode == "next":
+            self.advanced_explosion_field_next = advanced_explosion_field
+    #print(advanced_explosion_field)
+
+
 
     t_2 = time.time()
 
@@ -495,6 +555,7 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
         feature[:,:,2] = advanced_explosion_map
 
         #print(advanced_explosion_map)
+
         return feature
 
 

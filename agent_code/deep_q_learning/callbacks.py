@@ -38,7 +38,7 @@ def setup(self):
         load_model = "initialize_model"
     else:
         load_model = "saved_model"
-    load_model = "saved_model_1157"
+    load_model = "saved_model_1157_2"
     #load_model = "initialize_model"
     #load_model = "agent/recent_best_coin_collector"
     #load_model = "saved_model_TASK_2-1"
@@ -67,6 +67,9 @@ def setup(self):
     #initialize an array for the current bombs, which are exploded
     self.exploded_bombs_normal = []#special case in train.py for old_state, position of bomb with their timer
     self.exploded_bombs_next = []#special case in train.py for new_state, position of bombs with their timer
+
+    self.advanced_explosion_field_old = np.zeros((self.Hyperparameter["field_size"],self.Hyperparameter["field_size"]))
+    self.advanced_explosion_field_new = np.zeros((self.Hyperparameter["field_size"],self.Hyperparameter["field_size"]))
 
 
 def act(self, game_state: dict) -> str:
@@ -372,9 +375,8 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
     if self.train:
         if mode == "normal":
             self.advanced_explosion_field_old = advanced_explosion_field
-        if mode == "next":
-            self.advanced_explosion_field_next = advanced_explosion_field
-    #print(advanced_explosion_field)
+        if mode == "next_state":
+            self.advanced_explosion_field_new = advanced_explosion_field
 
 
 

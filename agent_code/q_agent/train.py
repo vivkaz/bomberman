@@ -12,7 +12,7 @@ from typing import List
 #from pyrsistent import b
 
 import events as e
-from .callbacks import get_state_index, state_to_features, get_arrangements, ACTIONS, dic, epsilon, GAME_MODE, CURRENT_FIELD, MAX_DIST_FROM_ME
+from .callbacks import get_state_index, state_to_features, get_arrangements, ACTIONS, epsilon
 
 # This is only an example!
 Transition = namedtuple('Transition',
@@ -175,15 +175,23 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     def dist(pos, objects):
             return np.sqrt( np.power(np.subtract(objects, pos).transpose()[0], 2) + np.power(np.subtract(objects, pos).transpose()[1], 2) )
     
-    def get_collectable_coins(my_pos):        
-        coins = np.empty((2, len(old_game_state['coins'])))
+    def get_collectable_coins(my_pos):      
+        if len(old_game_state['coins']) > 0:
+            all_coins = old_game_state['coins']
+            #print("coord", all_coins)
+            coins = [ coin for coin in all_coins if dist(my_pos, coin) <= 3 ]
+            #print("coins", coins)
+            return coins, len(coins) != 0
+        return [], False
+        """coins = np.empty((2, len(old_game_state['coins'])))
         if coins.size != 0:
             for count, coin in enumerate(old_game_state['coins']):
-                if dist(my_pos, coin) <= MAX_DIST_FROM_ME:
+                #print("dist to coin", dist(my_pos, coin))
+                if dist(my_pos, coin) <= 3:
                     coins[0, count] = coin[0]
                     coins[1, count] = coin[1]
-        
-        return coins, coins.size != 0
+        #print("coins",coins)
+        return coins, coins.size != 0"""
 
     def coin_distance_reduced():
         old_position = old_game_state['self'][3]
@@ -191,8 +199,8 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         coins, flag = get_collectable_coins(old_position)
 
         if flag: # coins not empty
-            def dist(position, coins):
-                return np.sqrt( np.power(coins[0] - position[0], 2) + np.power(coins[1] - position[1], 2) )
+            """def dist(position, coins):
+                return np.sqrt( np.power(coins[0] - position[0], 2) + np.power(coins[1] - position[1], 2) )"""
             
             old_dist = dist(old_position, coins)
             new_dist = dist(new_position, coins)
@@ -202,18 +210,21 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
     def crate_distance_reduced():
         old_crate_coord = np.where(old_game_state["field"] == 1)
+        old_crates = np.array([old_crate_coord[0], old_crate_coord[1]]).transpose()
         new_crate_coord = np.where(new_game_state["field"] == 1)
+        new_crates = np.array([new_crate_coord[0], new_crate_coord[1]]).transpose()
+        #print(len(old_crates))
 
-        intersection = [item for item in old_crate_coord if item in new_crate_coord]
-        if len(intersection) > 0:
+        crates = [item for item in old_crates if item in new_crates]
+        #print(len(crates))
+        if len(crates) > 0:
             old_position = old_game_state['self'][3]
             new_position = new_game_state['self'][3]
-            crates = np.array([intersection[0], intersection[1]]).transpose()
-            
+
             old_dist = dist(old_position, crates)
             new_dist = dist(new_position, crates)
 
-            return True, np.min(old_dist) < np.min(new_dist), np.min(old_dist) == np.min(new_dist)
+            return True, np.min(new_dist) < np.min(old_dist), np.min(new_dist) == np.min(old_dist)
         return False, False, False
                 
     def run_in_loop():
@@ -270,7 +281,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
                 return True
 
 
-    def reach_crate():
+    def find_crate():
         #if old_game_state["step"] == 1:#no reward for second visit, prevent infinity loops or stand still at crate
         crate_coord = np.where(old_game_state["field"] == 1)
         visitable_crates = np.array([crate_coord[0],crate_coord[1]]).transpose()
@@ -295,26 +306,51 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
                         return True
         return False
 
-    # wait or move from crate without reason
-    def next_to_crate_without_dropping_bomb():
-        old_position = old_game_state['self'][3]
-        
+    def get_neighbours(pos):
         sub = [(1,0), (0,-1), (-1,0), (0,1)] # left, down, right, up
         neighbours = []
         for i in sub:
-            neighbour = np.subtract(old_position, i)
+            neighbour = np.subtract(pos, i)
             if (0 <= neighbour[0] < 17) and (0 <= neighbour[1] < 17): # game borders
                 neighbours.append(neighbour)
+        return neighbours
+
+    # wait or move from crate without reason
+    def next_to_crate_without_dropping_bomb():
+        old_position = old_game_state['self'][3]
+        neighbours = get_neighbours(old_position)
 
         if any([ old_game_state['field'][neighbour[0]][neighbour[1]] == 1 for neighbour in neighbours ]):
             if old_game_state['self'][2] and new_game_state['self'][2]:
                 if len(old_game_state['bombs']) > 0:
                     bombs = old_game_state['bombs']
-                    old_risky_area = get_vh_region(old_game_state['self'][3])
+                    old_risky_area = get_vh_region(old_position)
                     if in_danger(old_risky_area, bombs):
                         return False # escaped
                 return True # no reason to leave       
         return False
+
+    def get_neighbours_values(neighbours, game_state=new_game_state):
+        neighbours_values = [ game_state['field'][neighbour[0]][neighbour[1]] for neighbour in neighbours ] # −1=walls,  0=free tiles, 1=crates
+        for j, value in enumerate(neighbours_values):
+            if value == 0 and len(game_state['bombs']) > 0: 
+                if any([ (neighbours[j] == np.array(bomb[0])).all() for bomb in game_state['bombs']]):
+                    neighbours_values[j] = 2 # bomb
+            elif value == 0 and len(game_state['others']) > 0 :
+                if any([(neighbours[j] == np.array(other[3])).all() and (other[3] != game_state['self'][3]) for other in game_state['others'] ]):
+                    neighbours_values[j] = 1 # opponent
+            elif value == 0 and game_state['explosion_map'][neighbours[j][0]][neighbours[j][1]] == 1:
+                neighbours_values[j] = 2  # explosion
+            #print("j explosion", j, game_state['explosion_map'][neighbours[j][0]][neighbours[j][1]])
+        return neighbours_values
+
+    def get_in_trap():
+        new_position = old_game_state['self'][3]
+        if new_position != old_game_state['self'][3]:
+            if 0 not in get_neighbours_values(new_position):
+                return True
+        return False
+            
 
 
     """Add your own events to hand out rewards"""
@@ -345,13 +381,16 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     if bomb_distance_increased():
         events.append(e.BOMB_DISTANCE_INCREASED)
 
-    if reach_crate():
-        events.append(e.CRATE_REACHED)
+    if find_crate():
+        events.append(e.CRATE_FOUND)
 
     if next_to_crate_without_dropping_bomb():
         events.append(e.CRATE_WITHOUT_DROPPING_BOMB)
+    
+    if get_in_trap():
+        events.append(e.GET_TRAPPED)
 
-    print("events", events)
+    #print("events", events)
      
     
     self.logger.debug(f'Encountered game event(s) {", ".join(map(repr, events))} in step {new_game_state["step"]}')
@@ -374,7 +413,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         
         q_value = self.model[index, action]
 
-        print(self.model[index],"\nold q", self.model[index, action])
+        #print(self.model[index],"\nold q", self.model[index, action])
 
         next_index, next_rotation = get_state_index(next_state)
         next_value = np.max(self.model[next_index]) 
@@ -384,7 +423,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         # Update Q-table
         self.model[index, action] = new_q_value
 
-        print("new q", self.model[index, action])
+        #print("new q", self.model[index, action])
 
         
         # Or SARSA (On-Policy algorithm for TD-Learning) ?
@@ -468,12 +507,13 @@ def reward_from_events(self, events: List[str]) -> int:
         e.CRATE_DISTANCE_REDUCED: 10,
         e.CRATE_DISTANCE_INCREASED: -5,
         e.CRATE_DESTROYED: 20,
-        e.CRATE_REACHED: 2, 
+        e.CRATE_FOUND: 2, 
         e.CRATE_WITHOUT_DROPPING_BOMB: -7,
         e.KILLED_OPPONENT: 500,
         e.GOT_KILLED: -100,
         e.KILLED_SELF: -200,
-        e.SURVIVED_ROUND: 3
+        e.SURVIVED_ROUND: 3,
+        e.GET_TRAPPED: -3
         #e.BOMB_EXPLODED: ?
     }
 

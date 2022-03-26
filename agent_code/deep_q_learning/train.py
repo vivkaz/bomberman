@@ -77,7 +77,6 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     :param new_game_state: The state the agent is in now.
     :param events: The events that occurred when going from  `old_game_state` to `new_game_state`
     """
-    start_time = time.time()
 
     # function "buffer_information" saves the experience of one step in the variable self.replay_memory starts a step 2 since in setp 1 the old_game_state is none
 
@@ -142,8 +141,8 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         return bombs
     bombs_old = get_bombs(old_game_state)
     bombs_new = get_bombs(new_game_state)
-    print("bombs_old : ", bombs_old)
-    print("bombs_new : ", bombs_new)
+    #print("bombs_old : ", bombs_old)
+    #print("bombs_new : ", bombs_new)
 
     position_old = np.array(old_game_state["self"][3])
     position_new = np.array(new_game_state["self"][3])
@@ -169,7 +168,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         obsticle_field_new[bombs_x_new.astype(int), bombs_y_new.astype(int)] += 1
 
 
-
+    t_0 = time.time()
     feature_old = state_to_features(self, old_game_state, mode="normal")
     #print(feature_old)
 
@@ -177,6 +176,8 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     feature_new = state_to_features(self, new_game_state, mode="next_state")
     #print(feature_new)
 
+    t_1 = time.time()
+    #print("time for double state_to_feature : ", t_1-t_0)
     def get_in_Danger():
         #print(position_new)
         #print(bombs)
@@ -187,7 +188,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             if not in_danger(area_old,bombs_old) and in_danger(area_new,bombs_new):
                 events.append(e.GET_IN_DANGER)
 
-    get_in_Danger()
+
 
     def bomb_dropped():
         return old_game_state['self'][2] == True and new_game_state['self'][2] == False
@@ -204,7 +205,9 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             bombs = bombs.transpose()
             old_danger = in_danger(old_risky_area, bombs)
             new_danger = in_danger(new_risky_area, bombs)
-            return old_danger and not new_danger
+            if old_danger and not new_danger:
+                events.append(e.BOMB_AVOIDED)
+
 
 
     def agent_is_in_danger():
@@ -216,7 +219,8 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
                 bombs[1,count] = bomb[0][1]
                 timer[count] = bomb[1]
             bombs = bombs.transpose()
-            return in_danger_with_timer(risky_area(new_game_state["self"][3]),bombs,timer)
+            if in_danger_with_timer(risky_area(new_game_state["self"][3]),bombs,timer):
+                events.append(e.IN_DANGER)
 
 
 
@@ -259,27 +263,13 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             return False
 
     # Add your own events to hand out rewards
-    if old_game_state is not None:
-        if bomb_avoided():
-            events.append(e.BOMB_AVOIDED)
 
-        if agent_is_in_danger():
-            events.append(e.IN_DANGER)
 
 
         #if bomb_dropped():
         #    events.append(e.BOMB_DROPPED)
 
-        collectable_coins, reduced_dist = coin_distance_reduced()
 
-        if collectable_coins:
-            if reduced_dist:
-                events.append(e.COIN_DISTANCE_REDUCED)
-            else:
-                events.append(e.COIN_DISTANCE_INCREASED)
-
-    if run_in_loop():
-        events.append(e.RUN_IN_LOOP)
 
 
     #print(events)
@@ -317,7 +307,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
 
 
-    reach_crate()
+
 
 
 
@@ -355,7 +345,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
                 events.append(e.BOMB_DISTANCE_INCREASED)
                 break
 
-    bomb_distance_increased()
+    #bomb_distance_increased()
 
     def get_trapped():
         view_range = self.Hyperparameter["feature_setup"]["INPUTS"][0]
@@ -382,10 +372,10 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
                 block_status_old += 1
             if (neighbors_new[n] in block_values):
                 block_status_new += 1
-        print(block_status_old,block_status_new)
+        #print(block_status_old,block_status_new)
         if block_status_new == 4 and block_status_old <= 3:
             return events.append(e.GET_TRAPPED)
-    get_trapped()
+
 
 
 
@@ -420,7 +410,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         def get_explosion_neighbors(explosion_field,position):
             (coord_x, coord_y) = np.where((explosion_field > 0) & (explosion_field <=4))
             coord = np.array([coord_x,coord_y]).transpose()#all coordniates where a bomb is ticking
-            print("coord : ", coord)
+            #print("coord : ", coord)
             if coord.size != 0:
                 #discard all coordinates, which are not relevant for angents position
                 d = np.sqrt(np.sum(np.power(coord - position,2),axis = 1))
@@ -453,6 +443,8 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             if tiles.size != 0:
                 necessary_steps = np.absolute(tiles[:,0]-position[0])+np.absolute(tiles[:,1]-position[1])
                 bomb_timer = field[position[0],position[1]]
+                #print("necessary_steps : ", necessary_steps)
+                #print("remaining time : ", 5-bomb_timer)
                 return tiles[necessary_steps <= (5-bomb_timer)]
             else:
                 return np.array([])
@@ -466,7 +458,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
                 for n,escape in enumerate(tiles):
                     x_diff = escape[0]-position[0]
                     y_diff = escape[1]-position[1]
-                    if np.absolute(x_diff) > np.absolute(y_diff):
+                    if np.absolute(x_diff) >= np.absolute(y_diff):
                         move_1 = np.broadcast_to(np.sign(x_diff)*np.array([1,0]),(np.absolute(x_diff).astype(int),2))
                         move_2 = np.broadcast_to(np.sign(y_diff)*np.array([0,1]),(np.absolute(y_diff).astype(int),2))
                     elif np.absolute(x_diff) < np.absolute(y_diff):
@@ -475,9 +467,9 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
                     if np.absolute(x_diff) == np.absolute(y_diff) and np.absolute(x_diff) == 1:
                         move_1 = np.broadcast_to(np.sign(x_diff)*np.array([1,0]),(np.absolute(x_diff).astype(int),2))
                         move_2 = np.broadcast_to(np.sign(y_diff)*np.array([0,1]),(np.absolute(y_diff).astype(int),2))
-                        print("position + move_1",position + move_1)
+                        #print("position + move_1",position + move_1)
                         index = (position+move_1).transpose()
-                        print("index : ", index)
+                        #print("index : ", index)
                         #print("1 step situation first try : ",field[int(index[0]),int(index[1])])
                         if field[int(index[0]),int(index[1])] != 0:
                             #print("1 step situation second try")
@@ -488,9 +480,9 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
                     x_path = path.transpose()[0][1:]
                     y_path = path.transpose()[1][1:]
 
-                    print("path_value = ",np.sum(field[x_path.astype(int),y_path.astype(int)]))
+                    #print("path_value = ",np.sum(field[x_path.astype(int),y_path.astype(int)]))
                     if np.sum(field[x_path.astype(int),y_path.astype(int)]) == 0:
-                        print("escape_path : ",path)
+                        #print("escape_path : ",path)
                         event = False
                         break
 
@@ -504,29 +496,73 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             if aef[int(position[0]), int(position[1])] != 0:  # find save place only if there is an incoming explosion
                 neigh = get_explosion_neighbors(aef, position)
                 neigh_free = get_free_neighbors(neigh, obsticle_field)
-                neigh_ava = get_available_neighboors(position, neigh_free, obsticle_field)
+                neigh_ava = get_available_neighboors(position, neigh_free, aef)
                 #print("coord_real_neigh", neigh)
                 #print("free_neighbors : ", neigh_free)
-                print("in_range neighbors : ", neigh_ava)
+                #print("in_range neighbors : ", neigh_ava)
                 cer_death =  get_reachable_neighbors(position, neigh_ava, obsticle_field)
             else:
                 cer_death = False
             return cer_death
-        print("-----------old_state certain_death prints : ----------------")
+        #print("-----------old_state certain_death prints : ----------------")
         cer_death_old = get_certain_death(position_old,aef_old,obsticle_field_old)
-        print("result _ old : ",cer_death_old)
-        print("-----------new_state certain_death prints : ----------------")
+        #print("result _ old : ",cer_death_old)
+        #print("-----------new_state certain_death prints : ----------------")
         cer_death_new = get_certain_death(position_new,aef_new,obsticle_field_new)
-        print("result _ new : ",cer_death_new)
+        #print("result _ new : ",cer_death_new)
 
         if cer_death_new and not cer_death_old:
             events.append(e.CERTAIN_DEATH)
 
 
-    certain_death()
-    #print("aef_old : ",self.advanced_explosion_field_old)
-    #print("aef_new : ",self.advanced_explosion_field_new)
+    #def get_bomb_next_to_crate():
 
+
+
+
+    #check for all events
+
+    t_0 = time.time()
+
+    collectable_coins, reduced_dist = coin_distance_reduced()
+
+    if collectable_coins:
+        if reduced_dist:
+            events.append(e.COIN_DISTANCE_REDUCED)
+        else:
+            events.append(e.COIN_DISTANCE_INCREASED)
+
+
+    if run_in_loop():
+        events.append(e.RUN_IN_LOOP)
+
+    t_1 = time.time()
+
+    agent_is_in_danger()
+
+    bomb_avoided()
+
+    t_2 = time.time()
+
+    get_in_Danger()
+
+    reach_crate()
+
+    t_3 = time.time()
+
+    bomb_distance_increased()
+
+    get_trapped()
+
+    t_4 = time.time()
+
+    certain_death()
+
+    t_5 = time.time()
+
+    T_s = np.array([t_5,t_4,t_3,t_2,t_1])
+    T_e = np.array([t_4,t_3,t_2,t_1,t_0])
+    #print("times for envents : ", T_e-T_s)
 
 
 
@@ -571,7 +607,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     print(events)
     #print(reward_from_events(self,events))
 
-    end_time = time.time()
+
     #times = np.array([end_time,buffer_time_end, t_2, t_1])-np.array([start_time,buffer_time_start ,t_1,buffer_time_start])
     #print("train : game_events_occured time = ", np.round(times,9))
 

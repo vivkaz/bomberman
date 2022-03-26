@@ -12,7 +12,7 @@ from typing import List
 from pyrsistent import b
 
 import events as e
-from .callbacks import get_state_index, state_to_features, get_arrangements, ACTIONS, dic, epsilon, GAME_MODE, CURRENT_FIELD
+from .callbacks import get_state_index, state_to_features, get_arrangements, ACTIONS, dic, epsilon, GAME_MODE, CURRENT_FIELD, MAX_DIST_FROM_ME
 
 # This is only an example!
 Transition = namedtuple('Transition',
@@ -88,17 +88,21 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         for a in area:
             return any([(np.array(bomb[0]) == a).all() for bomb in bombs])
 
-    #def bomb_dropped(): # covered in environment.py
-    #    return old_game_state['self'][2] == True and new_game_state['self'][2] == False
+    def bomb_dropped_next_to_crate():
+        if old_game_state['self'][2] and new_game_state['self'][2] == False:
+            old_position = old_game_state['self'][3]
+            sub = [(1,0), (0,-1), (-1,0), (0,1)] # left, down, right, up
+            neighbours = []
+            for i in sub:
+                neighbour = np.subtract(old_position, i)
+                if (0 <= neighbour[0] < 17) and (0 <= neighbour[1] < 17): # game borders
+                    neighbours.append(neighbour)
+            return any([ old_game_state['field'][neighbour[0]][neighbour[1]] == 1 for neighbour in neighbours ])
+        return False
     
     
-    def check_for_wall(y, x, new):
-        if new:
-            field = new_game_state['field']
-        else:
-            field = old_game_state['field']
+    def check_for_wall(y, x, field = old_game_state['field']):
         if (0 <= x < 17) and (0 <= y < 17):
-            #print("check wall",y,x, field[y][x])
             return field[y][x] == -1 # wall
         return False
 
@@ -143,11 +147,11 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         return down
 
     # get vertical and horizontal region from the position, consider walls
-    def get_vh_region(pos, new=False, n=3):
-        left = get_left(pos, new, n)
-        right = get_right(pos, new, n)
-        up = get_up(pos, new, n)
-        down = get_down(pos, new, n)
+    def get_vh_region(pos, n=3):
+        left = get_left(pos, n)
+        right = get_right(pos, n)
+        up = get_up(pos, n)
+        down = get_down(pos, n)
         
         for r in right:
             left.append(r)
@@ -161,7 +165,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         if len(old_game_state['bombs']) > 0:
             bombs = old_game_state['bombs']
             old_risky_area = get_vh_region(old_game_state['self'][3])
-            new_risky_area = get_vh_region(new_game_state['self'][3], True)
+            new_risky_area = get_vh_region(new_game_state['self'][3])
 
             old_danger = in_danger(old_risky_area, bombs)
             new_danger = in_danger(new_risky_area, bombs)
@@ -177,18 +181,24 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             new_danger = in_danger(new_risky_area, bombs)
             return old_danger and not new_danger"""
     
-    def get_collectable_coins():
+    def get_collectable_coins(my_pos):
+
+        def dist(pos, objects):
+            return np.sqrt( np.power(np.subtract(objects, pos).transpose()[0], 2) + np.power(np.subtract(objects, pos).transpose()[1], 2) )
+        
         coins = np.empty((2, len(old_game_state['coins'])))
         if coins.size != 0:
             for count, coin in enumerate(old_game_state['coins']):
-                coins[0, count] = coin[0]
-                coins[1, count] = coin[1]
+                if dist(my_pos, coin) <= MAX_DIST_FROM_ME:
+                    coins[0, count] = coin[0]
+                    coins[1, count] = coin[1]
+            #print("collectable coins", coins)
         return coins, coins.size != 0
 
     def coin_distance_reduced():
         old_position = old_game_state['self'][3]
         new_position = new_game_state['self'][3]
-        coins, flag = get_collectable_coins()
+        coins, flag = get_collectable_coins(old_position)
 
         if flag: # coins not empty
             def dist(position, coins):
@@ -198,7 +208,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             new_dist = dist(new_position, coins)
             return flag, np.min(new_dist) < np.min(old_dist), np.min(new_dist) == np.min(old_dist)
         else: 
-            return flag, False, False
+            return False, False, False
             
     def run_in_loop():
         update_states_buffer()
@@ -232,8 +242,8 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         bombs = np.empty((2, len(old_game_state["bombs"])))
         d_old = []
         d_new = []
+        position_old = np.array(old_game_state["self"][3])
         if bombs.size != 0:
-            position_old = np.array(old_game_state["self"][3])
             position_new = np.array(new_game_state["self"][3])
             for count, bomb in enumerate(old_game_state["bombs"]):
                 bombs[0, count] = bomb[0][0]
@@ -244,13 +254,13 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             bombs = bombs.transpose()
         bomb_sort = np.argsort(np.array(d_old))
         area = get_vh_region(position_old)
-        flag = False
         for n,i in enumerate(bomb_sort):
+            flag = False
             for j in area:
                 if (j == bombs[i]).all():
                     flag = True
                     break
-            if d_old[n] < d_new[n] and flag:
+            if d_old[i] < d_new[i] and flag:
                 return True
 
 
@@ -279,14 +289,35 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
                         return True
         return False
 
+    # wait or move from crate without reason
+    def next_to_crate_without_dropping_bomb():
+        old_position = old_game_state['self'][3]
+        
+        sub = [(1,0), (0,-1), (-1,0), (0,1)] # left, down, right, up
+        neighbours = []
+        for i in sub:
+            neighbour = np.subtract(old_position, i)
+            if (0 <= neighbour[0] < 17) and (0 <= neighbour[1] < 17): # game borders
+                neighbours.append(neighbour)
+
+        if any([ old_game_state['field'][neighbour[0]][neighbour[1]] == 1 for neighbour in neighbours ]):
+            if old_game_state['self'][2] and new_game_state['self'][2]:
+                if len(old_game_state['bombs']) > 0:
+                    bombs = old_game_state['bombs']
+                    old_risky_area = get_vh_region(old_game_state['self'][3])
+                    if in_danger(old_risky_area, bombs):
+                        return False # escaped
+                return True # no reason to leave       
+        return False
+
 
     """Add your own events to hand out rewards"""
     if old_game_state is not None:
         if bomb_avoided():
             events.append(e.BOMB_AVOIDED)
 
-        #if bomb_dropped(): #covered in environment.py
-        #    events.append(e.BOMB_DROPPED)
+        if bomb_dropped_next_to_crate():
+            events.append(e.BOMB_DROPPED_NEXT_TO_CRATE)
 
         collectable_coins, reduced_dist, same_distance = coin_distance_reduced()
         if collectable_coins: 
@@ -303,6 +334,9 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
     if reach_crate():
         events.append(e.CRATE_REACHED)
+
+    if next_to_crate_without_dropping_bomb():
+        events.append(e.CRATE_WITHOUT_DROPPING_BOMB)
 
     #print("events", events)
      
@@ -343,6 +377,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         #print("new q", self.model[index, action])
 
         #print("###")
+        
         # Or SARSA (On-Policy algorithm for TD-Learning) ?
         """the maximum reward for the next state is not necessarily used for updating the Q-values.
         Instead, a new action, and therefore reward, is selected using the same policy (eg e-greedy) that determined the original action.
@@ -426,16 +461,18 @@ def reward_from_events(self, events: List[str]) -> int:
         e.COIN_COLLECTED: 100,
         e.COIN_DISTANCE_REDUCED: 10,
         e.COIN_DISTANCE_INCREASED: -5,
-        e.BOMB_DISTANCE_INCREASED: -5,
+        e.BOMB_DISTANCE_INCREASED: 5,
         e.BOMB_AVOIDED : 5,
-        e.BOMB_DROPPED: -50,
+        e.BOMB_DROPPED: -7,
+        e.BOMB_DROPPED_NEXT_TO_CRATE: 5,
         e.KILLED_OPPONENT: 500,
         e.GOT_KILLED: -100,
         e.KILLED_SELF: -150,
         e.SURVIVED_ROUND: 2,
         e.CRATE_DESTROYED: 20,
         e.COIN_FOUND: 15, 
-        e.CRATE_REACHED: 2
+        e.CRATE_REACHED: 2, 
+        e.CRATE_WITHOUT_DROPPING_BOMB: -5
         #e.BOMB_EXPLODED: ?
     }
 

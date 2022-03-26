@@ -1,6 +1,6 @@
 from collections import namedtuple, deque
 from datetime import datetime
-from pathlib import PosixPath
+#from pathlib import PosixPath
 import random
 #from turtle import position
 from matplotlib.pyplot import new_figure_manager
@@ -9,7 +9,7 @@ import numpy as np
 import pickle
 from typing import List
 
-from pyrsistent import b
+#from pyrsistent import b
 
 import events as e
 from .callbacks import get_state_index, state_to_features, get_arrangements, ACTIONS, dic, epsilon, GAME_MODE, CURRENT_FIELD, MAX_DIST_FROM_ME
@@ -22,6 +22,7 @@ Transition = namedtuple('Transition',
 TRANSITION_HISTORY_SIZE = 4  # keep only 4 last transitions
 BUFFER_HISTORY_SIZE = 6 # keep only 6 last states
 RECORD_ENEMY_TRANSITIONS = 1.0  # record enemy transitions with probability 
+
 # determines to what extent newly acquired information overrides old information
 ALPHA = 0.1 # in fully deterministic environments 1 is optimal; when problem is stochastic, often const learning rate such as 0.1
 # determines the importance of future rewards
@@ -89,7 +90,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             return any([(np.array(bomb[0]) == a).all() for bomb in bombs])
 
     def bomb_dropped_next_to_crate():
-        if old_game_state['self'][2] and new_game_state['self'][2] == False:
+        if old_game_state['self'][2] and not new_game_state['self'][2]: # dropped bomb
             old_position = old_game_state['self'][3]
             sub = [(1,0), (0,-1), (-1,0), (0,1)] # left, down, right, up
             neighbours = []
@@ -97,7 +98,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
                 neighbour = np.subtract(old_position, i)
                 if (0 <= neighbour[0] < 17) and (0 <= neighbour[1] < 17): # game borders
                     neighbours.append(neighbour)
-            return any([ old_game_state['field'][neighbour[0]][neighbour[1]] == 1 for neighbour in neighbours ])
+            return any([ old_game_state['field'][neighbour[0]][neighbour[1]] == 1 for neighbour in neighbours ]) # crate
         return False
     
     
@@ -171,28 +172,17 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             new_danger = in_danger(new_risky_area, bombs)
             return old_danger and not new_danger
 
-        """bombs = np.empty((2, len(old_game_state['bombs'])))
-        if bombs.size != 0:
-            for count, bomb in enumerate(old_game_state['bombs']):
-                bombs[0, count] = bomb[0][0]
-                bombs[1, count] = bomb[0][1]
-            bombs = bombs.transpose()
-            old_danger = in_danger(old_risky_area, bombs)
-            new_danger = in_danger(new_risky_area, bombs)
-            return old_danger and not new_danger"""
-    
-    def get_collectable_coins(my_pos):
-
-        def dist(pos, objects):
+    def dist(pos, objects):
             return np.sqrt( np.power(np.subtract(objects, pos).transpose()[0], 2) + np.power(np.subtract(objects, pos).transpose()[1], 2) )
-        
+    
+    def get_collectable_coins(my_pos):        
         coins = np.empty((2, len(old_game_state['coins'])))
         if coins.size != 0:
             for count, coin in enumerate(old_game_state['coins']):
                 if dist(my_pos, coin) <= MAX_DIST_FROM_ME:
                     coins[0, count] = coin[0]
                     coins[1, count] = coin[1]
-            #print("collectable coins", coins)
+        
         return coins, coins.size != 0
 
     def coin_distance_reduced():
@@ -209,7 +199,23 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             return flag, np.min(new_dist) < np.min(old_dist), np.min(new_dist) == np.min(old_dist)
         else: 
             return False, False, False
+
+    def crate_distance_reduced():
+        old_crate_coord = np.where(old_game_state["field"] == 1)
+        new_crate_coord = np.where(new_game_state["field"] == 1)
+
+        intersection = [item for item in old_crate_coord if item in new_crate_coord]
+        if len(intersection) > 0:
+            old_position = old_game_state['self'][3]
+            new_position = new_game_state['self'][3]
+            crates = np.array([intersection[0], intersection[1]]).transpose()
             
+            old_dist = dist(old_position, crates)
+            new_dist = dist(new_position, crates)
+
+            return True, np.min(old_dist) < np.min(new_dist), np.min(old_dist) == np.min(new_dist)
+        return False, False, False
+                
     def run_in_loop():
         update_states_buffer()
         if len(self.states_buffer) == BUFFER_HISTORY_SIZE:
@@ -312,19 +318,26 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
 
     """Add your own events to hand out rewards"""
-    if old_game_state is not None:
-        if bomb_avoided():
-            events.append(e.BOMB_AVOIDED)
+    #if old_game_state is not None: 
+    if bomb_avoided():
+        events.append(e.BOMB_AVOIDED)
 
-        if bomb_dropped_next_to_crate():
-            events.append(e.BOMB_DROPPED_NEXT_TO_CRATE)
+    if bomb_dropped_next_to_crate():
+        events.append(e.BOMB_DROPPED_NEXT_TO_CRATE)
 
-        collectable_coins, reduced_dist, same_distance = coin_distance_reduced()
-        if collectable_coins: 
-            if reduced_dist:
-                events.append(e.COIN_DISTANCE_REDUCED)
-            elif not same_distance: 
-                events.append(e.COIN_DISTANCE_INCREASED)
+    collectable_coins, reduced_dist, same_distance = coin_distance_reduced()
+    if collectable_coins: 
+        if reduced_dist:
+            events.append(e.COIN_DISTANCE_REDUCED)
+        elif not same_distance: 
+            events.append(e.COIN_DISTANCE_INCREASED)
+
+    crates, reduced_dist, same_distance = crate_distance_reduced()
+    if crates: 
+        if reduced_dist:
+            events.append(e.CRATE_DISTANCE_REDUCED)
+        elif not same_distance:
+            events.append(e.CRATE_DISTANCE_INCREASED)
 
     if run_in_loop():
         events.append(e.RUN_IN_LOOP)
@@ -338,23 +351,20 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     if next_to_crate_without_dropping_bomb():
         events.append(e.CRATE_WITHOUT_DROPPING_BOMB)
 
-    #print("events", events)
+    print("events", events)
      
     
     self.logger.debug(f'Encountered game event(s) {", ".join(map(repr, events))} in step {new_game_state["step"]}')
     #print((f"Step {new_game_state['step']} : {events}"))
 
     # state_to_features is defined in callbacks.py
-    #print("###")
     self.transitions.append(Transition(state_to_features(old_game_state), self_action, state_to_features(new_game_state), reward_from_events(self, events)))
-    #print("###")
 
-    # Recalculate Q-values
+    """ Recalculate Q-values """
     state, action, next_state, reward = self.transitions[-1]
 
     # check if state is None
     if next_state is not None:
-        #print("###")
         index, rotation = get_state_index(state)
 
         action = ACTIONS.index(action)
@@ -364,7 +374,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         
         q_value = self.model[index, action]
 
-        #print("old q", self.model[index, action])
+        print(self.model[index],"\nold q", self.model[index, action])
 
         next_index, next_rotation = get_state_index(next_state)
         next_value = np.max(self.model[next_index]) 
@@ -374,9 +384,8 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         # Update Q-table
         self.model[index, action] = new_q_value
 
-        #print("new q", self.model[index, action])
+        print("new q", self.model[index, action])
 
-        #print("###")
         
         # Or SARSA (On-Policy algorithm for TD-Learning) ?
         """the maximum reward for the next state is not necessarily used for updating the Q-values.
@@ -412,16 +421,6 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
     #print(f"End : {events}")
     self.transitions.append(Transition(state_to_features(last_game_state), last_action, None, reward_from_events(self, events)))
 
-    # Q-values of terminal state is 0
-    state, action, _, _ = self.transitions[-1]
-    index, rotation = get_state_index(state)
-    action = ACTIONS.index(action)
-
-    if action < 4 and rotation != 0:
-        action = (action + rotation) % 4
-    
-    self.model[index, action] = 0
-
     # Store the model
     np.save("my-saved-model", self.model)
     
@@ -453,26 +452,28 @@ def reward_from_events(self, events: List[str]) -> int:
     game_rewards = {
         e.INVALID_ACTION: -100,
         e.RUN_IN_LOOP:-50,
+        e.WAITED: -20,
         e.MOVED_UP:-1,
+        e.MOVED_RIGHT: -1,
         e.MOVED_DOWN: -1,
         e.MOVED_LEFT: -1,
-        e.MOVED_RIGHT: -1,
-        e.WAITED: -20,
         e.COIN_COLLECTED: 100,
         e.COIN_DISTANCE_REDUCED: 10,
         e.COIN_DISTANCE_INCREASED: -5,
-        e.BOMB_DISTANCE_INCREASED: 5,
-        e.BOMB_AVOIDED : 5,
+        e.COIN_FOUND: 15, 
         e.BOMB_DROPPED: -7,
-        e.BOMB_DROPPED_NEXT_TO_CRATE: 5,
+        e.BOMB_DROPPED_NEXT_TO_CRATE: 10,
+        e.BOMB_AVOIDED : 5,
+        e.BOMB_DISTANCE_INCREASED: 5,
+        e.CRATE_DISTANCE_REDUCED: 10,
+        e.CRATE_DISTANCE_INCREASED: -5,
+        e.CRATE_DESTROYED: 20,
+        e.CRATE_REACHED: 2, 
+        e.CRATE_WITHOUT_DROPPING_BOMB: -7,
         e.KILLED_OPPONENT: 500,
         e.GOT_KILLED: -100,
-        e.KILLED_SELF: -150,
-        e.SURVIVED_ROUND: 2,
-        e.CRATE_DESTROYED: 20,
-        e.COIN_FOUND: 15, 
-        e.CRATE_REACHED: 2, 
-        e.CRATE_WITHOUT_DROPPING_BOMB: -5
+        e.KILLED_SELF: -200,
+        e.SURVIVED_ROUND: 3
         #e.BOMB_EXPLODED: ?
     }
 

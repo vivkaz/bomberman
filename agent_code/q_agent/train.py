@@ -100,7 +100,16 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
                     neighbours.append(neighbour)
             return any([ old_game_state['field'][neighbour[0]][neighbour[1]] == 1 for neighbour in neighbours ]) # crate
         return False
-    
+
+    def bomb_dropped_next_to_opponent():
+        if len(old_game_state['others']) > 0 and old_game_state['self'][2] and not new_game_state['self'][2]:
+            old_position = old_game_state['self'][3]
+            opponents = [ other[3] for other in old_game_state['others'] ]
+            area = get_vh_region(old_position)
+            for a in area:
+                if any([ (np.array(opponent) == a).all() for opponent in opponents ]):
+                    return True
+        return False    
     
     def check_for_wall(y, x, field = old_game_state['field']):
         if (0 <= x < 17) and (0 <= y < 17):
@@ -173,7 +182,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             return old_danger and not new_danger
 
     def dist(pos, objects):
-            return np.sqrt( np.power(np.subtract(objects, pos).transpose()[0], 2) + np.power(np.subtract(objects, pos).transpose()[1], 2) )
+        return np.sqrt( np.power(np.subtract(objects, pos).transpose()[0], 2) + np.power(np.subtract(objects, pos).transpose()[1], 2) )
     
     def get_collectable_coins(my_pos):      
         if len(old_game_state['coins']) > 0:
@@ -213,19 +222,31 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         old_crates = np.array([old_crate_coord[0], old_crate_coord[1]]).transpose()
         new_crate_coord = np.where(new_game_state["field"] == 1)
         new_crates = np.array([new_crate_coord[0], new_crate_coord[1]]).transpose()
-        #print(len(old_crates))
 
-        crates = [item for item in old_crates if item in new_crates]
-        #print(len(crates))
-        if len(crates) > 0:
+        common = [item for item in old_crates if item in new_crates]
+        if len(common) > 0:
             old_position = old_game_state['self'][3]
             new_position = new_game_state['self'][3]
+            crates = list(filter(lambda crate: dist(old_position, crate) <= 3, common))
+            if len(crates) > 0:
+                old_dist = dist(old_position, crates)
+                new_dist = dist(new_position, crates)
 
-            old_dist = dist(old_position, crates)
-            new_dist = dist(new_position, crates)
-
-            return True, np.min(new_dist) < np.min(old_dist), np.min(new_dist) == np.min(old_dist)
+                return True, np.min(new_dist) < np.min(old_dist), np.min(new_dist) == np.min(old_dist)
         return False, False, False
+
+    def agent_distance_reduced():
+        old_position = old_game_state['self'][3]
+        if len(old_game_state['others']) > 0:  
+            others = list(filter(lambda other: dist(old_position, other[3]) <= 3, old_game_state['others']))
+            opponents = [ opponent[3] for opponent in others]
+            if len(opponents) > 0: 
+                new_position = new_game_state['self'][3]
+                old_dist = dist(old_position, opponents)
+                new_dist = dist(new_position, opponents)
+                return True, np.min(new_dist) < np.min(old_dist), np.min(new_dist) == np.min(old_dist)
+        return False, False, False
+
                 
     def run_in_loop():
         update_states_buffer()
@@ -330,6 +351,20 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
                 return True # no reason to leave       
         return False
 
+    # wait or move from opponent without reason
+    def next_to_opponent_without_dropping_bomb():
+        if len(old_game_state['others']) > 0:
+            old_position = old_game_state['self'][3]
+            opponents = [ other[3] for other in old_game_state['others'] ]
+            if np.min(dist(old_position, opponents)) <= 3 and old_game_state['self'][2] and new_game_state['self'][2]: # opponent in radius and did not drop bomb
+                if len(old_game_state['bombs']) > 0:
+                    bombs = old_game_state['bombs']
+                    old_risky_area = get_vh_region(old_position)
+                    if in_danger(old_risky_area, bombs):
+                        return False # agent was in danger
+                return True # no reason to leave       
+        return False
+
     def get_neighbours_values(neighbours, game_state=new_game_state):
         neighbours_values = [ game_state['field'][neighbour[0]][neighbour[1]] for neighbour in neighbours ] # −1=walls,  0=free tiles, 1=crates
         for j, value in enumerate(neighbours_values):
@@ -345,9 +380,9 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         return neighbours_values
 
     def get_in_trap():
-        new_position = old_game_state['self'][3]
+        new_position = new_game_state['self'][3]
         if new_position != old_game_state['self'][3]:
-            if 0 not in get_neighbours_values(new_position):
+            if 0 not in get_neighbours_values(get_neighbours(new_position)):
                 return True
         return False
             
@@ -355,11 +390,24 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
 
     """Add your own events to hand out rewards"""
     #if old_game_state is not None: 
+
+    if run_in_loop():
+        events.append(e.RUN_IN_LOOP)
+
+    if get_in_trap():
+        events.append(e.GET_TRAPPED)
+
     if bomb_avoided():
         events.append(e.BOMB_AVOIDED)
 
     if bomb_dropped_next_to_crate():
         events.append(e.BOMB_DROPPED_NEXT_TO_CRATE)
+
+    if bomb_dropped_next_to_opponent():
+        events.append(e.BOMB_DROPPED_NEXT_TO_OPPONENT)
+
+    if bomb_distance_increased():
+        events.append(e.BOMB_DISTANCE_INCREASED)
 
     collectable_coins, reduced_dist, same_distance = coin_distance_reduced()
     if collectable_coins: 
@@ -368,29 +416,30 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         elif not same_distance: 
             events.append(e.COIN_DISTANCE_INCREASED)
 
-    crates, reduced_dist, same_distance = crate_distance_reduced()
+    crates, reduced_dist, same_distance = agent_distance_reduced()
     if crates: 
+        if reduced_dist:
+            events.append(e.OPPONENT_DISTANCE_REDUCED)
+        elif not same_distance:
+            events.append(e.OPPONENT_DISTANCE_INCREASED)
+
+    others, reduced_dist, same_distance = crate_distance_reduced()
+    if others:
         if reduced_dist:
             events.append(e.CRATE_DISTANCE_REDUCED)
         elif not same_distance:
             events.append(e.CRATE_DISTANCE_INCREASED)
-
-    if run_in_loop():
-        events.append(e.RUN_IN_LOOP)
-
-    if bomb_distance_increased():
-        events.append(e.BOMB_DISTANCE_INCREASED)
 
     if find_crate():
         events.append(e.CRATE_FOUND)
 
     if next_to_crate_without_dropping_bomb():
         events.append(e.CRATE_WITHOUT_DROPPING_BOMB)
-    
-    if get_in_trap():
-        events.append(e.GET_TRAPPED)
 
-    #print("events", events)
+    if next_to_opponent_without_dropping_bomb():
+        events.append(e.OPPONENT_WITHOUT_DROPPING_BOMB)
+
+    print("events", events)
      
     
     self.logger.debug(f'Encountered game event(s) {", ".join(map(repr, events))} in step {new_game_state["step"]}')
@@ -457,24 +506,31 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
     :param self: The same object that is passed to all of your callbacks.
     """
     self.logger.debug(f'Encountered event(s) {", ".join(map(repr, events))} in final step')
-    #print(f"End : {events}")
+    print(f"End : {events}")
+
     self.transitions.append(Transition(state_to_features(last_game_state), last_action, None, reward_from_events(self, events)))
+
+    """ Recalculate Q-value """
+    state, action, _, reward = self.transitions[-1]
+    index, rotation = get_state_index(state)
+    action = ACTIONS.index(action)
+    if action < 4 and rotation != 0:
+        action = (action + rotation) % 4
+    print(self.model[index], self.model[index,action])
+    q_value = self.model[index, action]
+    self.model[index, action] = (1 - ALPHA) * q_value + ALPHA * reward
+    print(self.model[index], self.model[index,action])
 
     # Store the model
     np.save("my-saved-model", self.model)
-    
-    #print(len(np.unique(self.model, axis = 0)))
     #with open("my-saved-model.pt", "wb") as file:
     #    pickle.dump(self.model, file)
 
     self.logger.info(f'End of round {last_game_state["round"]} with total reward : {self.rewards[-1]}')
-    
-    #print(f"Round {last_game_state['round']} : {self.rewards[-1]}")
 
     # Store training report
     #date = datetime.now().strftime("%d-%m-%Y")
     #file = "training_report_" + date
-    
     #with open(file, 'a') as f:
     #    f.write(f"[{datetime.now().strftime('%d/%m %H_%M_%S')}] finished round {last_game_state['round']} with total reward {self.rewards[-1]} \n")
 
@@ -491,29 +547,40 @@ def reward_from_events(self, events: List[str]) -> int:
     game_rewards = {
         e.INVALID_ACTION: -100,
         e.RUN_IN_LOOP:-50,
-        e.WAITED: -20,
+        e.WAITED: -10,
+        e.GET_TRAPPED: -5,
+
+        e.GOT_KILLED: -150,
+        e.KILLED_SELF: -300,
+        e.SURVIVED_ROUND: 3,
+
         e.MOVED_UP:-1,
         e.MOVED_RIGHT: -1,
         e.MOVED_DOWN: -1,
         e.MOVED_LEFT: -1,
+        
         e.COIN_COLLECTED: 100,
         e.COIN_DISTANCE_REDUCED: 10,
         e.COIN_DISTANCE_INCREASED: -5,
         e.COIN_FOUND: 15, 
-        e.BOMB_DROPPED: -7,
-        e.BOMB_DROPPED_NEXT_TO_CRATE: 10,
-        e.BOMB_AVOIDED : 5,
-        e.BOMB_DISTANCE_INCREASED: 5,
-        e.CRATE_DISTANCE_REDUCED: 10,
-        e.CRATE_DISTANCE_INCREASED: -5,
+        
+        e.BOMB_DROPPED: -10,
+        e.BOMB_DROPPED_NEXT_TO_CRATE: 7,
+        e.BOMB_DROPPED_NEXT_TO_OPPONENT: 5,
+        e.BOMB_AVOIDED : 20,
+        e.BOMB_DISTANCE_INCREASED: 3,
+        
         e.CRATE_DESTROYED: 20,
+        e.CRATE_DISTANCE_REDUCED: 10,
+        e.CRATE_DISTANCE_INCREASED: -2,
         e.CRATE_FOUND: 2, 
         e.CRATE_WITHOUT_DROPPING_BOMB: -7,
+
         e.KILLED_OPPONENT: 500,
-        e.GOT_KILLED: -100,
-        e.KILLED_SELF: -200,
-        e.SURVIVED_ROUND: 3,
-        e.GET_TRAPPED: -3
+        e.OPPONENT_DISTANCE_REDUCED: 5,
+        e.OPPONENT_DISTANCE_INCREASED: -2,
+        e.OPPONENT_WITHOUT_DROPPING_BOMB: -2
+        
         #e.BOMB_EXPLODED: ?
     }
 

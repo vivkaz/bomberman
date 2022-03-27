@@ -5,7 +5,7 @@ from lib2to3.pytree import LeafPattern
 import os
 import pickle
 import random
-from re import T
+from re import I, T
 
 import numpy as np
 from sklearn import neighbors
@@ -61,7 +61,7 @@ def setup(self):
         #with open("my-saved-model.pt", "rb") as file:
         #    self.model = pickle.load(file)
 
-    #self.model = np.load("my-saved-model.npy")
+    #self.model = np.load("coin-collector.npy")
 
 # rotate clockwise
 def get_arrangements(array):
@@ -180,12 +180,13 @@ def state_to_features(game_state: dict) -> np.array:
             if value == 0 and len(game_state['bombs']) > 0: 
                 if any([ (neighbours[j] == np.array(bomb[0])).all() for bomb in game_state['bombs']]):
                     neighbours_values[j] = 2 # bomb
-            elif value == 0 and len(game_state['others']) > 0 :
+                    continue
+            if value == 0 and len(game_state['others']) > 0 :
                 if any([(neighbours[j] == np.array(other[3])).all() and (other[3] != game_state['self'][3]) for other in game_state['others'] ]):
                     neighbours_values[j] = 1 # opponent
-            elif value == 0 and game_state['explosion_map'][neighbours[j][0]][neighbours[j][1]] == 1:
+                    continue
+            if value == 0 and game_state['explosion_map'][neighbours[j][0]][neighbours[j][1]] == 1:
                 neighbours_values[j] = 2  # explosion
-            #print("j explosion", j, game_state['explosion_map'][neighbours[j][0]][neighbours[j][1]])
         return neighbours_values
 
     # distance from position to objects
@@ -290,18 +291,19 @@ def state_to_features(game_state: dict) -> np.array:
         r234 = np.append(r23,r4).reshape(-1,2)
         return np.append(r234,r15).reshape(-1,2)"""
 
+
     # check if there are collectable coins near position
     def collectable_coin(pos, neighbours=[], my_pos=(0,0), me=True):
         if len(game_state['coins']) > 0:
             coins = game_state['coins']
             if me == True: # check if coin in agent's radius
                 return np.min(dist(pos, coins)) <= MAX_DIST_FROM_ME, -1
-        
+
             neighbours_values = get_neighbours_values(neighbours)
-            n_coins = 0  # number coins in region
+            n_coins = 1  # number coins in region
             j = -1 # neighbour with most coins in region
             k = -1 # neighbour with min distance to a coin
-            distance = 2.2 # ?
+            distance = 3 # ?
             for i, neighbour in enumerate(neighbours):
                 if neighbours_values[i] == 0: # free tile
                     d = np.min(dist(neighbour, coins))
@@ -314,10 +316,10 @@ def state_to_features(game_state: dict) -> np.array:
                     if temp > n_coins:
                         n_coins, j = temp, i
             
-            if k != -1:
-                return True, k
-            else:
+            if j != -1:
                 return True, j
+            else:
+                return True, k
         return False, -1
 
     # check if there are attackable opponents in radius of position
@@ -336,15 +338,16 @@ def state_to_features(game_state: dict) -> np.array:
     # nearest crate
     def destroyable_crate(neighbours):
         crate_coord = np.where(game_state["field"] == 1)
-        crates = np.array([crate_coord[0], crate_coord[1]]).transpose()
-        mask = np.where([game_state["field"][neighbour[0]][neighbour[1]] != -1 for neighbour in neighbours])
-        if len(mask) > 0:
-            temp = [neighbours[i] for i in mask[0]]
-            d = np.array([ np.min(dist(neighbour, crates)) for neighbour in temp ])
-            return mask[0][np.where(d == min(d))]
+        if len(crate_coord[0]) > 0:
+            crates = np.array([crate_coord[0], crate_coord[1]]).transpose()
+            mask = np.where([game_state["field"][neighbour[0]][neighbour[1]] != -1 for neighbour in neighbours])
+            if len(mask) > 0:
+                temp = [neighbours[i] for i in mask[0]]
+                d = np.array([ np.min(dist(neighbour, crates)) for neighbour in temp ])
+                return mask[0][np.where(d == min(d))]
 
-            #return mask[0][np.argmin([ np.min(dist(neighbour, crates)) for neighbour in temp ])]
-        return -1
+                #return mask[0][np.argmin([ np.min(dist(neighbour, crates)) for neighbour in temp ])]
+        return [-1]
 
     def count_free_tiles(my_pos, pos):
         if game_state['field'][pos[0]][pos[1]] == 0:
@@ -369,21 +372,31 @@ def state_to_features(game_state: dict) -> np.array:
 
     def direction_to_escape_bomb(my_pos, bombs, neighbours, values, j):
         index = np.argmin( [ dist(my_pos, bomb[0]) for bomb in bombs ])
-        bomb_area = np.array(get_vh_region(bombs[index][0]))
-        escape_index = np.where([neighbour not in bomb_area for neighbour in neighbours])[0]        
-        if len(escape_index) > 0 and  escape_index[0] == j: 
-            return True
+        bomb_area = get_vh_region(bombs[index][0])
+        bomb_area.append(bombs[index][0])
+        bomb_area = np.array(bomb_area)
+        escape_index = np.where([ (neighbour.tolist() not in bomb_area.tolist() and game_state['field'][neighbour[0]][neighbour[1]]==0) for neighbour in neighbours])[0]
+        print("bomb area", bomb_area)
+        print("neighbours", neighbours)  
+        print("escape index", escape_index, j)    
+        if len(escape_index) > 0: 
+            return escape_index[0] == j
+
         # else predict best direction
+        if game_state['field'][neighbours[j][0]][neighbours[j][1]] == 0:
+            region = get_neighbours(neighbours[j])
+            filtered_region = list(filter(lambda field: game_state['field'][field[0]][field[1]]==0, region))
+            print(region)
+            print(filtered_region)
+            print("len field not in area",len(np.where([field not in bomb_area for field in filtered_region])[0]))
+            if len(np.where([field not in bomb_area for field in filtered_region])[0]) > 0:
+                return True
+        
         mask = np.where(np.array(values) == 0)
         temp = np.array(neighbours)[mask]
-        region_j = get_region(my_pos, neighbours[j])
-        if len(np.where([field not in bomb_area for field in region_j])[0]) > 0:
-            return True
-        
         d = np.array(dist(bombs[index][0], temp))
-        #print("d", d)
         max_d_indices = np.where(d == max(d))[0]
-        #print("max d i j", max_d_indices, j)
+        print("max d indices, j", max_d_indices, j)
         if len(max_d_indices) > 1:
             return np.argmax([ count_free_tiles(my_pos, neighbour) for neighbour in neighbours ]) == j
         return j in max_d_indices
@@ -468,8 +481,6 @@ def state_to_features(game_state: dict) -> np.array:
     neighbours = get_neighbours(my_position)
     neighbours_values = get_neighbours_values(neighbours)
 
-    #print("my_pos ", my_position)
-
 
     """ calculate value of game mode """
     mode = 0 # destroy crates
@@ -529,20 +540,20 @@ def state_to_features(game_state: dict) -> np.array:
     escape_dir_flag = False
     for j, value in enumerate(neighbours_values):
         if value == 2: # bomb or explosion
-            channels.append(2) # danger
+            channels.append(-1) # like a wall, danger =^ do not go there
 
         elif value == 0:
             if danger(my_position) and not escape_dir_flag and direction_to_escape_bomb(my_position, game_state['bombs'], neighbours, neighbours_values, j):
                 escape_dir_flag = True
                 channels.append(1) # direction to escape
             
-            elif danger(neighbours[j]) or game_state['explosion_map'][neighbours[j][0]][neighbours[j][1]]==1:
+            elif danger(neighbours[j]):
                 channels.append(2) # danger
             
-            elif ( collectable_coin(neighbours[j], neighbours, my_position, False)[1] == j or attackable_opponent(neighbours[j], my_position, False) ) and mode != 2: # coin or opponent in region
+            elif ( collectable_coin(neighbours[j], neighbours, my_position, False)[1] == j or attackable_opponent(neighbours[j], my_position, False) ) and mode in [1,3]: # coin or opponent in region
                 channels.append(1) # depending on game mode go in this direction or drop bomb
             
-            elif ( j in destroyable_crate(neighbours) ) and not crate_dir_flag:
+            elif ( j in destroyable_crate(neighbours) ) and not crate_dir_flag and mode==0:
                 crate_dir_flag = True
                 channels.append(1) # depending on game mode go in this direction or drop bomb
 
@@ -557,7 +568,36 @@ def state_to_features(game_state: dict) -> np.array:
     
     assert len(channels) == 6, "Not all features in channels"
 
-    #print("features",channels)
+    """if 1 not in channels[-4:]:
+        crate_coord = np.where(game_state["field"] == 1)
+        d = 100
+        case = -1
+        coord = (0,0)
+        if len(crate_coord[0]) > 0:
+            crates = np.array([crate_coord[0], crate_coord[1]]).transpose()
+            d_temp = np.min(dist(my_position, crates))
+            coord = crates[np.argmin(crates)]
+            if d_temp < d:
+                d, case = d_temp, 0
+
+        if len(game_state['others']) > 0:
+            opponents = [ other[3] for other in game_state['others'] ]
+            d_temp = np.min(dist(my_position, opponents))
+            coord = crates[np.argmin(opponents)]
+            if d_temp < d:
+                d, case = d_temp, 1
+
+        if len(game_state['coins']) > 0:
+            coins = game_state['coins']
+            d_temp = np.min(dist(my_position, coins))
+            coord = crates[np.argmin(coins)]
+            if d_temp < d:
+                d, case = d_temp, 2
+        
+        if case != -1:
+            diff = np.subtract(my_position, coord)"""
+
+    print("features",channels, "\n")
 
     # concatenate them as a feature tensor (they must have the same shape)
     stacked_channels = np.stack(channels)

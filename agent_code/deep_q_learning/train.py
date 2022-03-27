@@ -604,7 +604,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     buffer_information()
     self.rewards.append(reward_from_events(self,events))
 
-    print(events)
+    #print(events)
     #print(reward_from_events(self,events))
 
 

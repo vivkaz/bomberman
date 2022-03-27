@@ -38,7 +38,7 @@ def setup(self):
         load_model = "initialize_model"
     else:
         load_model = "saved_model"
-    load_model = "saved_model_1157_2"
+    #load_model = "saved_model_1157_2"
     #load_model = "initialize_model"
     #load_model = "agent/recent_best_coin_collector"
     #load_model = "saved_model_TASK_2-1"
@@ -86,7 +86,7 @@ def act(self, game_state: dict) -> str:
     #epsilon is a hyperparameter that introduces a random factor for the decisoin process for the first trained rounds. This supports the agent to discover the enviroment
     epsilon = max(1 - game_state["round"] / self.Hyperparameter["epsilon_scale"], 0.05)
     #epsilon = 0.05
-    epsilon = 0
+    #epsilon = 0
     #print("callbacks - act")
     inputs = state_to_features(self,game_state)
     #print(f"inputs at step {game_state['step']} : {inputs}")

@@ -167,14 +167,14 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         bombs_y_new = bombs_new.transpose()[1]
         obsticle_field_new[bombs_x_new.astype(int), bombs_y_new.astype(int)] += 1
 
-
+    #print("--------- new step ----------")
     t_0 = time.time()
     feature_old = state_to_features(self, old_game_state, mode="normal")
-    #print(feature_old)
+    #print("feature_old : ", feature_old)
 
 
     feature_new = state_to_features(self, new_game_state, mode="next_state")
-    #print(feature_new)
+    #print("feature_new : ",feature_new)
 
     t_1 = time.time()
     #print("time for double state_to_feature : ", t_1-t_0)
@@ -579,15 +579,20 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         done = False
         buffer_time_start = time.time()
 
-        old_feature = state_to_features(self, old_game_state,mode = "normal")
+        #old_feature = state_to_features(self, old_game_state,mode = "normal")
 
         t_1 = time.time()
 
-        new_feature = state_to_features(self, new_game_state,mode = "next_state")
+        #new_feature = state_to_features(self, new_game_state,mode = "next_state")
 
         t_2 = time.time()
-        self.replay_memory.append((old_feature, self_action,
-                                       reward_from_events(self, events), new_feature,done))
+        self.replay_memory.append((feature_old, self_action,
+                                       reward_from_events(self, events), feature_new,done))
+        #print("buffer _ information : ")
+        #print("feature old : ", feature_old)
+        #print("feature _ enw : ",feature_new)
+        #print("action : ", self_action)
+        #print("reward : ", reward_from_events(self,events))
         buffer_time_end = time.time()
 
         #times = np.array([buffer_time_end, buffer_time_end,t_2, t_1]) - np.array(
@@ -628,7 +633,7 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
 
     #add last action to buffer
     done = True
-    self.replay_memory.append((state_to_features(self,last_game_state),last_action,
+    self.replay_memory.append((state_to_features(self,last_game_state,mode = "normal"),last_action,
                         reward_from_events(self,events),state_to_features(self,last_game_state), done))
     self.rewards.append(reward_from_events(self,events))
 

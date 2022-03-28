@@ -38,7 +38,7 @@ def setup(self):
         load_model = "initialize_model"
     else:
         load_model = "saved_model"
-    #load_model = "saved_model_1157_2"
+    #load_model = "saved_model_1157"
     #load_model = "initialize_model"
     #load_model = "agent/recent_best_coin_collector"
     #load_model = "saved_model_TASK_2-1"
@@ -46,17 +46,20 @@ def setup(self):
     #load_model = "saved_model_double_dqn_coin"
 
 
+
     try:
         self.model = tf.keras.models.load_model(load_model)
         with open(f'{load_model}/Hyperparameter.pkl', 'rb') as f:
             self.Hyperparameter = pickle.load(f)
-        print(f"loaded model : {load_model}")
+        print(f"loaded model  : {load_model}")
+
     except:
+
         self.logger.debug("model cant be loaded from save place")
         print(f"model : {load_model} cant be loaded")
 
     self.n_outputs = self.model.get_config()['layers'][-1]["config"]["units"]
-    #self.n_outputs = self.Hyperparameter["n_outputs"]
+    self.n_outputs = self.Hyperparameter["n_outputs"]
     #print(f"[info] loaded model to play/train : {load_model}")
 
     self.model_input_shape = self.model.get_config()["layers"][0]["config"]["batch_input_shape"]
@@ -67,9 +70,13 @@ def setup(self):
     #initialize an array for the current bombs, which are exploded
     self.exploded_bombs_normal = []#special case in train.py for old_state, position of bomb with their timer
     self.exploded_bombs_next = []#special case in train.py for new_state, position of bombs with their timer
+    try:
+        self.advanced_explosion_field_old = np.zeros((self.Hyperparameter["field_size"],self.Hyperparameter["field_size"]))
+        self.advanced_explosion_field_new = np.zeros((self.Hyperparameter["field_size"],self.Hyperparameter["field_size"]))
+    except:
+        self.advanced_explosion_field_old = np.zeros((17,17))
+        self.advanced_explosion_field_new = np.zeros((17,17))
 
-    self.advanced_explosion_field_old = np.zeros((self.Hyperparameter["field_size"],self.Hyperparameter["field_size"]))
-    self.advanced_explosion_field_new = np.zeros((self.Hyperparameter["field_size"],self.Hyperparameter["field_size"]))
 
 
 def act(self, game_state: dict) -> str:
@@ -88,7 +95,7 @@ def act(self, game_state: dict) -> str:
     #epsilon = 0.05
     #epsilon = 0
     #print("callbacks - act")
-    inputs = state_to_features(self,game_state)
+    inputs = state_to_features(self,game_state,mode = 'normal')
     #print(f"inputs at step {game_state['step']} : {inputs}")
     #print(f"inputs at setp {game_state['step']} : \n {inputs}")
     #print("inputs",inputs)

@@ -42,24 +42,26 @@ def setup(self):
     #load_model = "initialize_model"
     #load_model = "agent/recent_best_coin_collector"
     #load_model = "saved_model_TASK_2-1"
-    #load_model = "saved_model_best"
+    #load_model = "saved_model_1105_final"
     #load_model = "saved_model_double_dqn_coin"
-
+    #load_model = "cc_5"
+    load_model = "scenario_2"
 
 
     try:
         self.model = tf.keras.models.load_model(load_model)
         with open(f'{load_model}/Hyperparameter.pkl', 'rb') as f:
             self.Hyperparameter = pickle.load(f)
-        print(f"loaded model  : {load_model}")
+        #print(f"loaded model  : {load_model}")
 
     except:
 
         self.logger.debug("model cant be loaded from save place")
-        print(f"model : {load_model} cant be loaded")
+        #print(f"model : {load_model} cant be loaded")
 
     self.n_outputs = self.model.get_config()['layers'][-1]["config"]["units"]
-    self.n_outputs = self.Hyperparameter["n_outputs"]
+    #self.n_outputs = self.Hyperparameter["n_outputs"]
+
     #print(f"[info] loaded model to play/train : {load_model}")
 
     self.model_input_shape = self.model.get_config()["layers"][0]["config"]["batch_input_shape"]
@@ -91,9 +93,9 @@ def act(self, game_state: dict) -> str:
     """
 
     #epsilon is a hyperparameter that introduces a random factor for the decisoin process for the first trained rounds. This supports the agent to discover the enviroment
-    epsilon = max(1 - game_state["round"] / self.Hyperparameter["epsilon_scale"], 0.05)
+    epsilon = max(1 - game_state["round"] / self.Hyperparameter["epsilon_scale"], 0.01)
     #epsilon = 0.05
-    #epsilon = 0
+    epsilon = 0
     #print("callbacks - act")
     inputs = state_to_features(self,game_state,mode = 'normal')
     #print(f"inputs at step {game_state['step']} : {inputs}")
@@ -146,6 +148,7 @@ def act(self, game_state: dict) -> str:
 
     if invalid_move(np.argmax(Q_values),game_state):
         decision = np.where(Q_values == np.sort(Q_values)[-2])[0][0]
+
         #print(f" invalid move occured at step : {game_state['step']} \n invalid move : {ACTIONS[np.argmax(Q_values)]} \n Q-values : {Q_values} \n"
         #      f" move replaced with : {ACTIONS[decision]}")
     else:
@@ -155,10 +158,10 @@ def act(self, game_state: dict) -> str:
 
     self.logger.info(f"Action {ACTIONS[decision]} at step {game_state['step']}")
 
-    print(
-       f" STEP : {game_state['step']}, ACTION : {ACTIONS[decision]} ,{np.round(time_1 - start_time, 3)},{np.round(time_2 - start_time, 3)}")
+    #print(
+       #f" STEP : {game_state['step']}, ACTION : {ACTIONS[decision]} ,{np.round(time_1 - start_time, 3)},{np.round(time_2 - start_time, 3)}")
 
-    print(f"Q_Values : {self.model.predict(inputs[np.newaxis])}")
+    #print(f"Q_Values : {self.model.predict(inputs[np.newaxis])}")
 
 
     return ACTIONS[decision]
@@ -332,9 +335,13 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
     #the step at which a bombs was set is used as an absolute basis to get the timer and explosion state, because the function callbacks is called multiple times
     def get_advanced_explosion_field(mode):#checked and corrected
         if mode == "normal":
+            if game_state["step"] == 1:#reset bomb_buffer variable after each episode, such that the bombs from previous rounds dont effect the next round
+                self.exploded_bombs_normal = []
             bomb_buffer = self.exploded_bombs_normal
             #print("normal : ", self.exploded_bombs_normal)
         elif mode == "next_state":
+            if game_state["step"] == 1:
+                self.exploded_bombs_next = []
             bomb_buffer = self.exploded_bombs_next
             #print("next : ", self.exploded_bombs_next)
 
@@ -346,6 +353,7 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
                 #print("diff : ",diff)
                 if diff <= 5:
                     value = diff +1
+                    #print("value : ", value)
                     area = get_lethal_area(coord[0], coord[1])
                     for tile in area:
                         advanced_explosion_field[tile[0], tile[1]] = value
@@ -524,6 +532,7 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
         return feature
 
 
+
     def fake_coin_field_bombs(INPUT):
         view_range = INPUT[0]
         shape = INPUT[1]
@@ -531,6 +540,7 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
         coin_map = get_agents_view(coin_field, view_range, agents_position, "coin_field")
         bomb_map = get_agents_view(bomb_field,view_range,agents_position,"coin_field")#"coin_field" just sets tiles outside the field to zeros instead of -1 like for the option "field"
         advanced_explosion_map = get_agents_view(advanced_explosion_field,view_range,agents_position,"coin_field")
+
 
         def check_index(index):
             if index > size -1 :
@@ -567,12 +577,76 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
 
         return feature
 
+    def fake_coin_crate_field_bombs(INPUT):
+        view_range = INPUT[0]
+        shape = INPUT[1]
+        field_map = get_agents_view(field, view_range, agents_position, "field")
+        coin_map = get_agents_view(coin_field, view_range, agents_position, "coin_field")
+        bomb_map = get_agents_view(bomb_field, view_range, agents_position,
+                                   "coin_field")  # "coin_field" just sets tiles outside the field to zeros instead of -1 like for the option "field"
+        advanced_explosion_map = get_agents_view(advanced_explosion_field, view_range, agents_position, "coin_field")
 
+        def fake_crates(field_map, view_range, position):
+            result = np.zeros((2 * view_range + 1, 2 * view_range + 1))
+            # print("field_map", field_map)
+            if np.sum(field_map == 1) > 0:
+                all_crates = np.vstack((np.where(field == 1)[0], np.where(field == 1)[1])).transpose()
+                outer_neighbors = np.array(
+                    np.meshgrid(np.arange(position[0] - view_range, position[0] + view_range + 1),
+                                np.arange(position[1] - view_range, position[1] + view_range) + 1)).T.reshape(-1, 2)
+                nearest_crate = all_crates[np.argmin(np.sqrt(np.sum(np.power(all_crates - position, 2), axis=1)))]
+                nearest_neighbor = outer_neighbors[
+                    np.argmin(np.sqrt(np.sum(np.power(outer_neighbors - nearest_crate, 2), axis=1)))]
+                # print(nearest_neighbor)
+                # print(nearest_crate)
+                # print(position)
+                # print(nearest_neighbor[0] - position[0] + view_range, nearest_neighbor[1] - position[1] + view_range)
+                result[
+                    nearest_neighbor[0] - position[0] + view_range, nearest_neighbor[1] - position[1] + view_range] = 1
+                return result
+            else:
+                return result
+
+        fake_crates_map = fake_crates(field_map, view_range, agents_position)
+
+        def check_index(index):
+            if index > size - 1:
+                return size - 1
+            elif index < 0:
+                return 0
+            else:
+                return index
+
+        if np.sum(np.sum(coin_map, axis=1), axis=0) == 0 and x_coin.size != 0:
+            agents_view_coord = []
+            for i in range(-view_range, view_range + 1, 1):
+                for j in range(-view_range, view_range + 1, 1):
+                    if field[check_index(agents_position[0] + i), check_index(agents_position[1] + j)] == 0:
+                        agents_view_coord.append([agents_position[0] + i, agents_position[1] + j])
+            agents_view_coord = np.array(agents_view_coord)
+            n = np.argmin(d(agents_position, np.array([x_coin, y_coin])))
+            nearest_coin = np.array([x_coin[n], y_coin[n]])
+            nearest_field = agents_view_coord[np.argmin(d(nearest_coin, agents_view_coord.transpose()))]
+            # print("nearest_coin : ", nearest_coin)
+            # print("nearest_field : ", nearest_field)
+            agnets_coord_origin = agents_position - np.array([2, 2])
+            coin_map[nearest_field[0] - agnets_coord_origin[0], nearest_field[1] - agnets_coord_origin[1]] = 1
+
+        # print(advanced_explosion_map)
+        feature = np.zeros(shape)
+        feature[:, :, 0] = (field_map + bomb_map + fake_crates_map)
+        feature[:, :, 1] = coin_map
+        feature[:, :, 2] = advanced_explosion_map
+
+        # print(advanced_explosion_map)
+
+        return feature
 
     feature_functions = {"field_coin_map": field_coin_map,
                          "one_field_map" : one_field_map,
                          "fake_coin_field" : fake_coin_field,
-                         "fake_coin_field_bombs": fake_coin_field_bombs}
+                         "fake_coin_field_bombs": fake_coin_field_bombs,
+                         "fake_coin_crate_field_bombs": fake_coin_crate_field_bombs}
     t_3 = time.time()
 
     inputs = feature_functions[self.Hyperparameter["feature_setup"]["feature_function"]](self.Hyperparameter["feature_setup"]["INPUTS"])
@@ -581,4 +655,7 @@ def state_to_features(self,game_state: dict,mode = "normal") -> np.array:
     #print(f"input at step {game_state['step']} : {inputs}")
     times = np.array([t_4,t_3,t_2,t_1])-np.array([t_3,t_2,t_1,t_0])
     #print("state to feature time : ", np.round(times,9))
+    #print(np.shape(inputs))
+    #print(self.Hyperparameter["feature_setup"]["feature_function"])
     return inputs
+

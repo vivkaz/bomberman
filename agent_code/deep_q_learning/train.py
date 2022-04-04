@@ -24,8 +24,31 @@ def transform_actions_to_number(action):
 # function "sample_experiences" samples a random set of experiences. A experience is the information about the state the action the reward and the next state of one step in the game.
 # the parameter batch_size defines the number of experiences that are use for one training iteration
 def sample_experiences(self, batch_size):
+    if self.Hyperparameter["train_method"]["algo"] == "PER_DQN":
+        print("sample experiences")
+        z = self.Hyperparameter["train_method"]["INPUTS"][1]
+        values = np.copy(np.array(self.PER_memory))
+
+        P = np.power(values,z)/np.sum(np.power(values,z))#probability to get choosen at least 10%
+        indices = []
+        condition = True
+        while condition:
+            ind = np.random.randint(0,len(self.replay_memory),size =len(self.replay_memory))
+            print(ind, len(self.replay_memory))
+            for index in ind:
+                if P[index] >= np.random.rand():
+                    if len(indices) < batch_size:
+                        indices.append(index)
+                        print(f"pick index {index} with prob {P[index]}")
+                    else:
+                        condition = False
+                        break
+        indices = np.array(indices)
+        self.indices = indices
+
+    else:
+        indices = np.random.randint(len(self.replay_memory), size=batch_size)
     #print("länger replay_memory : ", len(self.replay_memory))
-    indices = np.random.randint(len(self.replay_memory), size=batch_size)
     batch = [self.replay_memory[index] for index in indices]
     states, actions, rewards, next_states, dones = [np.array([experience[field_index] for experience in batch])
                                              for field_index in range(5)]
@@ -42,7 +65,8 @@ def setup_training(self):
     """
 
     # variable to buffer the experiences of previous setps
-    self.replay_memory = deque(maxlen=1000)
+    self.replay_memory = deque(maxlen=2000)
+    self.PER_memory = deque(maxlen = 2000)
 
     # variavle to save the rewards per step
     self.rewards = []
@@ -50,14 +74,15 @@ def setup_training(self):
 
     self.buffer_states = deque(maxlen=6)
 
-    self.training_history = deque(maxlen = 6000)
+    self.training_history = deque(maxlen = 10000)
 
     #setup target model:
-    if self.Hyperparameter["train_method"]["algo"] == "double_DQN":
-        self.target = tf.keras.models.clone_model(self.model)
-        self.target.set_weights(self.model.get_weights())
+
+    self.target = tf.keras.models.clone_model(self.model)
+    self.target.set_weights(self.model.get_weights())
 
     self.visited_crates = []
+    self.new_data = 0
 
 
 def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_state: dict, events: List[str]):
@@ -354,7 +379,11 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
             position = np.array([view_range, view_range])
             field = feature[:, :, 0]#field with crates, opponents(not implemented), walls and bombs
             #print(feature[:, :, 2])
-            explosion_field = np.where(feature[:,:,2] >= 5, 2,0)#field with active explosions
+            try:
+                explosion_field = np.where(feature[:,:,2] >= 5, 2,0)#field with active explosions
+            except:
+                explosion_field = np.zeros(np.shape(field))
+
 
             A = []
             for i in [np.array([0, 1]), np.array([0, -1]), np.array([1, 0]), np.array([-1, 0])]:
@@ -588,9 +617,18 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
         t_2 = time.time()
         self.replay_memory.append((feature_old, self_action,
                                        reward_from_events(self, events), feature_new,done))
+        self.new_data += 1
+        if len(self.PER_memory) == 0:
+            value = 1
+        else:
+            value = max(self.PER_memory)
+        #print("buffer step with value :", value, "len buffer  : ", len(self.PER_memory))
+        self.PER_memory.append(value)
+
+        #print("------------new step---------------")
         #print("buffer _ information : ")
         #print("feature old : ", feature_old)
-        #print("feature _ enw : ",feature_new)
+        #print("feature _ new : ",feature_new)
         #print("action : ", self_action)
         #print("reward : ", reward_from_events(self,events))
         buffer_time_end = time.time()
@@ -609,7 +647,7 @@ def game_events_occurred(self, old_game_state: dict, self_action: str, new_game_
     buffer_information()
     self.rewards.append(reward_from_events(self,events))
 
-    #print(events)
+    #print("events : ",events)
     #print(reward_from_events(self,events))
 
 
@@ -637,12 +675,19 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
                         reward_from_events(self,events),state_to_features(self,last_game_state), done))
     self.rewards.append(reward_from_events(self,events))
 
+    value = max(self.PER_memory)
+    #print("buffer step with value :", value, "len buffer  : ", len(self.PER_memory))
+    self.PER_memory.append(value)
+
     #print("end of round : ",events)
 
     batch_size = self.Hyperparameter["batch_size"]  # number of old experience used for updating the model
     discount_factor = self.Hyperparameter["discount_factor"]  # value which weights
     optimizer = tf.keras.optimizers.Adam(learning_rate=self.Hyperparameter["learning_rate"])
     loss_fn = tf.keras.losses.mean_squared_error
+    def loss_PER(Q_target,Q_perd,w):
+        loss = tf.math.pow((Q_target-Q_perd)*w,2)
+        return loss
 
 
 
@@ -654,7 +699,8 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
             states = np.array(states)
             next_states = np.array(next_states)
 
-            next_Q_values = self.model.predict(next_states)
+            next_Q_values = self.target.predict(next_states)
+            #next_Q_values = self.model.predict(next_states)
             max_next_Q_values = np.max(next_Q_values, axis=1)
             target_Q_values = (rewards + (1-dones) * discount_factor * max_next_Q_values)
             target_Q_values = target_Q_values.reshape(-1, 1)
@@ -674,6 +720,9 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
             # print("grads: ",grads)
             optimizer.apply_gradients(zip(grads, self.model.trainable_variables))
             self.logger.info("update model")
+        if last_game_state["round"] %  input[1] == 0:
+            #print("update target at round", last_game_state["round"])
+            self.target.set_weights(self.model.get_weights())
 #double DQN
     def Double_DQN(input):
         if last_game_state["round"] >= input[0]:
@@ -708,10 +757,70 @@ def end_of_round(self, last_game_state: dict, last_action: str, events: List[str
         if last_game_state["round"] %  input[1] == 0:
             self.target.set_weights(self.model.get_weights())
 
-    if self.Hyperparameter["train_method"]["algo"] == "DQN":
-        DQN(self.Hyperparameter["train_method"]["INPUTS"])
-    elif self.Hyperparameter["train_method"]["algo"] == "double_DQN":
-        Double_DQN(self.Hyperparameter["train_method"]["INPUTS"])
+    def PER_DQN(input):
+        print("execute train step")
+        z = input[1]
+        beta = input[2]
+        epsilon = input[3]
+
+        if last_game_state["round"] >= input[0]:
+
+
+
+            experiences = sample_experiences(self, batch_size)
+            states, actions, rewards, next_states, dones = experiences
+            states = np.array(states)
+            next_states = np.array(next_states)
+
+            P_all = np.copy(np.array(self.PER_memory))
+            P_all_normed = np.power(P_all, z) / np.sum(np.power(P_all, z))
+            P = P_all_normed[self.indices]
+            print("normed P : ", P)
+
+            next_Q_values = self.model.predict(next_states)
+            max_next_Q_values = np.max(next_Q_values, axis=1)
+            target_Q_values = (rewards + (1-dones) * discount_factor * max_next_Q_values)
+            target_Q_values = target_Q_values.reshape(-1, 1)
+            # print("actions : ",actions)
+            actions = transform_actions_to_number(actions)
+            # print("actions : ", actions)
+            mask = tf.one_hot(actions, self.n_outputs)
+            with tf.GradientTape() as tape:
+                # print("states",states)
+                # print(self.model(states))
+                all_Q_values = self.model(states)
+                Q_values = tf.reduce_sum(all_Q_values * mask, axis=1, keepdims=True)
+                w = np.power(1/batch_size*1/P,beta)
+                w = w/np.max(w)
+                print("weights : ",w)
+                loss = tf.reduce_mean(loss_PER(target_Q_values, Q_values,w))
+                self.loss.append(loss)
+
+
+            grads = tape.gradient(loss, self.model.trainable_variables)
+            # print("grads: ",grads)
+            optimizer.apply_gradients(zip(grads, self.model.trainable_variables))
+            self.logger.info("update model")
+
+            error = target_Q_values-Q_values
+            print("update PER_memory", self.PER_memory)
+            for n,ind in enumerate(self.indices):
+                self.PER_memory[ind] = np.absolute(error[n])+epsilon
+            print("updated PER_memory : ",self.PER_memory)
+
+
+
+    #print("self.new_data",self.new_data)
+    #if self.new_data >= batch_size:#one train step is only executed, if twice the batch_size were added to the buffer compared to the last train step
+    if True:
+        #print("train step")
+        if self.Hyperparameter["train_method"]["algo"] == "DQN":
+            DQN(self.Hyperparameter["train_method"]["INPUTS"])
+        elif self.Hyperparameter["train_method"]["algo"] == "double_DQN":
+            Double_DQN(self.Hyperparameter["train_method"]["INPUTS"])
+        elif self.Hyperparameter["train_method"]["algo"] == "PER_DQN":
+            PER_DQN(self.Hyperparameter["train_method"]["INPUTS"])
+        self.new_data = 0
 
 
     self.logger.debug(f'Encountered event(s) {", ".join(map(repr, events))} in final step')

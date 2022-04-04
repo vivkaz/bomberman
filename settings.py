@@ -17,7 +17,7 @@ SCENARIOS = {
         "COIN_COUNT": 9 #9
     }, 
     "clean": {
-        "CRATE_DENSITY": 0.5,
+        "CRATE_DENSITY": 0.4,
         "COIN_COUNT": 25
     }
     # Feel free to add more game modes and properties
